@@ -1,0 +1,118 @@
+.userImg_1{
+    z-index: 1000;
+    position: relative;
+}
+.userImg_2{
+    transform: translateX(-1rem);
+    position: relative;
+    display: inline-block;
+    z-index: 1;
+
+}
+.userImg_3{
+    transform: translateX(-1.9rem);
+    display: inline-block;
+    z-index: -1;
+
+}
+
+.cardLink{
+    color: var(--headingColor);
+    text-decoration: none;
+    transition: all 0.2s ease-in-out;
+}
+
+.cardLink:hover{
+    color: var(--primaryColor);
+    text-decoration: none;
+}
+
+
+.heroButtonOne{
+    background-color: var(--primaryColor);
+    padding: .9rem 2rem;
+    color: #fff;
+    border: 2px solid var(--primaryColor) !important;
+    font-weight: 500;
+    border: none;
+    margin-right: 2rem;
+    border-top-right-radius: 2rem;
+    border-bottom-right-radius: 2rem;
+    border-top-left-radius: 2rem;
+    font-size: 1rem;
+}
+
+.navLogo{
+    color: #fff;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.navLogo:hover{
+    color: #fff;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.navText{
+    color: #fff;
+    font-weight: 400;
+    text-decoration: none;
+}
+
+.navText:hover{
+    color: #fff;
+    font-weight: 400;
+    text-decoration: none;
+}
+
+
+.navbar{
+    background-color: var(--primaryColor) !important;
+    color: #fff;
+    padding-block: 1rem !important;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+}
+
+.navLinks{
+    /* margin-left: 10rem; */
+    margin: 0 auto;
+    color: #fff;
+}
+.navButton{
+    margin: 0px 0px 0px 45px;
+    padding: 6px 17px 8px;
+    font-size: 16px;
+    border: 1px solid white;
+    border-radius: 40px;
+    background: transparent;
+   
+    color: white;
+}
+.navButton a{
+    color: white; text-decoration: none;
+}
+.navLink{
+    color: #fff;
+    /* margin-left: 4rem; */
+    text-decoration: none;
+}
+
+.navLink.active{
+    position: relative;
+}
+
+.navLink.active::after{
+    content: "";
+    height: 6px;
+    width: 6px;
+    border-radius: 2rem;
+    background-color: #fff;
+
+    position: absolute;
+    bottom: -25%;
+    left: 50%;
+    transform: translate(-100%, -100%);
+}
