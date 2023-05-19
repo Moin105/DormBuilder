@@ -5,13 +5,15 @@ import { Link,useLocation } from 'react-router-dom';
 import Footer from '../utils/Footer/Footer';
 import axios from 'axios';
 import whatsapp from './assets/whatsapp.png'
+import { useSelector } from 'react-redux';
 
 const GalleryDetail = () => {
     const location = useLocation();
     const data = location.state ? location.state.data : null;
     const [dormData,setDormData] = useState(null)
     const [toggleButton, setToggleButton] = useState('hide')
-   const token = localStorage.getItem("token")
+//    const token = localStorage.getItem("token")
+   const token = useSelector((state) => state.token);
     const handleButton = () => {
         console.log('as');
         setToggleButton('show')

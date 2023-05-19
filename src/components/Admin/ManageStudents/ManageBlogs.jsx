@@ -12,10 +12,12 @@ import Footer from '../../utils/Footer/Footer';
 import Form from 'react-bootstrap/Form';
 import UserContext from '../../../Context';
 import Cookies from 'js-cookie';
+import { useSelector } from 'react-redux';
 
 function ManageStudents() {
     const [isModalOpen, setModalOpen] = useState(false);
     const [userToDelete, setUserToDelete] = useState(null);
+    const token = useSelector((state) => state.token); 
     const [role, setRole] = useState(null);
     const navigate = useNavigate();
     const openModal = (userId,role) => {
@@ -34,7 +36,7 @@ function ManageStudents() {
         navigate(url, { state: { data: datas } });
       };
     const [data,setData]=useState(null)
-    const token = localStorage.getItem("token");
+    // const token = localStorage.getItem("token");
    
       function removeKeys() {
         // Array of keys to remove
@@ -169,8 +171,10 @@ function ManageStudents() {
         <CustomModal isOpen={isModalOpen} onClose={closeModal}>
                 <h1>Delete </h1>
                 <p>Are you sure you want to delete this user?</p>
+                <div>
                 <button onClick={()=>deleteUser(userToDelete, role)}>Confirm</button>
                 <button onClick={closeModal}>Cancel</button>
+                </div>
             </CustomModal>
                 </div>
             </div>   

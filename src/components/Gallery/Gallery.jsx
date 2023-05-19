@@ -7,6 +7,7 @@ import { BiEdit, BiSearch } from "react-icons/bi";
 import { FaLaptop, FaStar, FaWifi, FaWindowMaximize } from 'react-icons/fa';
 import axios from 'axios';
 import Header from '../Header/Header';
+import { useSelector } from 'react-redux';
 
 
 const Gallery = () => {
@@ -15,7 +16,8 @@ const Gallery = () => {
         navigate(url, { state: { data: datas } });
       };
     const [data, setData] = useState([]);
-    const token = localStorage.getItem("token")
+    // const token = localStorage.getItem("token")
+    const token = useSelector((state) => state.token);
     const fetchData = async () => {
         try {
             const response = await axios.get('http://backend.uni-hive.net/api/get_all_dorms', {
@@ -37,6 +39,22 @@ const Gallery = () => {
     const memoizedData = useMemo(() => data, [data]);
 
  console.log(memoizedData)
+ const [searchTerm, setSearchTerm] = useState("");
+
+  const handleInputChange = (event) => {
+    setSearchTerm(event.target.value);
+  };
+
+  const filteredData = useMemo(
+    () =>
+      memoizedData.filter((item) =>
+      item.dorm_id?.toString().includes(searchTerm)
+  
+      // item?.id?.includes(searchTerm.toLowerCase())
+      ),
+    [searchTerm, memoizedData]
+  );
+  console.log("filteredData", filteredData);
     return (
         <>
             {/* NAVBAR */}
@@ -138,7 +156,7 @@ const Gallery = () => {
                                 <BiSearch />
                             </span>
 
-                            <input type="text" className="searchInput" placeholder="Search" />
+                            <input type="text" onChange={handleInputChange}  className="searchInput" placeholder="Search" />
                         </div>
                     </div>
 
@@ -155,9 +173,9 @@ const Gallery = () => {
 
 
                     <div className="row ">
-                    {memoizedData.map((dorm) => {
+                    {filteredData.length > 0  ?filteredData.map((dorm) => {
                         return (
-                            <div className="col-sm-12 col-md-6 col-lg-4 dormGalleryCards" style={{display:"flex"}} onClick={() => handleRouteChange(`/student/dorm-show/${dorm.id}`,dorm.id) }>
+                            <div className="col-sm-12 col-md-6 col-lg-4 dormGalleryCards" style={{display:"flex"}} onClick={() => handleRouteChange(`/student/dorm-show/${dorm.dorm_id}`,dorm.dorm_id) }>
                             <div className="card text-left">
 
                                 <div className="galleryCardImg">
@@ -222,7 +240,7 @@ const Gallery = () => {
                             </div>
                         </div>
                         )
-                    })}
+                    }): "" }
                         <div className="col-sm-12 col-md-6 col-lg-4 dormGalleryCards">
                             <div className="card text-left">
 

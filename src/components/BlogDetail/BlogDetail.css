@@ -15,3 +15,6 @@
 .blogDetail{
     font-size: .9rem;
 }
+.blogDetail .container .blogSecondImage img{
+    object-fit: contain;
+}

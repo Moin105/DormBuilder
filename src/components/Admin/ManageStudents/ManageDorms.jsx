@@ -9,6 +9,7 @@ import axios from 'axios';
 import { MdKeyboardBackspace, MdVerticalAlignBottom } from "react-icons/md";
 import { Link, useNavigate } from 'react-router-dom';
 import Footer from '../../utils/Footer/Footer';
+import { useSelector } from 'react-redux';
 import Form from 'react-bootstrap/Form';
 import UserContext from '../../../Context';
 import Cookies from 'js-cookie';
@@ -29,12 +30,12 @@ function ManageDorms() {
         setRole(null);
         setModalOpen(false);
     };
-
+const token = useSelector((state) => state.token);
     const handleRouteChange = (url, datas) => {
         navigate(url, { state: { data: datas } });
       };
     const [data,setData]=useState(null)
-    const token = localStorage.getItem("token");
+    // const token = localStorage.getItem("token");
     const getData = async () => {
         try {
           const response = await axios.get(
@@ -76,7 +77,7 @@ function ManageDorms() {
        
         try {
             // Make a POST request with axios
-            const response = await axios.post(`http://backend.uni-hive.net/api/delete_dorm/${data}`, {
+            const response = await axios.post(`http://backend.uni-hive.net/api/delete_dorm/${id}`, {
 
                 id: id
             },
@@ -165,8 +166,11 @@ function ManageDorms() {
         <CustomModal isOpen={isModalOpen} onClose={closeModal}>
                 <h1>Delete</h1>
                 <p>Are you sure you want to delete this user?</p>
-                <button onClick={()=>deleteUser(userToDelete)}>Confirm</button>
+                <div>
+                  <button onClick={()=>deleteUser(userToDelete)}>Confirm</button>
                 <button onClick={closeModal}>Cancel</button>
+                </div>
+                
             </CustomModal>
                 </div>
             </div>    

@@ -5,12 +5,14 @@ import { Link,useLocation } from 'react-router-dom'
 import why4 from './assets/why4.jpg';
 import Footer from '../utils/Footer/Footer';
 import axios from 'axios';
+import { useSelector } from 'react-redux';
 const BlogDetail = () => {
     const location = useLocation();
     const data = location.state ? location.state.data : null;
     const [blogData,setBlogData] = useState(null)
     const [toggleButton, setToggleButton] = useState('hide')
-   const token = localStorage.getItem("token")
+//    const token = localStorage.getItem("token")
+const token = useSelector((state) => state.token);
     // const handleButton = () => {
     //     console.log('as');
     //     setToggleButton('show')

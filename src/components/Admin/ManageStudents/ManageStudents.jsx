@@ -12,7 +12,7 @@ import Footer from '../../utils/Footer/Footer';
 import Form from 'react-bootstrap/Form';
 import UserContext from '../../../Context';
 import Cookies from 'js-cookie';
-
+import { useSelector } from 'react-redux';
 function ManageStudents() {
     const [isModalOpen, setModalOpen] = useState(false);
     const [userToDelete, setUserToDelete] = useState(null);
@@ -34,7 +34,8 @@ function ManageStudents() {
         navigate(url, { state: { data: datas } });
       };
     const [data,setData]=useState(null)
-    const token = localStorage.getItem("token");
+    const token = useSelector((state) => state.token);
+    // const token = localStorage.getItem("token");
     const getData = async () => {
         try {
           const response = await axios.get(
@@ -165,8 +166,11 @@ function ManageStudents() {
         <CustomModal isOpen={isModalOpen} onClose={closeModal}>
                 <h1>Delete</h1>
                 <p>Are you sure you want to delete this user?</p>
+                <div>
                 <button onClick={()=>deleteUser(userToDelete)}>Confirm</button>
                 <button onClick={closeModal}>Cancel</button>
+                </div>
+               
             </CustomModal>
                 </div>
             </div>    

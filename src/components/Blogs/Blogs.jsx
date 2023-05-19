@@ -8,6 +8,7 @@ import Footer from '../utils/Footer/Footer';
 
 import why4 from './assets/why4.jpg';
 import axios from 'axios';
+import { useSelector } from 'react-redux';
 
 const Blogs = () => {
     const navigate = useNavigate();
@@ -15,7 +16,8 @@ const Blogs = () => {
         navigate(url, { state: { data: datas } });
       };
     const [data, setData] = useState([]);
-    const token = localStorage.getItem("token");
+    // const token = localStorage.getItem("token");
+    const token = useSelector((state) => state.token);
     const fetchData = async () => {
         try {
             const response = await axios.get('http://backend.uni-hive.net/api/get_all_blogs', {

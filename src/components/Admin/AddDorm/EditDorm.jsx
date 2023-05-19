@@ -10,20 +10,21 @@ import Footer from '../../utils/Footer/Footer';
 import Form from 'react-bootstrap/Form';
 import UserContext from '../../../Context';
 import Cookies from 'js-cookie';
+import { useSelector } from 'react-redux';
 const EditDorm = () => {
     const location = useLocation();
     const data = location.state ? location.state.data : null;
-    const { user, setUser } = useContext(UserContext);
-    const updateUser = (user) => {
-        setUser(user);
-      };
+    // const { user, setUser } = useContext(UserContext);
+    // const updateUser = (user) => {
+    //     setUser(user);
+    //   };
       const [formData, setFormData] = useState({
         id: "",
         description: "",
         rent_details: "",
       });
       useEffect(() => {
-        console.log(user)
+        // console.log(user)
       }, [])
       const navigate = useNavigate();
       const handleRouteChange = (url, datas) => {
@@ -105,7 +106,8 @@ const EditDorm = () => {
             getUser(data);
             console.log("qwertyu", data);
           }, []);
-        const token = localStorage.getItem("token")
+        // const token = localStorage.getItem("token")
+        const token =  useSelector((state) => state.token);
         // const handleSubmit = (event) => {
         //     event.preventDefault();
         //    console.log(formData)
@@ -127,7 +129,7 @@ const EditDorm = () => {
 
             <div className="addBlogMain">
                 <div className="container">
-                    <h1>Add New Dorm</h1>
+                    <h1>Edit  Dorm</h1>
                     <div className="inputs">
 
                         <div className="input">

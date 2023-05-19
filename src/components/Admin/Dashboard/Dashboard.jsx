@@ -2,36 +2,27 @@ import React,{useEffect,useState,useMemo} from 'react';
 import './Dashboard.css';
 import { FiArrowRight } from 'react-icons/fi';
 import why4 from '../../Home/assets/why4.jpg'
-import logout from './assets/logout.png'
+import logouts from './assets/logout.png'
 import { Link,useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { BiTrendingUp, BiTrendingDown } from "react-icons/bi";
+import { useSelector,useDispatch } from 'react-redux';
+import { logout } from '../../../redux/slices/authSlice';
 import Cookies from 'js-cookie';
-
+import { Button, Container, Card } from 'react-bootstrap';
 const Dashboard = () => {
-    const token = localStorage.getItem("token");
+    // const token = localStorage.getItem("token");
+    const dispatch = useDispatch()
+    const token = useSelector((state) => state.token);
     const [datas, setDatas] = useState([]);
     const navigate = useNavigate();
     const handleRouteChange = (url, datas) => {
         navigate(url, { state: { data: datas } });
       };
-    function removeKeys() {
-        // Array of keys to remove
-        const keys = ['token', 'role'];
-    
-        keys.forEach((key) => {
-            // Remove key from localStorage
-            localStorage.removeItem(key);
-    
-            // Remove key from cookies
-            Cookies.remove(key);
-        });
-       if(
-        !localStorage.getItem("token") && !Cookies.get("token")){
-            window.location.reload();
-                handleRouteChange("/");
-        } 
-    }
+      const handleLogout = () => {
+        // Clear auth state in Redux
+        dispatch(logout());
+      };
     const fetchDatas = async () => {
         try {
             const response = await axios.get('http://backend.uni-hive.net/api/get_all_blogs', {
@@ -62,8 +53,8 @@ const Dashboard = () => {
             <div className="LoginNavbar">
                 <h5>United Dorms</h5>
 
-                <div className="logoutButton" onClick={()=>{removeKeys();handleRouteChange("/login")}}>
-                    <img src={logout} alt="" />
+                <div className="logoutButton" onClick={()=>{handleLogout();handleRouteChange("/login")}}>
+                    <img src={logouts} alt="" />
                 </div>
             </div>
 
@@ -73,19 +64,24 @@ const Dashboard = () => {
             <div className="dashboard">
                 <div className="container">
                     <div className="row">
-                        <div className="col-sm-12 col-md-6 col-lg-6 p-5">
+                        {/* <div className="col-sm-12 col-md-6 col-lg-6 p-5">
 
                             <h1>Dashobard</h1>
                             <h5 className="link">Welcome Back</h5>
 
-                        </div>
-                        <div className="col-sm-12 col-md-6 col-lg-6 p-5 dashboardButtons">
+                        </div> */}
+                        <Card className="mb-4 p-3 text-center">
+                <Card.Title className="display-4"><h1>Welcome Back!</h1></Card.Title>
+                <Card.Text><p className="link">This is your Dashboard, you can navigate from here.</p></Card.Text>
+            </Card>
+                        <div className="col-sm-12 col-md-6 col-lg-6 p-5 dashboardButtons d-flex flex-column justify-content-around">
 {/* /admin/manage-blogs */}
-                            <Link to='/admin/add-dorm'><button className="dashboardBtn"> Add New Dorm</button></Link> <br />
-                            <Link to='/admin/manage-dorms'><button className="dashboardBtn"> Manage Dorms</button></Link> <br />
-                            <Link to='/admin/manage-blogs'><button className="dashboardBtn"> Manage Blogs</button></Link> <br />
-                            <Link to='/admin/add-blog'><button className="dashboardBtn"> Add New Blog</button></Link> <br />
-                            <Link to='/admin/manage-students'><button className="dashboardBtn"> Manage Students</button></Link>
+         
+                            <Link style={{margin:"0 auto"}} to='/admin/add-dorm'><Button className="dashboardBtn"> Add New Dorm</Button></Link> <br />
+                            <Link style={{margin:"0 auto"}} to='/admin/manage-dorms'><Button className="dashboardBtn"> Manage Dorms</Button></Link> <br />
+                            <Link style={{margin:"0 auto"}} to='/admin/manage-blogs'><Button className="dashboardBtn"> Manage Blogs</Button></Link> <br />
+                            <Link style={{margin:"0 auto"}} to='/admin/add-blog'><Button className="dashboardBtn"> Add New Blog</Button></Link> <br />
+                            <Link style={{margin:"0 auto"}} to='/admin/manage-students'><Button className="dashboardBtn"> Manage Students</Button></Link>
 
                         </div>
 

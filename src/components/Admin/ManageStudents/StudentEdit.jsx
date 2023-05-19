@@ -10,6 +10,7 @@ import { Link, useLocation,useNavigate } from "react-router-dom";
 import Footer from "../../utils/Footer/Footer";
 import Form from "react-bootstrap/Form";
 import UserContext from "../../../Context";
+import { useSelector } from "react-redux";
 function StudentEdit() {
   const location = useLocation();
   const navigate = useNavigate();
@@ -18,7 +19,8 @@ function StudentEdit() {
   };
   const data = location.state ? location.state.data : null;
   const [student, setStudent] = useState(null);
-  const token = localStorage.getItem("token");
+  // const token = localStorage.getItem("token");
+  const token = useSelector((state) => state.token);
   const [formData, setFormData] = useState({
     // first_name: "",
     // last_name: "",

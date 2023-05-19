@@ -4,18 +4,21 @@ import logout from "../AddDorm/assets/logout.png";
 import images from "../AddDorm/assets/image.png";
 import imageCompression from "browser-image-compression";
 import "./ManageStudents.css";
+import { Spinner } from "react-bootstrap";
 import axios from "axios";
 import { MdKeyboardBackspace, MdVerticalAlignBottom } from "react-icons/md";
 import { Link, useLocation,useNavigate } from "react-router-dom";
 import Footer from "../../utils/Footer/Footer";
 import Form from "react-bootstrap/Form";
 import UserContext from "../../../Context";
+import { useSelector } from "react-redux";
 function BlogEdit() {
   const location = useLocation();
   const data = location.state ? location.state.data : null;
   const navigate = useNavigate();
   const [student, setStudent] = useState(null);
-  const token = localStorage.getItem("token");
+  // const token = localStorage.getItem("token");
+  const token = useSelector((state) => state.token);
   const [formData, setFormData] = useState({
     // first_name: "",
     // last_name: "",

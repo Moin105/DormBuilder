@@ -4,15 +4,19 @@ import UserContext from '../../../Context';
 import { RiLockFill, RiMailFill } from "react-icons/ri";
 import { Link, useNavigate } from 'react-router-dom';
 import Footer from '../../utils/Footer/Footer';
+import { useDispatch } from 'react-redux';
+import { login } from '../../../redux/slices/authSlice';
 import axios from 'axios';
 import Cookies from 'js-cookie';
+import { toast, ToastContainer } from 'react-toastify';
+
 
 
 
 const Login = () => {
 
     const [responseData, setResponseData] = useState([]);
-
+    const dispatch = useDispatch();
     const [email, setEmail] = useState('');
     const getEmail = (e) => {
         setEmail(e.target.value);
@@ -27,98 +31,53 @@ const Login = () => {
     }
 
     const navigate = useNavigate()
-    const { user, setUser } = useContext(UserContext);
-    const updateUser = (user) => {
-        setUser(user);
-      };
+    // const { user, setUser } = useContext(UserContext);
+    // const updateUser = (user) => {
+    //     setUser(user);
+    //   };
 
 
     const handleLogin = async () => {
-
+      
         let data = {
             email,
             password
         }
+   if(data.email == ""){
 
-        if (email === "admin@admin.com") {
-            await axios.post('http://backend.uni-hive.net/api/user_login', data)
-                .then(response => {
-                    setResponseData(response.data);
-                    if(response.data.status == 200){
-                        const  {token,role,user} = response.data;
-                        const id = response.data.user.id;
-                        if(token){
-                          Cookies.set("token",token)
-                          Cookies.set("role",role)
-                          let userStr = JSON.stringify(user);
-
-                          // Set the cookie
-                          Cookies.set('user', userStr);
-                          localStorage.setItem("token",token)
-                          localStorage.setItem("role",role)
-                          updateUser(response.data)
-                          if(role == "student" ){
-                              handleRouteChange('/student-dashboard',user)
-                              window.location.reload()
-                          }if (role == "admin"){
-                              handleRouteChange('/admin/dashboard')
-                              window.location.reload()
-                          }
-                          // handleRouteChange('/')
-                        }
-              
-                         }
-                    // navigate('/admin/dashboard')
-
-                })
-                .catch(error => {
-                    window.alert(error.message);
-                });
-        } else {
-            try {
-                await axios.post('http://backend.uni-hive.net/api/user_login', data)
-                    .then(response => {
-                        setResponseData(response.data);
-                        console.log(responseData);
-                        if(response.data.status == 200){
-                            const  {token,role,user} = response.data;
-                            const id = response.data.user.id;
-                            if(token){
-                              Cookies.set("token",token)
-                              Cookies.set("role",role)
-                              let userStr = JSON.stringify(user);
+       toast.error("Please enter email")
+   }else if (data.password == ""){
+    toast.error("Please enter password")
+   }else if (email !== "" && password !== ""){
+        try {
+            const response = await axios.post('http://backend.uni-hive.net/api/user_login', data);
+            const responseData = response.data;
+       console.log(responseData)
+            if(responseData.status == 200){
+                console.log("helllooo gee")
+                const  {token,role,user} = responseData;
+                console.log("role",role)
+                console.log("user",user)
+                console.log("token",token)
+                if(token){
+                    // Dispatch login action to update token and role in redux store
+                    dispatch(login({ token, role,user }));
     
-                              // Set the cookie
-                              Cookies.set('user', userStr);
-                              localStorage.setItem("token",token)
-                              localStorage.setItem("role",role)
-                              updateUser(response.data)
-                              if(role == "student" ){
-                                  handleRouteChange('/student-dashboard',user)
-                                  window.location.reload()
-                              }if (role == "admin"){
-                                  handleRouteChange('/admin/dashboard')
-                                  window.location.reload()
-                              }
-                              // handleRouteChange('/')
-                            }
-                  
-                             }
-                        // navigate('/')
-                        
-
-                    })
-                    .catch(error => {
-                        window.alert(error.message);
-                    });
-            } catch (error) {
-                window.alert(error.message);
-
+                    // let userStr = JSON.stringify(user);
+    
+                    // Set the cookie
+                    // Cookies.set('user', userStr);
+    
+                    if(role === "student"){
+                        handleRouteChange('/student-dashboard',user)
+                    }else if (role === "admin"){
+                        handleRouteChange('/admin/dashboard')
+                    }
+                }
             }
-
-        }
-
-
+        } catch (error) {
+            window.alert(error.message);
+        }}
     }
     const handleforget = async () => {
 
@@ -126,7 +85,6 @@ const Login = () => {
             email:email
         }
 
-        if (email !== "") {
             await axios.post('http://backend.uni-hive.net/api/forgot_password', data)
                 .then(response => {
                     setResponseData(response.data);
@@ -152,7 +110,7 @@ const Login = () => {
                 .catch(error => {
                     window.alert(error.message);
                 });
-        }
+        
 
 
     }
@@ -162,7 +120,7 @@ const Login = () => {
             <div className="LoginNavbar">
                 <h5>United Dorms</h5>
             </div>
-
+       <ToastContainer />
 
             <div className="loginForm">
                 <h5>Sign in to continue</h5>

@@ -1,10 +1,13 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
 import { Container, Nav, Navbar,Button } from 'react-bootstrap'
+import { useSelector } from 'react-redux';
 import './Header.css'
 import Cookies from 'js-cookie';
 function Header() {
-    const token =  Cookies.get("token");
+    // const token =  Cookies.get("token");
+    const token = useSelector((state) => state.token)
+
     const role = Cookies.get("role");
   return (
     <>

@@ -65,6 +65,11 @@
 
 table{
     font-size: 20px;
+    background-color: #F0F0F0;
+}
+table ,td,th ,tr{
+    border: 1px solid black;
+
 }
 .inputFile p {
     width: 370px;
@@ -96,7 +101,16 @@ table{
     width: 80%;
     max-width: 500px;
   }
-  
+  .modal-content div{
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+  }
+  .modal-content div button{
+    border:none;
+    padding: 10px;
+    font-size: 16px;
+  }
   .modal-close-button {
     position: absolute;
     right: 15px;

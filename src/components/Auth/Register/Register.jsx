@@ -5,6 +5,8 @@ import { RiLockFill, RiMailFill, RiUser3Fill } from "react-icons/ri";
 import { Link, useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import axios from 'axios';
+import { useDispatch } from 'react-redux';
+import { login } from '../../../redux/slices/authSlice';
 // import { / } from 'react';
 import UserContext from '../../../Context';
 import Footer from '../../utils/Footer/Footer';
@@ -12,10 +14,8 @@ import Footer from '../../utils/Footer/Footer';
 
 const Register = () => {
     const navigate = useNavigate()
-    const { user, setUser } = useContext(UserContext);
-    const updateUser = (user) => {
-        setUser(user);
-      };
+    const dispatch = useDispatch();
+
     // const dispatch = useDispatch();
     const [formData, setFormData] = useState({
         name: '',
@@ -52,26 +52,28 @@ const Register = () => {
            if(response.data.status == 200){
           const  {token,role,user} = response.data;
           // const id = response.data;
-          if(token){
-            Cookies.set("token",token)
-            Cookies.set("role",role)
-            let userStr = JSON.stringify(user);
+          if(response.status == 200){
+            console.log("helllooo gee")
+            // const  {token,role,user} = responseData;
+            console.log("role",role)
+            console.log("user",user)
+            console.log("token",token)
+            if(token){
+                // Dispatch login action to update token and role in redux store
+                dispatch(login({ token, role,user }));
 
-// Set the cookie
-            Cookies.set('user', userStr);
-            localStorage.setItem("token",token)
-            localStorage.setItem("role",role)
-            updateUser(response.data)
-           
-            if(role == "student" ){
-                handleRouteChange('/student/dashboard',user)
-                window.location.reload()
-            }else{
-                handleRouteChange('/admin/dashboard')
-                window.location.reload()
+                // let userStr = JSON.stringify(user);
+
+                // Set the cookie
+                // Cookies.set('user', userStr);
+
+                if(role === "student"){
+                    handleRouteChange('/student-dashboard',user)
+                }else if (role === "admin"){
+                    handleRouteChange('/admin/dashboard')
+                }
             }
-            // handleRouteChange('/')
-          }
+        }
 
            }
           // Handle success response here
@@ -94,8 +96,7 @@ const handleSubmit = async (event) => {
  postData("http://backend.uni-hive.net/api/user_register",data)
 
  
-  };
-    return (
+  };    return (
         <>
         
         <div className="LoginNavbar">

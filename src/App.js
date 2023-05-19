@@ -5,10 +5,15 @@ import Login from "./components/Auth/Login/Login";
 import Home from "./components/Home/Home";
 import Blogs from "./components/Blogs/Blogs";
 import Gallery from "./components/Gallery/Gallery";
+import { useSelector } from "react-redux";
+import { PersistGate } from "redux-persist/integration/react";
 import BlogDetail from "./components/BlogDetail/BlogDetail";
 import GalleryDetail from "./components/GalleryDetail/GalleryDetail";
 import Dashboard from "./components/Admin/Dashboard/Dashboard";
 import AddDorm from "./components/Admin/AddDorm/AddDorm";
+
+import 'react-toastify/dist/ReactToastify.css';
+
 import EditDorm from "./components/Admin/AddDorm/EditDorm";
 import ManageBlogs from "./components/Admin/ManageStudents/ManageBlogs";
 import AddBlog from "./components/Admin/AddBlog/AddBlog";
@@ -17,13 +22,14 @@ import UserContext from "./Context";
 import Cookies from "js-cookie";
 import UserDashboard from "./components/UserDashboard/UserDashboard";
 import ManageStudents from "./components/Admin/ManageStudents/ManageStudents";
+import { ToastContainer } from "react-toastify";
 import StudentEdit from "./components/Admin/ManageStudents/StudentEdit";
 import BlogEdit from "./components/Admin/ManageStudents/BlogEdit";
 import ForgetPassword from "./components/Auth/Login/ForgetPassword";
 import ConfirmOTP from "./components/Auth/Login/ConfirmOtp";
 import ManageDorms from "./components/Admin/ManageStudents/ManageDorms";
 function App() {
-  const [user, setUser] = useState(null);
+  // const [user, setUser] = useState(null);
 
   // const userRoel = "admin"
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -39,7 +45,7 @@ function App() {
     { path: "/gallery", element: <Gallery />, name: "" },
     { path: "/otp", element: <ConfirmOTP />, name: "" },
     // {path:'/reset-password',element:<ResetPassword/>,name:""}
-  ];
+  ]; 
   const AdminRoutes = [
     { path: "/admin/dashboard", element: <Dashboard />, name: "" },
     { path: "/admin/add-dorm", element: <AddDorm />, name: "" },
@@ -69,9 +75,13 @@ function App() {
 // student/dorm-show/27
 // const token = localStorage.getItem("token")
 // const role = localStorage.getItem("role")
-const token = Cookies.get("token")
-const role = Cookies.get("role")
+// const token = Cookies.get("token")
+// const role = Cookies.get("role")
+const token = useSelector((state) => state.token)
+const role = useSelector((state) => state.role);
+const user = useSelector((state) => state.user);
 useEffect(() => {
+     console.log("token",token)
     if(token){
       setIsAuthenticated(true)
       if(role == "student"){
@@ -86,10 +96,35 @@ useEffect(() => {
   useEffect(() => {
     console.log("user",user)
   }, [])
-  
+useEffect(() => {
+  console.log("role",role)
+  console.log("user",user)
+  console.log("token",token)
+}, [token,role,user])
+
   return (
     
     <div className="App">
+      <Router>
+  <Routes>
+    {isAuthenticated
+      ? authenticatedRoutes.map((route) => (
+          <Route
+            key={route.path}
+            path={route.path}
+            element={route.element}
+          />
+        ))
+      : GuestRoutes.map((route) => (
+          <Route
+            key={route.path}
+            path={route.path}
+            element={route.element}
+          />
+        ))}
+    <Route path="*" element={<Home />} />
+  </Routes>
+</Router>
       {/* <Router>
         <Routes>
           <Route path="/" element={<Home/>} />
@@ -110,9 +145,8 @@ useEffect(() => {
 
         </Routes>
       </Router> */}
-    <UserContext.Provider value={{ user, setUser }}>
-      <Router>
-        <Routes>
+    {/* <UserContext.Provider value={{ user, setUser }}> */}
+        {/* <Routes>
           {isAuthenticated
             ? authenticatedRoutes.map((route) => (
                 <Route
@@ -129,9 +163,33 @@ useEffect(() => {
                 />
               ))}
           <Route path="*" element={<Home/>} />
-        </Routes>
-      </Router>
-      </UserContext.Provider>
+        </Routes> */}
+      {/* <Router>
+          {token && role === "admin" && <Routes> { authenticatedRoutes.map((route) => (
+                <Route
+                  key={route.path}
+                  path={route.path}
+                  element={route.element}
+                />
+              ))} </Routes>}
+          {token && role === "student" && <Routes> { authenticatedRoutes.map((route) => (
+                <Route
+                  key={route.path}
+                  path={route.path}
+                  element={route.element}
+                />
+              ))} </Routes>}
+          {!token && <Routes> {GuestRoutes.map((route) => (
+                <Route
+                  key={route.path}
+                  path={route.path}
+                  element={route.element}
+                />
+              ))} </Routes>}
+               <Route path="*" element={<Home/>} />
+      </Router> */}
+      {/* </UserContext.Provider> */}
+
     </div>
   );
 }

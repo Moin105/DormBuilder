@@ -14,7 +14,35 @@
     color: #2c2c2c;
     cursor: pointer;
 }
+.images-gallery{
+    display: flex;
+    width: 100%;
+    gap: 10px;
+    height: 100px;
+    justify-content: center;
 
+}
+.images-gallery .figure{
+    position: relative;
+    width: 100px;
+    height: 100px;
+}
+.images-gallery .figure .remove{
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 25px;
+    border:none;
+    background-color: #fff;
+    border-radius: 44px;
+    color: black;
+    height: 25px;
+    /* transform: translate(-1rem , 2rem) */
+}
+.images-gallery .figure img{
+    width: 100px;
+    height: 100px;
+}
 .inputs {
     display: flex;
     align-items: center;

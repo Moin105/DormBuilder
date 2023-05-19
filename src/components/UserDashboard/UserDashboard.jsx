@@ -3,24 +3,29 @@ import './UserDashboard.css'
 
 
 
-import logout from './assets/logout.png'
+import logouts from './assets/logout.png'
 import profile from './assets/profile.png'
 import { BiEdit } from 'react-icons/bi'
 import { Link,useNavigate,useLocation } from 'react-router-dom'
 import axios from 'axios'
+import { logout } from '../../redux/slices/authSlice'
+import { useSelector,useDispatch } from 'react-redux'
 import Cookies from 'js-cookie'
 const UserDashboard = () => {
-    const location = useLocation();
-    const data = location.state ? location.state.data : null;
     const navigate = useNavigate();
-    const [formData, setFormData] = useState({
-        // first_name: "",
-        // last_name: "",
-        username:'',
-        college_university: "",
-        phone_number: "",
-        id:""
-      });
+    const dispatch = useDispatch();
+    const handleLogout = () => {
+        // Clear auth state in Redux
+        dispatch(logout());
+      };
+    // const [formData, setFormData] = useState({
+    //     // first_name: "",
+    //     // last_name: "",
+    //     username:'',
+    //     college_university: "",
+    //     phone_number: "",
+    //     id:""
+    //   });
     
     //   let userStr = Cookies.get('user');
 
@@ -29,6 +34,8 @@ const UserDashboard = () => {
     const handleRouteChange = (url, datas) => {
         navigate(url, { state: { data: datas } });
       };
+      const user = useSelector((state) => state.user);
+
     //   const getUser = async (id) => {
     //     try {
     //       // Make a POST request with axios
@@ -73,32 +80,26 @@ const UserDashboard = () => {
             // Remove key from cookies
             Cookies.remove(key);
         });
-        if(
-            !localStorage.getItem("token") && !Cookies.get("token")){
-                window.location.reload();
-                handleRouteChange("/");
-            } 
+        // if(
+        //     !localStorage.getItem("token") && !Cookies.get("token")){
+        //         window.location.reload();
+        //         handleRouteChange("/");
+        //     } 
     }
-    const  savedUser = JSON.parse(localStorage.getItem('user'));
+    // const  savedUser = JSON.parse(localStorage.getItem('user'));
 
-    console.log(savedUser);  
+    // console.log(savedUser);  
     useEffect(() => {
-        
-        console.log("qwertyu", data);
-        if(data){
-            localStorage.setItem('user', JSON.stringify(data))
-        }
-        if(savedUser){
-            console.log("qwertyu", savedUser)
-        }
+       console.log(user)    
+    
       }, []);
     return (
         <>
             <div className="LoginNavbar">
                 <h5>United Dorms</h5>
 
-                <div className="logoutButton" onClick={()=>{removeKeys();handleRouteChange("/")}}>
-                    <img src={logout} alt="" />
+                <div className="logoutButton" onClick={()=>{handleLogout();handleRouteChange("/")}}>
+                    <img src={logouts} alt="" />
                 </div>
                   
             </div>
@@ -109,7 +110,7 @@ const UserDashboard = () => {
                         <div className="col-sm-12 col-md-6 col-lg-7">
                             <div className="userDashboardContent">
                                 <h5>Hello</h5>
-                                <h1>{savedUser?.username}!</h1>
+                                <h1>{user?.username}!</h1>
                                 <p>Copy your bio link & paste it in your profile, <br /> to let people find you</p>
                             </div>
                         </div>
@@ -126,23 +127,23 @@ const UserDashboard = () => {
                         </div>
 
                         <div className="studentInfoName">
-                            <h6>{savedUser?.username}</h6>
+                            <h6>{user?.username}</h6>
                         </div>
 
                         <div className="studentInfoName">
-                            <h6>{savedUser?.email}</h6>
+                            <h6>{user?.email}</h6>
                         </div>
 
                         <div className="studentInfoName">
-                            <h6>{savedUser?.college_university || "University Pending"}</h6>
+                            <h6>{user?.college_university || "University Pending"}</h6>
                         </div>
 
                         <div className="studentInfoName">
-                            <h6>{savedUser?.name }</h6>
+                            <h6>{user?.name }</h6>
                         </div>
 
                         <div className="studentInfoName">
-                            <h6>{savedUser?.phone_number || "no phone number"}</h6>
+                            <h6>{user?.phone_number || "no phone number"}</h6>
                         </div>
 
                         <div className="studentInfoName">
