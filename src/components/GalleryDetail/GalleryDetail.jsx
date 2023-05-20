@@ -6,11 +6,13 @@ import Footer from '../utils/Footer/Footer';
 import axios from 'axios';
 import whatsapp from './assets/whatsapp.png'
 import { useSelector } from 'react-redux';
+import AddReview from '../Admin/AddDorm/AddReview';
 
 const GalleryDetail = () => {
     const location = useLocation();
     const data = location.state ? location.state.data : null;
     const [dormData,setDormData] = useState(null)
+    const user = useSelector((state) => state.user);
     const [toggleButton, setToggleButton] = useState('hide')
 //    const token = localStorage.getItem("token")
    const token = useSelector((state) => state.token);
@@ -80,7 +82,27 @@ const GalleryDetail = () => {
                     <h1 className='title text-center'>Dorm Id {dormData?.id}</h1>
 
                     <div className="row">
-                        <div className="col-sm-12 col-md-6 col-lg-6 mt-5">
+                { dormData.dorm_images ? <> {dormData?.dorm_images?.map((image, index) => {
+        if (image.image_url.endsWith('.mp4')) {
+          // Render video
+          return (
+            <div key={index}>
+                <div className="col-sm-12 col-md-6 col-lg-6 mt-5">
+              <video controls  style={{width:"512px",height:"512px"}}>
+                <source src={`http://backend.uni-hive.net/storage/${image.image_url}`} type="video/mp4" />
+              </video>
+                </div>  </div>
+          );
+        } else {
+          // Render image
+          return (
+            <div className="col-sm-12 col-md-6 col-lg-6 mt-5">
+              <img style={{width:"512px",height:"512px",objectFit:"contain"}} src={`http://backend.uni-hive.net/storage/${image.image_url}`} alt={`Image ${index + 1}`} />
+            </div>
+          );
+        }
+      })}</>
+                :    <>    <div className="col-sm-12 col-md-6 col-lg-6 mt-5">
                             <img src="/homeBg.jpg" className='img-fluid' alt="" />
                         </div>
                         <div className="col-sm-12 col-md-6 col-lg-6 mt-5">
@@ -91,7 +113,7 @@ const GalleryDetail = () => {
                         </div>
                         <div className="col-sm-12 col-md-6 col-lg-6 mt-5">
                             <img src="/homeBg.jpg" className='img-fluid' alt="" />
-                        </div>
+                        </div></>}
                     </div>
 
                     <div className="container mt-5">
@@ -110,9 +132,10 @@ const GalleryDetail = () => {
                         <br />
                         <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Accusamus laboriosam atque amet porro facere perferendis cupiditate obcaecati recusandae maiores architecto minima, quos aperiam, incidunt similique modi dolore quibusdam ullam itaque.</p>
 
-                      </>}
-
-                        <p className="text-center"><button className='heroButtonOne' onClick={handleButton}>Book Now</button></p>
+                      </>} 
+                      <AddReview dorm_id={data}user_id={user}/>
+                    
+                        {/* <p className="text-center"><button className='heroButtonOne' onClick={handleButton}>Book Now</button></p> */}
 
 
                         <div className={`numberDetails ${toggleButton}`}>

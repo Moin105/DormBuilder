@@ -20,7 +20,7 @@ const Gallery = () => {
     const token = useSelector((state) => state.token);
     const fetchData = async () => {
         try {
-            const response = await axios.get('http://backend.uni-hive.net/api/get_all_dorms', {
+           const response = await  axios.post('http://backend.uni-hive.net/api/get_all_dorms', {
 
                 headers: {
                     "Authorization":`Bearer ${token}`  },
@@ -40,19 +40,27 @@ const Gallery = () => {
 
  console.log(memoizedData)
  const [searchTerm, setSearchTerm] = useState("");
+ const [selectedBedrooms, setSelectedBedrooms] = useState('');
 
+ const handleBedroomsChange = (event) => {
+    setSelectedBedrooms(event.target.value);
+  };
   const handleInputChange = (event) => {
     setSearchTerm(event.target.value);
+  };
+  const handleClearFilters = () => {
+    setSearchTerm('');
+    setSelectedBedrooms('');
   };
 
   const filteredData = useMemo(
     () =>
       memoizedData.filter((item) =>
-      item.dorm_id?.toString().includes(searchTerm)
-  
-      // item?.id?.includes(searchTerm.toLowerCase())
+        item.dorm_id?.toString().includes(searchTerm) &&
+        (selectedBedrooms == '' ||
+          item.rooms == parseInt(selectedBedrooms))
       ),
-    [searchTerm, memoizedData]
+    [searchTerm, selectedBedrooms, memoizedData]
   );
   console.log("filteredData", filteredData);
     return (
@@ -87,32 +95,42 @@ const Gallery = () => {
                     <h2>The Comfort of your <span className='link'>Home</span></h2>
 
                     <div className="row d-flex align-items-center">
-                        <div className="col-lg-4">
+                        {/* <div className="col-lg-4">
                             <Form.Check
                                 inline
                                 label="Single Room"
                                 type="radio"
                             />
 
-                        </div>
+                        </div> */}
                         <div className="col-lg-4">
-                            <Form.Check
-                                inline
-                                label="Double Room"
-                                type="radio"
-                            />
+                        <Form.Check
+            inline
+            label="1 Room"
+            type="radio"
+            name="bedrooms"
+            value="1"
+            checked={selectedBedrooms === '1'}
+            onChange={handleBedroomsChange}
+          />
 
                         </div>
                         <div className="col-lg-4">
-                            <Form.Check
-                                inline
-                                label="Suit"
-                                type="radio"
-                            />
+                        <Form.Check
+            inline
+            label="2 Rooms"
+            type="radio"
+            name="bedrooms"
+            value="2"
+            checked={selectedBedrooms === '2'}
+            onChange={handleBedroomsChange}
+          />
 
                         </div>
                     </div>
-
+                {selectedBedrooms  !== "" && <button className='signuma' variant="primary" onClick={handleClearFilters}>
+        Clear Filters
+      </button>}
                 </div>
                 <Carousel fade className='carouselMain'>
                     <Carousel.Item>
@@ -161,28 +179,29 @@ const Gallery = () => {
                     </div>
 
                     <div className="dormfilters">
-                        <div className="dormfilter">
+                        {/* <div className="dormfilter">
                             <Form.Select className='filterSelect' aria-label="Default select example">
                                 <option>Filter</option>
                                 <option value="1">One</option>
                                 <option value="2">Two</option>
                                 <option value="3">Three</option>
                             </Form.Select>
-                        </div>
+                        </div> */}
                     </div>
 
 
                     <div className="row ">
                     {filteredData.length > 0  ?filteredData.map((dorm) => {
                         return (
-                            <div className="col-sm-12 col-md-6 col-lg-4 dormGalleryCards" style={{display:"flex"}} onClick={() => handleRouteChange(`/student/dorm-show/${dorm.dorm_id}`,dorm.dorm_id) }>
+                            <div className="col-sm-12 col-md-6 col-lg-4 dormGalleryCards" style={{display:"flex"}} onClick={() => handleRouteChange(`/student/dorm-show/${dorm.id}`,dorm.id) }>
                             <div className="card text-left">
 
                                 <div className="galleryCardImg">
                                     <span className="editIcon">
                                         <BiEdit />
                                     </span>
-                                    <img className="card-img-top" src="./homeBg.jpg" alt="" />
+                                 {dorm?.dorm_images[0]?.image_url ?   <img className="card-img-top" src={`http://backend.uni-hive.net/storage/${dorm?.dorm_images[0]?.image_url}`} alt="" />:<img className="card-img-top" src="./homeBg.jpg" alt="" />
+}
                                     <div className="rating">
 
                                         <div className="ratingStar">
@@ -211,7 +230,7 @@ const Gallery = () => {
 
 
                                 <div className="card-body">
-                                    <div  className="card-title">{dorm?.user_dorm[0]?.username}DORM</div>
+                                    <div  className="card-title">{dorm?.dorm_id}</div>
                                     <p className="card-text">{dorm?.description}</p>
 
                                     <div className="cardBottom">

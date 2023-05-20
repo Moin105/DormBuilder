@@ -11,6 +11,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Footer from "../../utils/Footer/Footer";
 import Form from "react-bootstrap/Form";
 import UserContext from "../../../Context";
+// import { Toast } from "react-toastify/dist/components";
 import { useSelector } from "react-redux";
 import Cookies from "js-cookie";
 const AddDorm = () => {
@@ -18,6 +19,8 @@ const AddDorm = () => {
   const [showModal, setShowModal] = useState(false);
   const [save,setSaved] = useState("Save")
   const [status ,setStatus] = useState({});
+  const [selectedOption, setSelectedOption] = useState('1');
+
   const [errors, setErrors] = useState([]);
   const token = useSelector((state) => state.token);
   const [images, setImages] = useState([]);
@@ -69,22 +72,26 @@ const AddDorm = () => {
 // }
 
   // const [image, setImage] = useState(null);
-  const postData = async (url, data, token, image) => {
+  const postData = async (url, data, token, image,bedrooms) => {
 
     setIsLoading(true);
     const formData = new FormData();
     formData.append("id", data.id);
     formData.append("description", data.description);
-    formData.append("image", image);
+    formData.append("bedrooms", bedrooms);
+    // formData.append("images", image);
+    images.forEach((item, index) => {
+      formData.append(`images[${index}]`, item.file);
+    });
     formData.append("rent_details", data.rent_details);
     console.log(data, formData, image);
 
 
 
     try {
-      const response = await axios.post(url, data, {
+      const response = await axios.post(url, formData, {
         headers: {
-          //   "Content-Type": "multipart/form-data",
+            "Content-Type": "multipart/form-data",
           Authorization: `Bearer ${token}`,
         },
       });
@@ -106,66 +113,45 @@ const AddDorm = () => {
       setIsLoading(false);
     }
   };
-  // const handleImageChange = async (event, name) => {
-  //   const imageFile = event.target.files[0];
 
-  //   const options = {
-  //     maxSizeMB: 1,
-  //     maxWidthOrHeight: 1920,
-  //     useWebWorker: true,
-  //   };
-
-  //   try {
-  //     const compressedImage = await imageCompression(imageFile, options);
-  //     console.log(`Compressed ${name} image:`, compressedImage);
-  //     if (name === "image") {
-  //       // setImage((prevState) => {
-  //       //   prevState = compressedImage;
-  //       //   return prevState;
-  //       // });
-  //       setImages(prevImages => [...prevImages, compressedImage]);
-
-  //     }
-  //     // Upload the compressed image to the server or save it to the state
-  //     // ...
-  //   } catch (error) {
-  //     console.error(`Error compressing ${name} image:`, error);
-  //   }
-  // };
-  const handleImageChange = async (event, name) => {
-    const file = event.target.files[0];
-  
-    const options = {
-      maxSizeMB: 1,
-      maxWidthOrHeight: 1920,
-      useWebWorker: true,
-    };
-  
-    try {
-      let compressedFile = null;
-  
-      if (file.type.startsWith("image/")) {
-        // Compress image files
-        compressedFile = await imageCompression(file, options);
-      } else if (file.type.startsWith("video/")) {
-        // Handle video files (no compression needed)
-        compressedFile = file;
-      } else {
-        console.error("Invalid file type");
-        return;
-      }
-  
-      console.log(`Compressed ${name}:`, compressedFile);
-  
-      // Upload the compressed file to the server or save it to the state
-      // ...
-  
-      setImages(prevImages => [...prevImages, compressedFile]);
-    } catch (error) {
-      console.error(`Error compressing ${name}:`, error);
-    }
+  const handleOptionChange = (event) => {
+    setSelectedOption(event.target.value);
   };
-  
+
+  const handleImageChange = async (event, name) => {
+  const file = event.target.files[0];
+
+  const options = {
+    maxSizeMB: 1,
+    maxWidthOrHeight: 1920,
+    useWebWorker: true,
+  };
+
+  try {
+    let compressedFile = null;
+
+    if (file.type.startsWith('image/')) {
+      // Compress image files
+      compressedFile = await imageCompression(file, options);
+    } else if (file.type.startsWith('video/')) {
+      // Handle video files (no compression needed)
+      compressedFile = file;
+    } else {
+      console.error('Invalid file type');
+      return;
+    }
+
+    console.log(`Compressed ${name}:`, compressedFile);
+
+    // Upload the compressed file to the server or save it to the state
+    // ...
+
+    setImages((prevImages) => [...prevImages, { name, file: compressedFile }]);
+  } catch (error) {
+    console.error(`Error compressing ${name}:`, error);
+  }
+};
+
   const handleRemoveImage = (index) => {
     setImages(prevImages => prevImages.filter((_, i) => i !== index)); 
   };
@@ -176,6 +162,7 @@ const AddDorm = () => {
     formDatas.append("description", formData.description);
     formDatas.append("image", images);
     formDatas.append("rent_details", formData.rent_details);
+    // formData.append("bedrooms", selectedOption);
     console.log( formDatas, images);
     console.log(formData);
     const newErrors = validateForm(formData, images);
@@ -186,7 +173,7 @@ const AddDorm = () => {
       console.log("first error", errors)
         // setErrors(newErrors);
     } else {
-        postData("http://backend.uni-hive.net/api/add_new_dorm",formData,token,image);
+        postData("http://backend.uni-hive.net/api/add_new_dorm",formData,token,images,selectedOption);
         setErrors([]); // clear errors after successful submission
     }
     // postData(
@@ -262,19 +249,59 @@ const AddDorm = () => {
               </div>
             </div>
            <div className="images-gallery">
-            {images?.map((img, index) => (
+            {/* {images?.map((img, index) => (
       <div key={index}  className="figure">
-        <img src={URL.createObjectURL(img)} alt="" />
+        <img src={URL.createObjectURL(img?.image|| img?.video)} alt="" />
         <button className="remove" onClick={() => handleRemoveImage(index)}><MdClose/></button>
       </div>
-    ))}
-            
+    ))} */}
+              {images?.map((item, index) => (
+      <div key={index} className="figure">
+        {item.name === 'image' && (
+          <img src={URL.createObjectURL(item.file)} alt={`Image ${index}`} />
+        )}
+        {item.name === 'video' && (
+          <video controls >
+            <source src={URL.createObjectURL(item.file)} type={item.file.type} />
+          </video>
+        )}
+        </div>
+        ))}
             </div> 
             <div className="radioSelect">
               <h5>Choose The Type Of Room</h5>
 
-              <div className="row">
-                <div className="col-lg-6">
+              <div className="row" style={{display:"flex"}}>
+           <div className="col-lg-6" style={{width:"45%"}}>
+          <input
+            type="radio"
+            value="1"
+            checked={selectedOption == '1'}
+            onChange={handleOptionChange}
+          />
+          Single Room 1:
+        </div>
+        <div className="col-lg-6" style={{width:"45%"}}>
+          <input
+            type="radio"
+            value="2"
+            checked={selectedOption == '2'}
+            onChange={handleOptionChange}
+          />
+          Double Room 2:
+        </div>
+     {/* <div className="col-lg-6">
+:
+          <input
+            type="radio"
+            value="3"
+            checked={selectedOption === 'option3'}
+            onChange={handleOptionChange}
+          />
+        </div> */}
+        {/* <input type="submit" value="Submit" /> */}
+      
+                {/* <div className="col-lg-6">
                   <Form.Check inline label="Single Room" type="radio" />
                 </div>
                 <div className="col">
@@ -282,7 +309,7 @@ const AddDorm = () => {
                 </div>
                 <div className="col">
                   <Form.Check inline label="Single Room" type="radio" />
-                </div>
+                </div> */}
               </div>
             </div>
 

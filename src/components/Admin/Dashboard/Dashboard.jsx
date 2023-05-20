@@ -11,7 +11,6 @@ import { logout } from '../../../redux/slices/authSlice';
 import Cookies from 'js-cookie';
 import { Button, Container, Card } from 'react-bootstrap';
 const Dashboard = () => {
-    // const token = localStorage.getItem("token");
     const dispatch = useDispatch()
     const token = useSelector((state) => state.token);
     const [datas, setDatas] = useState([]);
@@ -23,24 +22,24 @@ const Dashboard = () => {
         // Clear auth state in Redux
         dispatch(logout());
       };
-    const fetchDatas = async () => {
-        try {
-            const response = await axios.get('http://backend.uni-hive.net/api/get_all_blogs', {
+    // const fetchDatas = async () => {
+    //     try {
+    //         const response = await axios.get('http://backend.uni-hive.net/api/get_all_blogs', {
 
-                headers: {
-                    "Authorization": `Bearer ${token}` }
-            });
-             setDatas(response.data);
-            console.log(datas);
-        } catch (error) {
-            console.error(error);
-        }
-    };
-    useEffect(() => {
+    //             headers: {
+    //                 "Authorization": `Bearer ${token}` }
+    //         });
+    //          setDatas(response.data);
+    //         console.log(datas);
+    //     } catch (error) {
+    //         console.error(error);
+    //     }
+    // };
+    // useEffect(() => {
     
-        fetchDatas();
-    }, []);
-    const memoizedDatas = useMemo(() => datas, [datas]);
+    //     fetchDatas();
+    // }, []);
+    // const memoizedDatas = useMemo(() => datas, [datas]);
 
 
     // useEffect(() => {
@@ -74,7 +73,7 @@ const Dashboard = () => {
                 <Card.Title className="display-4"><h1>Welcome Back!</h1></Card.Title>
                 <Card.Text><p className="link">This is your Dashboard, you can navigate from here.</p></Card.Text>
             </Card>
-                        <div className="col-sm-12 col-md-6 col-lg-6 p-5 dashboardButtons d-flex flex-column justify-content-around">
+                        <div style={{margin:"0 auto"}} className="col-sm-12 col-md-6 col-lg-6 p-5 dashboardButtons d-flex flex-column justify-content-around">
 {/* /admin/manage-blogs */}
          
                             <Link style={{margin:"0 auto"}} to='/admin/add-dorm'><Button className="dashboardBtn"> Add New Dorm</Button></Link> <br />

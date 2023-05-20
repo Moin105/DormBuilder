@@ -13,7 +13,7 @@ import Dashboard from "./components/Admin/Dashboard/Dashboard";
 import AddDorm from "./components/Admin/AddDorm/AddDorm";
 
 import 'react-toastify/dist/ReactToastify.css';
-
+import axios from "axios";
 import EditDorm from "./components/Admin/AddDorm/EditDorm";
 import ManageBlogs from "./components/Admin/ManageStudents/ManageBlogs";
 import AddBlog from "./components/Admin/AddBlog/AddBlog";
@@ -30,7 +30,30 @@ import ConfirmOTP from "./components/Auth/Login/ConfirmOtp";
 import ManageDorms from "./components/Admin/ManageStudents/ManageDorms";
 function App() {
   // const [user, setUser] = useState(null);
+// useEffect( async() => {
+//     // Here you can make a post request with the form data
+//     const  response = await axios.post(
+//         `http://backend.uni-hive.net/api/add_dorm_review`,
+//         {
+//             idorm_id:"formData.id",
+//             user_id:"formData.user_id",
+//             review:"formData.review",
+//             rating:"formData.rating",
+//         },
+//         {
+//           headers: {
+//             Authorization: `Bearer ${token}`,
+//           },
+//         }
+//       );
+    
+//     // if(response.status == 200){
+//     //   handleRouteChange("/admin/manage-dorms");
+//     // }
+//       console.log("wert", response.data);
 
+
+//  }, []);
   // const userRoel = "admin"
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [userRole, setUserRole] = useState("admin");
