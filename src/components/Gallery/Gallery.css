@@ -176,6 +176,22 @@
 .card .card-body{
     font-size: .9rem;
 }
+.card-img-top{
+    max-height: 196px;
+    max-width: 100%;
+    object-fit: cover;
+    min-width: 250px;
+    width: 100%;
+}
+.card-text{
+    width: 200px;
+    max-height: 20px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
 .signuma{
     padding: 5px;
     border: 1px solid #151515;
@@ -193,7 +209,7 @@
     display: block;
     overflow: hidden;
     white-space: nowrap;
-    margin-bottom: 2rem;
+    /* margin-bottom: 2rem; */
     color: #151515;
 }
 

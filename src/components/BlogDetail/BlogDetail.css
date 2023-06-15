@@ -1,4 +1,4 @@
-.blogDetailMainTitle{
+/* .blogDetailMainTitle{
     position: absolute;
     bottom: 0;
     left: 50%;
@@ -9,12 +9,31 @@
     display: flex;
     align-items: center;
     justify-content: center
+} */
+.blogDetailMainTitle{
+   
+    text-align: center;
+    font-size: 1rem;
+    
+    display: flex;
+    align-items: center;
+    justify-content: center
+} 
+.blogDetailMainTitle h1{
+    font-weight: 700;
+    text-align: justify;
+    width: 95%;
+    word-break: break-word;
 }
-
-
+li{
+    list-style-type: none;
+}
 .blogDetail{
     font-size: .9rem;
 }
 .blogDetail .container .blogSecondImage img{
     object-fit: contain;
+}
+.blogDetail p{
+word-wrap: break-word;
 }

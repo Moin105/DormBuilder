@@ -9,13 +9,19 @@ import { useDispatch } from 'react-redux';
 import { login } from '../../../redux/slices/authSlice';
 // import { / } from 'react';
 import UserContext from '../../../Context';
+import { Spinner } from 'react-bootstrap';
 import Footer from '../../utils/Footer/Footer';
+
+import { ToastContainer, toast } from 'react-toastify';
+import Header from '../../Header/Header';
+
 // import { useDispatch } from 'react-redux'; 
 
 const Register = () => {
     const navigate = useNavigate()
     const dispatch = useDispatch();
-
+    const [save,setSaved] = useState("Sign In")
+    const [isLoading, setIsLoading] = useState(false);
     // const dispatch = useDispatch();
     const [formData, setFormData] = useState({
         name: '',
@@ -66,9 +72,13 @@ const Register = () => {
 
                 // Set the cookie
                 // Cookies.set('user', userStr);
+                toast.success('Form submitted successfully!', {
+                  position: toast.POSITION.TOP_CENTER,
+                  toastClassName: "custom-toast",
+                });
 
                 if(role === "student"){
-                    handleRouteChange('/student-dashboard',user)
+                    handleRouteChange('/blogs',user)
                 }else if (role === "admin"){
                     handleRouteChange('/admin/dashboard')
                 }
@@ -79,11 +89,17 @@ const Register = () => {
           // Handle success response here
         } catch (error) {
           console.error('API error:', error);
+          toast.error('Failed to submit the form. Please try again.', {
+            position: toast.POSITION.TOP_CENTER,
+            toastClassName: "custom-toast",
+          });
+          setIsLoading(false);
           // Handle error response here
         }
       };
 const handleSubmit = async (event) => {
     event.preventDefault();
+    setIsLoading(true);
   
   const data = {
     password: formData.password,
@@ -91,19 +107,26 @@ const handleSubmit = async (event) => {
     name: formData.name,
     username: formData.username,
   };
-  
+  if (!formData.email || !formData.password || !formData.name || !formData.username) {
+    toast.error('Please fill in all the required fields.', {
+      position: toast.POSITION.TOP_CENTER,
+      toastClassName: "custom-toast",
+    });
+    setIsLoading(false);
+    return;
+  } else{
   console.log("data",formData)  
- postData("http://backend.uni-hive.net/api/user_register",data)
-
+ postData("https://backend.uni-hive.net/api/user_register",data)
+}
  
   };    return (
         <>
         
-        <div className="LoginNavbar">
+        {/* <div className="LoginNavbar">
             <h5>United Dorms</h5>
-        </div>
+        </div> */}
         
-
+<Header/>
         <div className="loginForm">
             <h5>Sign in to continue</h5>
 
@@ -116,16 +139,16 @@ const handleSubmit = async (event) => {
                 <span><RiUser3Fill/></span>
                 <input onChange={(e)=>{handleInputChange(e)}} name="name" type="text" placeholder="Enter your full name" />
             </div>
-
-            <div className="loginField">
-                <span><RiUser3Fill/></span>
-                <input onChange={(e)=>{handleInputChange(e)}} name="password" type="password" placeholder="Password" />
-            </div>
-
             <div className="loginField">
                 <span><RiMailFill/></span>
                 <input onChange={(e)=>{handleInputChange(e)}} name="email" type="email" placeholder="Enter Your Email Address" />
             </div>
+
+            <div className="loginField">
+                <span><RiLockFill /></span>
+                <input onChange={(e)=>{handleInputChange(e)}} name="password" type="password" placeholder="Password" />
+            </div>
+
 
             {/* <div className="loginField">
                 <span><RiLockFill/></span>
@@ -135,7 +158,13 @@ const handleSubmit = async (event) => {
 
 
             <div className="loginBtn">
-            <button onClick={handleSubmit}  className="signInBtn">Sign Up</button>
+            <button onClick={handleSubmit}  className="signInBtn"> { isLoading ? (
+        <Spinner animation="border" role="status">
+          {/* <span className="sr-only">Loading...</span> */}
+        </Spinner>
+      ) : (
+        <> {save}</>
+      )}</button>
                 {/* <Link to="/student-dashboard" className="signInBtn">Sign In</Link> */}
             </div>
 
@@ -143,6 +172,7 @@ const handleSubmit = async (event) => {
 
         </div>
 
+        <ToastContainer />
 
         <Footer/>
         

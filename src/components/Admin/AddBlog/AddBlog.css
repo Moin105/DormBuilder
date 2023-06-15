@@ -1,8 +1,9 @@
 input {
     margin-top: 1rem;
-    font-size: 1.2rem;
+    font-size: 1rem;
     padding: 1rem;
     border-radius: 2rem;
+    max-width: 370px;
     border: 1px solid #333333;
     outline: none;
     width: 100%;
@@ -10,10 +11,26 @@ input {
 
 .input textarea {
     margin-top: 1rem;
-    font-size: 1.2rem;
+    font-size: 1rem;
     padding: 1rem;
     border-radius: 2rem;
     border: 1px solid #333333;
     outline: none;
     width: 100%;
+    max-width: 370px;
+}
+.overflowText{
+    width: 370px;
+    margin: 0 auto;
+    top: 0;
+    display: flex;
+    justify-content:space-between;
+    align-items: center;
+    right: 0;
+    position: absolute;
+    left: 0;
+    z-index: -1;
+}
+.overflowText p{
+    margin: 10px 0px;
 }

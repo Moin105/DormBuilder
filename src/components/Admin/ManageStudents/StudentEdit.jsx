@@ -1,5 +1,5 @@
 import React, { useMemo, useContext, useEffect, useState } from "react";
-import logout from "../AddDorm/assets/logout.png";
+import logouts from "../AddDorm/assets/logout.png";
 // import images from '../AddDorm/assets/image.png';
 import images from "../AddDorm/assets/image.png";
 import imageCompression from "browser-image-compression";
@@ -10,10 +10,16 @@ import { Link, useLocation,useNavigate } from "react-router-dom";
 import Footer from "../../utils/Footer/Footer";
 import Form from "react-bootstrap/Form";
 import UserContext from "../../../Context";
-import { useSelector } from "react-redux";
+import { logout } from "../../../redux/slices/authSlice";
+import { useSelector,useDispatch } from "react-redux";
 function StudentEdit() {
   const location = useLocation();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const handleLogout = () => {
+      // Clear auth state in Redux
+      dispatch(logout());
+    };
   const handleRouteChange = (url, datas) => {
     navigate(url, { state: { data: datas } });
   };
@@ -40,7 +46,7 @@ function StudentEdit() {
     console.log(formData);
     // Here you can make a post request with the form data
     const response = await axios.post(
-        "http://backend.uni-hive.net/api/edit_student",
+        "https://backend.uni-hive.net/api/edit_student",
         {
             
                 username: formData.username,
@@ -65,7 +71,7 @@ function StudentEdit() {
     try {
       // Make a POST request with axios
       const response = await axios.post(
-        "http://backend.uni-hive.net/api/get_student",
+        "https://backend.uni-hive.net/api/get_student",
         {
           id: id,
         },
@@ -108,10 +114,11 @@ let last_name = parts[1];
             </Link>
           </span>
         </div>
+        <Link  to="/"> 
         <h5>United Dorms</h5>
-
-        <div className="logoutButton">
-          <img src={logout} alt="" />
+        </Link>
+        <div className="logoutButton" onClick={()=>{handleLogout();handleRouteChange("/login")}}>
+          <img src={logouts} alt="" />
         </div>
       </div>
       <div className="addBlogMain">

@@ -6,6 +6,7 @@ import { Link, useNavigate,useLocation } from 'react-router-dom';
 import Footer from '../../utils/Footer/Footer';
 import axios from 'axios';
 import Cookies from 'js-cookie';
+import Header from '../../Header/Header';
 
 
 
@@ -30,10 +31,7 @@ const [show,setShow] = useState(false);
       }
 
     const navigate = useNavigate()
-    const { user, setUser } = useContext(UserContext);
-    const updateUser = (user) => {
-        setUser(user);
-      };
+  
 useEffect(() => {
     console.log("maa ka bharosa",data)
  if(data){
@@ -45,7 +43,7 @@ const [confirmPassword, setConfirmPassword] = useState('');
 const resetPassword = async (e,email, password, confirmPassword) => {
      e.preventDefault();
     try {
-      const response = await axios.post('http://3.84.54.19/api/reset_password', {
+      const response = await axios.post('https://backend.uni-hive.net/api/reset_password', {
         email: email,
         password: password,
         confirm_password: confirmPassword
@@ -53,7 +51,7 @@ const resetPassword = async (e,email, password, confirmPassword) => {
   
       // Handle success
       console.log(response.data);
-      if(response.status == 200){
+      if(response.data.status == 200){
         handleRouteChange('/login')
       }
     } catch (error) {
@@ -71,14 +69,12 @@ const resetPassword = async (e,email, password, confirmPassword) => {
 
     
             try {
-                await axios.post('http://backend.uni-hive.net/api/match_otp', data)
+                await axios.post('https://backend.uni-hive.net/api/match_otp', data)
                     .then(response => {
                         setResponseData(response.data);
                         console.log(response);
-                        if(response.status == 200){
-                           setShowForm(true)
-                        
-                  
+                        if(response.data.status == 200 && response.data.message === "otp verified successfully"){
+                           setShowForm(true)                        
                              } else{
                                 setShowForm(false)
                                     setShow(true)
@@ -100,10 +96,7 @@ const resetPassword = async (e,email, password, confirmPassword) => {
     return (
         <>
 
-            <div className="LoginNavbar">
-                <h5>United Dorms</h5>
-            </div>
-
+          <Header/>
 {showForm ? <>
     <form  className="loginForm">
     <div className="loginField">
@@ -112,12 +105,12 @@ const resetPassword = async (e,email, password, confirmPassword) => {
       </div>
 
       <div className="loginField">
-                    <span><RiMailFill /></span>
+                    <span><RiLockFill /></span>
         <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
       </div>
 
       <div className="loginField">
-                    <span><RiMailFill /></span>
+                    <span><RiLockFill /></span>
         <input type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} required />
       </div>
       <div className="loginBtn">

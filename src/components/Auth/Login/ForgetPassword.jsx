@@ -6,7 +6,9 @@ import { Link, useNavigate,useLocation } from 'react-router-dom';
 import Footer from '../../utils/Footer/Footer';
 import axios from 'axios';
 import Cookies from 'js-cookie';
+// import { toast } from 'react-toastify';
 
+import { ToastContainer, toast } from 'react-toastify';
 
 
 const ForgetPassword = () => {
@@ -34,10 +36,7 @@ const ForgetPassword = () => {
     }
 
     const navigate = useNavigate()
-    const { user, setUser } = useContext(UserContext);
-    const updateUser = (user) => {
-        setUser(user);
-      };
+     
 
 
     const handleLogin = async () => {
@@ -45,38 +44,53 @@ const ForgetPassword = () => {
         let data = {
             email:email
         }
-
-    
+if(email == ""){
+    console.log("sa")
+    toast.error("Please enter email", {
+        position: toast.POSITION.TOP_CENTER,
+        toastClassName: "custom-toast",
+      })
+}
+    else {
             try {
-                await axios.post('http://backend.uni-hive.net/api/forgot_password', data)
+                await axios.post('https://backend.uni-hive.net/api/forgot_password', data)
                     .then(response => {
                         setResponseData(response.data);
                         console.log(responseData);
-                        if(response.data.status == 200){
+                        if(response.data.status == 200){ 
                             const  {token,role} = response.data;
                             handleRouteChange('/otp',{email:email})
                         
                   
+                             }else{
+                                handleRouteChange('/otp',{email:email})
+                                // toast.error(response.data.message)  
                              }
                         // navigate('/')
                         
 
                     })
                     .catch(error => {
-                        window.alert(error.message);
+                        toast.error("Please enter email", {
+                            position: toast.POSITION.TOP_CENTER,
+                            toastClassName: "custom-toast",
+                          })
+                        // window.alert(error.message);
                     });
             } catch (error) {
                 window.alert(error.message);
         }
 
-
+    }
     }
 
     return (
         <>
 
             <div className="LoginNavbar">
-                <h5>United Dorms</h5>
+            <Link  to="/"> 
+        <h5>United Dorms</h5>
+        </Link>
             </div>
 
 
@@ -97,7 +111,7 @@ const ForgetPassword = () => {
 
             </div>
 
-
+            <ToastContainer />
             <Footer />
 
         </>

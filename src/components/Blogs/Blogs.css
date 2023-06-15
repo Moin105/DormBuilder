@@ -11,8 +11,21 @@
 .mainBlog{
     margin-top: 5rem;
 }
-
-
+.blogs .blogCard .blogCardImg{    position: relative;
+    align-items: center;
+    display: flex;
+    margin-bottom: 2rem;
+}
+.blogs .blogCard .blogCardContent h5{
+    text-overflow: ellipsis;
+    height: 33px;
+    overflow: hidden;
+    font-size: 1.3rem;
+    line-height: 1.8rem;
+    width: 200px;
+    font-weight: 700;
+    overflow: hidden;
+}
 .mainBlogsCard{
     display: flex;
     gap: 2rem;
@@ -20,7 +33,12 @@
     padding-bottom: 2rem;
     margin-top: 2rem;
 }
-
+.img-fluid{
+    width: 100%;
+    margin: 0 auto;
+    height: 145px;
+    object-fit: cover;
+}
 .mainBlogsCard img{
     width: 500px;
 }

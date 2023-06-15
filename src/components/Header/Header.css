@@ -78,7 +78,7 @@
 
 .navLinks{
     /* margin-left: 10rem; */
-    margin: 0 auto;
+    margin: 0px 0px 0px auto !important;
     color: #fff;
 }
 .navButton{
@@ -115,4 +115,13 @@
     bottom: -25%;
     left: 50%;
     transform: translate(-100%, -100%);
+}
+@media (max-width: 999px) {
+    .navLinks {
+        margin: 0 auto !important;
+        /* Insert your CSS styles here. */
+    }
+    .navLinks a{
+        margin: 0 auto !important;
+    }
 }

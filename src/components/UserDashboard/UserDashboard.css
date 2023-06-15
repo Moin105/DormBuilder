@@ -20,7 +20,10 @@
     font-weight: 700;
     /* margin: 0 !important; */
 }
-
+.LoginNavbar a{
+    color: white !important;
+    text-decoration: none !important;
+}
 
 
 .studentInfoTable{
@@ -43,8 +46,13 @@
     float: right;
     text-align: center;
     font-size: 2rem;
+    display: flex;
+    align-items: center;
 }
-
+.studentInfoTable .studentTableTop .editIcon p{
+    font-size: 15px;
+    margin: 0px 10px 0px 0px;
+}
 .studentInfoTable .studentInfoName h6{
     border-top: 1px solid #393939;
     padding: 1rem;

@@ -12,9 +12,19 @@ const authSlice = createSlice({
   initialState,
   reducers: {
       login(state, action) {
-      state.token = action.payload.token;
-      state.role = action.payload.role;
-      state.user = action.payload.user;
+        console.log("darasal",action.payload)
+        if (action.payload.token) {
+          state.token = action.payload.token;
+      }
+      if (action.payload.role) {
+          state.role = action.payload.role;
+      }
+      if (action.payload.user ) {
+          state.user = action.payload.user;
+      }
+      if(action.payload.student){
+        state.user = action.payload.student;
+      }
     },
     logout(state) {
       state.token = null;

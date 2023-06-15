@@ -9,6 +9,7 @@ import Footer from '../utils/Footer/Footer';
 import why4 from './assets/why4.jpg';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
+import Header from '../Header/Header';
 
 const Blogs = () => {
     const navigate = useNavigate();
@@ -17,10 +18,11 @@ const Blogs = () => {
       };
     const [data, setData] = useState([]);
     // const token = localStorage.getItem("token");
+    const role = useSelector((state) => state.role);
     const token = useSelector((state) => state.token);
     const fetchData = async () => {
         try {
-            const response = await axios.get('http://backend.uni-hive.net/api/get_all_blogs', {
+            const response = await axios.get('https://backend.uni-hive.net/api/get_all_blogs', {
 
                 headers: {
                     "Authorization": `Bearer ${token}`},
@@ -43,12 +45,23 @@ const Blogs = () => {
     // }, []);
     console.log("memoizedData", memoizedData);
 
-
+const handleBlogDetails = (id)=>{
+    if (!token){
+   return     handleRouteChange(`/blog-detail/${id}`,id)
+    }else if(token){
+        if (role == "student"){
+       return     handleRouteChange(`/student/blog-detail/${id}`,id)
+        }
+        else if (role == "admin"){
+         return   handleRouteChange(`/admin/blog-detail/${id}`,id)
+        }
+    }
+}
 
     return (
         <>
             {/* NAVBAR */}
-            <Navbar expand="lg" className="navbar">
+            {/* <Navbar expand="lg" className="navbar">
                 <Container>
                     <Navbar.Brand><Link className='navLogo'>United Dorms</Link> </Navbar.Brand>
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -56,7 +69,7 @@ const Blogs = () => {
                         <Nav className="me-auto navLinks">
                             <Nav.Link className="navLink "><Link className="navText" to="/">Home</Link></Nav.Link>
 
-                            <Nav.Link className="navLink"><Link className="navText" to="/gallery">Gallery</Link></Nav.Link>
+                            <Nav.Link className="navLink"><Link className="navText" to="/dorm">Dorms</Link></Nav.Link>
 
                             <Nav.Link className="navLink"><Link className="navText" to="/">Testimonials</Link></Nav.Link>
                             <Nav.Link className="navLink"><Link className="navText" to="/">About</Link></Nav.Link>
@@ -66,10 +79,10 @@ const Blogs = () => {
                         </Nav>
                     </Navbar.Collapse>
                 </Container>
-            </Navbar>
+            </Navbar> */}
 
 
-
+<Header/>
 
             {/* BLOGS */}
 
@@ -81,23 +94,39 @@ const Blogs = () => {
 
                     <div className="row">
       {memoizedData.map((item, index) => {
-   return      <div key={index} className="col-sm-12 col-md-6 col-lg-4" onClick={() => handleRouteChange(`/student/blog-detail/${item.id}`,item.id) }>
+   return      <div key={index} onClick={()=>{handleBlogDetails(item.id)}}  className="col-sm-12 col-md-6 col-lg-4" >
          <div className="blogCard">
              <div className="blogCardImg">
-                 <span className="blogCardBadge">Student</span>
-                 <img src={` http://backend.uni-hive.net/storage/${item.featured_image_url}`}className="img-fluid" alt="" />
+                 {/* <span className="blogCardBadge">Student</span> */}
+                 <img src={` https://backend.uni-hive.net/storage/${item.featured_image_url}`}className="img-fluid" alt="" />
              </div>
              <div className="blogCardContent">
-                 <Link className="cardLink" to="/blog-detail"> <h5>{item.title}</h5></Link>
+                 <Link className="cardLink" > <h5>{item.title}</h5></Link>
 
-                 <div className="contentBottom">
-                     <p>7 mins read - September 20</p>
-                     <div className="cardIcon">
-                         <span >
-                             <FiArrowRight className="icon" />
-                         </span>
-                     </div>
-                 </div>
+                 { !token &&   <div className="contentBottom" onClick={() => handleRouteChange(`/blog-detail/${item.id}`,item.id) }>
+                                                {/* <p>7 mins read - September 20</p> */}
+                                                <div className="cardIcon">
+                                                    <span >
+                                                        <FiArrowRight className="icon" />
+                                                    </span>
+                                                </div>
+                                            </div>}
+                                            { token && role == "admin"   &&   <div className="contentBottom" onClick={() => handleRouteChange(`/admin/blog-detail/${item.id}`,item.id)}>
+                                                {/* <p>7 mins read - September 20</p> */}
+                                                <div className="cardIcon">
+                                                    <span >
+                                                        <FiArrowRight className="icon" />
+                                                    </span>
+                                                </div>
+                                            </div>}
+                                            {token && role=="student"   && <div className="contentBottom" onClick={() => handleRouteChange(`/student/blog-detail/${item.id}`,item.id) }>
+                                                {/* <p>7 mins read - September 20</p> */}
+                                                <div className="cardIcon">
+                                                    <span >
+                                                        <FiArrowRight className="icon" />
+                                                    </span>
+                                                </div>
+                                            </div>}
              </div>
 
 
@@ -174,16 +203,16 @@ const Blogs = () => {
 
                     </div>
                     
-                    <div className="customButton">
+             {memoizedData.length> 12  &&     <div className="customButton">
                     <button className="btn btn-custom">View More</button>
-                    </div>
+                    </div>}
 
                 </div>
             </section>
 
 
             {/* Main Blog */}
-            <section className="mainBlog">
+            {/* <section className="mainBlog">
                 <div className="container">
                     <div className="mainBlogsCards">
 
@@ -232,7 +261,7 @@ const Blogs = () => {
                     </div>
 
                 </div>
-            </section>
+            </section> */}
 
 
 

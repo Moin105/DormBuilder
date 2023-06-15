@@ -1,6 +1,6 @@
 // import React from 'react'
 import React,{useMemo, useContext, useEffect,useState} from 'react';
-import logout from '../AddDorm/assets/logout.png';
+import logouts from '../AddDorm/assets/logout.png';
 // import images from '../AddDorm/assets/image.png';
 import images from '../AddDorm/assets/image.png'
 import imageCompression from 'browser-image-compression';
@@ -12,13 +12,18 @@ import Footer from '../../utils/Footer/Footer';
 import Form from 'react-bootstrap/Form';
 import UserContext from '../../../Context';
 import Cookies from 'js-cookie';
-import { useSelector } from 'react-redux';
-
+import { useSelector,useDispatch } from 'react-redux';
+import { logout } from '../../../redux/slices/authSlice';
 function ManageStudents() {
     const [isModalOpen, setModalOpen] = useState(false);
     const [userToDelete, setUserToDelete] = useState(null);
     const token = useSelector((state) => state.token); 
     const [role, setRole] = useState(null);
+    const dispatch = useDispatch();
+    const handleLogout = () => {
+        // Clear auth state in Redux
+        dispatch(logout());
+      };
     const navigate = useNavigate();
     const openModal = (userId,role) => {
         setUserToDelete(userId)
@@ -64,7 +69,7 @@ function ManageStudents() {
     
         try {
             // Make a POST request with axios
-            const response = await axios.post('http://backend.uni-hive.net/api/delete_blog_post', {
+            const response = await axios.post('https://backend.uni-hive.net/api/delete_blog_post', {
 
             blog_id: id
             },
@@ -108,7 +113,7 @@ function ManageStudents() {
     }
     const fetchDatas = async () => {
         try {
-            const response = await axios.get('http://backend.uni-hive.net/api/get_all_blogs', {
+            const response = await axios.get('https://backend.uni-hive.net/api/get_all_blogs', {
 
                 headers: {
                     "Authorization": `Bearer ${token}` }
@@ -133,10 +138,12 @@ function ManageStudents() {
                 <div className="backBtn float-start" >
                     <span ><Link className="backIcon" to="/admin/dashboard"><MdKeyboardBackspace /></Link></span>
                 </div>
-                <h5>United Dorms</h5>
+                <Link  to="/"> 
+        <h5>United Dorms</h5>
+        </Link>
 
-                <div className="logoutButton" onClick={()=> removeKeys}>
-                    <img src={logout} alt="" />
+                <div className="logoutButton" onClick={()=>{handleLogout();handleRouteChange("/login")}}>
+                    <img src={logouts} alt="" />
                 </div>
             </div> 
             <div className="addBlogMain">

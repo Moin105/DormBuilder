@@ -1,5 +1,5 @@
 import React,{useContext, useEffect,useState} from 'react';
-import logout from './assets/logout.png';
+import logouts from './assets/logout.png';
 import images from './assets/image.png';
 import imageCompression from 'browser-image-compression';
 import './AddDorm.css'
@@ -10,10 +10,16 @@ import Footer from '../../utils/Footer/Footer';
 import Form from 'react-bootstrap/Form';
 import UserContext from '../../../Context';
 import Cookies from 'js-cookie';
-import { useSelector } from 'react-redux';
+import { logout } from '../../../redux/slices/authSlice';
+import { useSelector,useDispatch } from 'react-redux';
 const EditDorm = () => {
     const location = useLocation();
     const data = location.state ? location.state.data : null;
+    const dispatch = useDispatch();
+    const handleLogout = () => {
+        // Clear auth state in Redux
+        dispatch(logout());
+      };
     // const { user, setUser } = useContext(UserContext);
     // const updateUser = (user) => {
     //     setUser(user);
@@ -58,7 +64,7 @@ const EditDorm = () => {
             console.log(formData);
             // Here you can make a post request with the form data
             const response = await axios.post(
-                `http://backend.uni-hive.net/api/edit_dorm/${data}`,
+                `https://backend.uni-hive.net/api/edit_dorm/${data}`,
                 {
                     id:formData.id,
                     description: formData.description,
@@ -79,7 +85,7 @@ const EditDorm = () => {
             try {
               // Make a POST request with axios
               const response = await axios.post(
-                "http://backend.uni-hive.net/api/get_specific_dorm",
+                "https://backend.uni-hive.net/api/get_specific_dorm",
                 {
                     dorm_id: id,
                 },
@@ -93,7 +99,7 @@ const EditDorm = () => {
               console.log("wert", response.data.dorms);
         
               setFormData({
-                id:response.data.dorms.id,
+                id:response.data.dorms.dorm_id,
                 description: response.data.dorms.description,
                 rent_details: response.data.dorms.rent_details,
               });
@@ -120,10 +126,11 @@ const EditDorm = () => {
                 <div className="backBtn float-start" >
                     <span ><Link className="backIcon" to="/admin/dashboard"><MdKeyboardBackspace /></Link></span>
                 </div>
-                <h5>United Dorms</h5>
-
-                <div className="logoutButton">
-                    <img src={logout} alt="" />
+                <Link  to="/"> 
+        <h5>United Dorms</h5>
+        </Link>
+                <div className="logoutButton" onClick={()=>{handleLogout();handleRouteChange("/login")}}>
+                    <img src={logouts} alt="" />
                 </div>
             </div>
 

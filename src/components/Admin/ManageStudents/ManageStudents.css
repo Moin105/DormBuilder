@@ -24,7 +24,7 @@
 
 .inputs .input input {
     margin-top: 1rem;
-    font-size: 1.2rem;
+    font-size: 1rem;
     padding: 1rem;
     border-radius: 2rem;
     border: 1px solid #333333;
@@ -34,8 +34,9 @@
 
 .inputs .input textarea {
     margin-top: 1rem;
-    font-size: 1.2rem;
+    font-size: 1rem;
     padding: 1rem;
+    width: 379px;
     border-radius: 2rem;
     border: 1px solid #333333;
     outline: none;

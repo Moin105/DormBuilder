@@ -12,6 +12,19 @@ import { useSelector } from 'react-redux';
 
 const Gallery = () => {
     const navigate = useNavigate();
+const role = useSelector((state) => state.role);
+    const  handleDormDetails = (id)=>{
+        if(token !== null ){
+            if(role === "admin"){
+              return  handleRouteChange(`/admin/dorm-show/${id}`,id)
+            }
+             if(role === "student"){
+        return       handleRouteChange(`/student/dorm-show/${id}`,id)
+                }
+        }else{
+     return       handleRouteChange(`/dorm-show/${id}`,id)
+        }
+    }
       const handleRouteChange = (url, datas) => {
         navigate(url, { state: { data: datas } });
       };
@@ -20,7 +33,7 @@ const Gallery = () => {
     const token = useSelector((state) => state.token);
     const fetchData = async () => {
         try {
-           const response = await  axios.post('http://backend.uni-hive.net/api/get_all_dorms', {
+           const response = await  axios.post('https://backend.uni-hive.net/api/get_all_dorms', {
 
                 headers: {
                     "Authorization":`Bearer ${token}`  },
@@ -65,33 +78,14 @@ const Gallery = () => {
   console.log("filteredData", filteredData);
     return (
         <>
-            {/* NAVBAR */}
-            {/* <Navbar expand="lg" className="navbar">
-                <Container>
-                    <Navbar.Brand><Link className='navLogo'>United Dorms</Link> </Navbar.Brand>
-                    <Navbar.Toggle aria-controls="basic-navbar-nav" />
-                    <Navbar.Collapse id="basic-navbar-nav">
-                        <Nav className="me-auto navLinks">
-                            <Nav.Link className="navLink "><Link className="navText" to="/">Home</Link></Nav.Link>
-
-                            <Nav.Link className="navLink active"><Link className="navText" to="/gallery">Gallery</Link></Nav.Link>
-
-                            <Nav.Link className="navLink"><Link className="navText" to="/">Testimonials</Link></Nav.Link>
-                            <Nav.Link className="navLink"><Link className="navText" to="/">About</Link></Nav.Link>
-                            <Nav.Link className="navLink"><Link className="navText" to="/blogs">Blogs</Link></Nav.Link>
-                            <Nav.Link className="navLink"><Link className="navText" to="/student-dashboard">Profile</Link></Nav.Link>
-
-                        </Nav>
-                    </Navbar.Collapse>
-                </Container>
-            </Navbar> */}
+        
             <Header/>
             {/* GALLERY MAIN */}
 
             <section className="galleryMain">
                 <div className="carousalContent">
 
-                    <h1 className='link'>Gallery</h1>
+                    <h1 className='link'>Dorm Gallery</h1>
                     <h2>The Comfort of your <span className='link'>Home</span></h2>
 
                     <div className="row d-flex align-items-center">
@@ -106,7 +100,7 @@ const Gallery = () => {
                         <div className="col-lg-4">
                         <Form.Check
             inline
-            label="1 Room"
+            label="One Room"
             type="radio"
             name="bedrooms"
             value="1"
@@ -118,7 +112,7 @@ const Gallery = () => {
                         <div className="col-lg-4">
                         <Form.Check
             inline
-            label="2 Rooms"
+            label="Double Rooms"
             type="radio"
             name="bedrooms"
             value="2"
@@ -127,6 +121,18 @@ const Gallery = () => {
           />
 
                         </div>
+                        <div className="col-lg-4">
+                        <Form.Check
+            inline
+            label="Apartments"
+            type="radio"
+            name="bedrooms"
+            value="3"
+            checked={selectedBedrooms === '3'}
+            onChange={handleBedroomsChange}
+          />
+
+                        </div>             
                     </div>
                 {selectedBedrooms  !== "" && <button className='signuma' variant="primary" onClick={handleClearFilters}>
         Clear Filters
@@ -193,14 +199,14 @@ const Gallery = () => {
                     <div className="row ">
                     {filteredData.length > 0  ?filteredData.map((dorm) => {
                         return (
-                            <div className="col-sm-12 col-md-6 col-lg-4 dormGalleryCards" style={{display:"flex"}} onClick={() => handleRouteChange(`/student/dorm-show/${dorm.id}`,dorm.id) }>
-                            <div className="card text-left">
+                            <div className="col-sm-12 col-md-6 col-lg-4 dormGalleryCards" style={{display:"flex"}} >
+                            <div className="card text-left" style={{display:"flex",flexDirection:"column",width:"100%"}}>
 
                                 <div className="galleryCardImg">
                                     <span className="editIcon">
-                                        <BiEdit />
+                                      {role =="admin" && < BiEdit  onClick={() => handleRouteChange(`/admin/edit-dorm/${dorm.id}`,dorm.id) }/>}
                                     </span>
-                                 {dorm?.dorm_images[0]?.image_url ?   <img className="card-img-top" src={`http://backend.uni-hive.net/storage/${dorm?.dorm_images[0]?.image_url}`} alt="" />:<img className="card-img-top" src="./homeBg.jpg" alt="" />
+                                 {dorm?.dorm_images[0]?.image_url ?   <img className="card-img-top" src={`https://backend.uni-hive.net/storage/${dorm?.dorm_images[0]?.image_url}`} alt="" />:<img className="card-img-top" src="./homeBg.jpg" alt="" />
 }
                                     <div className="rating">
 
@@ -229,7 +235,7 @@ const Gallery = () => {
                                 </div>
 
 
-                                <div className="card-body">
+                                <div className="card-body" style={{cursor:"pointer"}} onClick={() => handleDormDetails(dorm.id) }>
                                     <div  className="card-title">{dorm?.dorm_id}</div>
                                     <p className="card-text">{dorm?.description}</p>
 
@@ -259,8 +265,8 @@ const Gallery = () => {
                             </div>
                         </div>
                         )
-                    }): "" }
-                        <div className="col-sm-12 col-md-6 col-lg-4 dormGalleryCards">
+                    }): "No Data found" }
+                        {/* <div className="col-sm-12 col-md-6 col-lg-4 dormGalleryCards">
                             <div className="card text-left">
 
                                 <div className="galleryCardImg">
@@ -323,7 +329,7 @@ const Gallery = () => {
 
                                 </div>
                             </div>
-                        </div>
+                        </div> */}
 
 
 

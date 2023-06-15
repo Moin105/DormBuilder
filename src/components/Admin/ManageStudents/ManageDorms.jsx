@@ -1,6 +1,6 @@
 // import React from 'react'
 import React,{useMemo, useContext, useEffect,useState} from 'react';
-import logout from '../AddDorm/assets/logout.png';
+import logouts from '../AddDorm/assets/logout.png';
 // import images from '../AddDorm/assets/image.png';
 import images from '../AddDorm/assets/image.png'
 import imageCompression from 'browser-image-compression';
@@ -9,11 +9,11 @@ import axios from 'axios';
 import { MdKeyboardBackspace, MdVerticalAlignBottom } from "react-icons/md";
 import { Link, useNavigate } from 'react-router-dom';
 import Footer from '../../utils/Footer/Footer';
-import { useSelector } from 'react-redux';
+import { useSelector,useDispatch } from 'react-redux';
 import Form from 'react-bootstrap/Form';
 import UserContext from '../../../Context';
 import Cookies from 'js-cookie';
-
+import { logout } from '../../../redux/slices/authSlice';
 function ManageDorms() {
     const [isModalOpen, setModalOpen] = useState(false);
     const [userToDelete, setUserToDelete] = useState(null);
@@ -23,7 +23,11 @@ function ManageDorms() {
         setUserToDelete(userId)
         setRole(role);
         setModalOpen(true);
-    };
+    };    const dispatch = useDispatch();
+    const handleLogout = () => {
+        // Clear auth state in Redux
+        dispatch(logout());
+      };
 
     const closeModal = () => {
         setUserToDelete(null);
@@ -38,8 +42,8 @@ const token = useSelector((state) => state.token);
     // const token = localStorage.getItem("token");
     const getData = async () => {
         try {
-          const response = await axios.get(
-            "http://backend.uni-hive.net/api/get_all_dorms",
+          const response = await axios.post(
+            "https://backend.uni-hive.net/api/get_all_dorms",
             {
               headers: {
                 Authorization: `Bearer ${token}`,
@@ -77,7 +81,7 @@ const token = useSelector((state) => state.token);
        
         try {
             // Make a POST request with axios
-            const response = await axios.post(`http://backend.uni-hive.net/api/delete_dorm/${id}`, {
+            const response = await axios.post(`https://backend.uni-hive.net/api/delete_dorm/${id}`, {
 
                 id: id
             },
@@ -128,10 +132,12 @@ const token = useSelector((state) => state.token);
                 <div className="backBtn float-start" >
                     <span ><Link className="backIcon" to="/admin/dashboard"><MdKeyboardBackspace /></Link></span>
                 </div>
-                <h5>United Dorms</h5>
+                <Link  to="/"> 
+        <h5>United Dorms</h5>
+        </Link>
 
-                <div className="logoutButton" onClick={()=> removeKeys}>
-                    <img src={logout} alt="" />
+                <div className="logoutButton" onClick={()=>{handleLogout();handleRouteChange("/login")}}>
+                    <img src={logouts} alt="" />
                 </div>
             </div>
             <div className="addBlogMain">
@@ -151,7 +157,7 @@ const token = useSelector((state) => state.token);
                 {memoizedData?.map((student,index) => (
                     <tr key={student.id}>
                         <td>{index+1}</td>
-                        <td>    {`${student.id} Dorm`} </td>
+                        <td>    {`${student.dorm_id}`} </td>
                         <td></td>
                         <td></td>
                         <td>

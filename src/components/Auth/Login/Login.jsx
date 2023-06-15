@@ -9,6 +9,8 @@ import { login } from '../../../redux/slices/authSlice';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import { toast, ToastContainer } from 'react-toastify';
+import Header from '../../Header/Header';
+import { Spinner } from 'react-bootstrap';
 
 
 
@@ -29,6 +31,8 @@ const Login = () => {
     const getPassword = (e) => {
         setPassword(e.target.value);
     }
+    const [save,setSaved] = useState("Sign In")
+    const [isLoading, setIsLoading] = useState(false);
 
     const navigate = useNavigate()
     // const { user, setUser } = useContext(UserContext);
@@ -38,29 +42,55 @@ const Login = () => {
 
 
     const handleLogin = async () => {
-      
+        setIsLoading(true);
         let data = {
             email,
             password
         }
    if(data.email == ""){
 
-       toast.error("Please enter email")
+       toast.error("Please enter email", {
+        position: toast.POSITION.TOP_CENTER,
+        toastClassName: "custom-toast",
+      })
    }else if (data.password == ""){
-    toast.error("Please enter password")
+    toast.error("Please enter password", {
+        position: toast.POSITION.TOP_CENTER,
+        toastClassName: "custom-toast",
+      })
    }else if (email !== "" && password !== ""){
         try {
-            const response = await axios.post('http://backend.uni-hive.net/api/user_login', data);
+            const response = await axios.post('https://backend.uni-hive.net/api/user_login', data);
             const responseData = response.data;
        console.log(responseData)
             if(responseData.status == 200){
+                
+
                 console.log("helllooo gee")
                 const  {token,role,user} = responseData;
                 console.log("role",role)
                 console.log("user",user)
                 console.log("token",token)
+                if(responseData.status == 200 && responseData.message == "invalid password") {
+                    toast.error("Invalid Password", {
+                        position: toast.POSITION.TOP_CENTER,
+                        toastClassName: "custom-toast",
+                      })
+                    setIsLoading(false);
+                }
+                if(responseData.status == 200 && responseData.message == 'user not found please enter the correct credentials') {
+                    toast.error("User not found", {
+                        position: toast.POSITION.TOP_CENTER,
+                        toastClassName: "custom-toast",
+                      })
+                    setIsLoading(false);
+                }
                 if(token){
                     // Dispatch login action to update token and role in redux store
+                    toast.success("Login Successfully", {
+                        position: toast.POSITION.TOP_CENTER,
+                        toastClassName: "custom-toast",
+                      })
                     dispatch(login({ token, role,user }));
     
                     // let userStr = JSON.stringify(user);
@@ -69,7 +99,7 @@ const Login = () => {
                     // Cookies.set('user', userStr);
     
                     if(role === "student"){
-                        handleRouteChange('/student-dashboard',user)
+                        handleRouteChange('/blogs',user)
                     }else if (role === "admin"){
                         handleRouteChange('/admin/dashboard')
                     }
@@ -84,32 +114,32 @@ const Login = () => {
         let data = {
             email:email
         }
-
-            await axios.post('http://backend.uni-hive.net/api/forgot_password', data)
-                .then(response => {
-                    setResponseData(response.data);
-                    if(response.data.status == 200){
-                        console.log("forget gee",response.data)
-                        // const  {token,role} = response.data;
-                        // if(token){
-                        //   Cookies.set("token",token)
-                        //   Cookies.set("role",role)
-                        //   localStorage.setItem("token",token)
-                        //   localStorage.setItem("role",role)
-                        //   updateUser(response.data)
+        handleRouteChange('/forget-password')
+            // await axios.post('https://backend.uni-hive.net/api/forgot_password', data)
+            //     .then(response => {
+            //         setResponseData(response.data);
+            //         if(response.data.status == 200){
+            //             console.log("forget gee",response.data)
+            //             // const  {token,role} = response.data;
+            //             // if(token){
+            //             //   Cookies.set("token",token)
+            //             //   Cookies.set("role",role)
+            //             //   localStorage.setItem("token",token)
+            //             //   localStorage.setItem("role",role)
+            //             //   updateUser(response.data)
                           
-                              handleRouteChange('/forget-password',email)
+                              
           
-                        //   // handleRouteChange('/')
-                        // }
+            //             //   // handleRouteChange('/')
+            //             // }
               
-                         }
-                    // navigate('/admin/dashboard')
+            //              }
+            //         // navigate('/admin/dashboard')
 
-                })
-                .catch(error => {
-                    window.alert(error.message);
-                });
+            //     })
+            //     .catch(error => {
+            //         window.alert(error.message);
+            //     });
         
 
 
@@ -117,9 +147,10 @@ const Login = () => {
     return (
         <>
 
-            <div className="LoginNavbar">
+            {/* <div className="LoginNavbar">
                 <h5>United Dorms</h5>
-            </div>
+            </div> */}
+            <Header/>
        <ToastContainer />
 
             <div className="loginForm">
@@ -140,7 +171,13 @@ const Login = () => {
             
 
                 <div className="loginBtn">
-                    <button onClick={handleLogin} className="signInBtn">Sign In</button>
+                    <button onClick={handleLogin} className="signInBtn">  { isLoading ? (
+        <Spinner animation="border" role="status">
+          {/* <span className="sr-only">Loading...</span> */}
+        </Spinner>
+      ) : (
+        <> {save}</>
+      )}</button>
                 </div>
 
                 <h6>New To United Dorms? <Link className='link' to="/register">Sign Up</Link></h6>

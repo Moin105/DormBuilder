@@ -11,7 +11,7 @@
     border-radius: 50%;
     font-size: .3rem;
     transform: translateY(-2.4rem) rotate(180deg);
-    margin-right: 4rem;
+    margin: 0px 16px 0px 75px;
     cursor: pointer;
 
 }
@@ -41,19 +41,36 @@
 
 .dashboard .dashboardButtons{
     display: flex;
-    justify-content: center;
-    align-items: flex-end;
-    flex-direction: column;
+    /* justify-content: center; */
+    /* align-items: flex-end; */
+    /* gap: 20px; */
+    /* flex-direction: column; */
 }
 
 .dashboard .dashboardButtons button{
     border: 1px solid transparent;
-    padding: 1rem 4rem;
+    padding: 10px 20px;
     font-size: .8rem;
-    background-color: #090228;
+    cursor: pointer;
+    width: 250px;
+    /* background-color: #090228;
+
+     */
+     background: rgb(9,2,40);
+     
+    display: flex;
+    flex-direction: column;
+     background: linear-gradient(153deg, rgba(9,-12,35,3.95) 34%, rgba(46,18,14,0.297444) 100%);
+     border: none;
     color: #fff;
 }
-
+.dashboard .dashboardButtons button p{
+    font-size: 18px;
+    margin: 5px 0px 7px 0px;
+}
+.dashboard .dashboardButtons button span{
+font-size: 25px;
+}
 /* dashboardStats */
 
 

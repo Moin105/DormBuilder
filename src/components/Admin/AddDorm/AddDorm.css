@@ -52,7 +52,7 @@
 
 .inputs .input input {
     margin-top: 1rem;
-    font-size: 1.2rem;
+    font-size: 1rem;
     padding: 1rem;
     border-radius: 2rem;
     border: 1px solid #333333;
@@ -62,7 +62,7 @@
 
 .inputs .input textarea {
     margin-top: 1rem;
-    font-size: 1.2rem;
+    font-size: 1rem;
     padding: 1rem;
     border-radius: 2rem;
     border: 1px solid #333333;
@@ -70,7 +70,7 @@
 }
 
 .input button {
-    font-size: 1.2rem;
+    font-size: 1rem;
     padding: .7rem 5rem;
     margin-top: 2rem;
     background-color: var(--primaryColor);
@@ -102,12 +102,12 @@
     text-align: left
 }
 
-.overflowText {
+/* .overflowText {
     position: absolute;
     top: 0;
     left: 0;
     z-index: -1;
-}
+} */
 
 .hiddenInput {
     opacity: 0;
@@ -125,4 +125,16 @@
 
 .radioSelect{
     margin-top: 4rem;
+}
+.overflowText{
+    width: 370px;
+    margin: 0 auto;
+    top: 0;
+    display: flex;
+    justify-content:space-between;
+    align-items: center;
+    right: 0;
+    position: absolute;
+    left: 0;
+    z-index: -1;
 }

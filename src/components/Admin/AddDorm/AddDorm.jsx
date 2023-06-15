@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import logout from "./assets/logout.png";
+import logouts from "./assets/logout.png";
 import images from "./assets/image.png";
 import imageCompression from "browser-image-compression";
 import "./AddDorm.css";
@@ -9,10 +9,15 @@ import axios from "axios";
 import { MdKeyboardBackspace, MdVerticalAlignBottom } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
 import Footer from "../../utils/Footer/Footer";
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 import Form from "react-bootstrap/Form";
+import { ToastContainer, toast } from 'react-toastify';
+
 import UserContext from "../../../Context";
 // import { Toast } from "react-toastify/dist/components";
-import { useSelector } from "react-redux";
+import { useSelector,useDispatch } from "react-redux";
+import { logout } from "../../../redux/slices/authSlice";
 import Cookies from "js-cookie";
 const AddDorm = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -20,7 +25,7 @@ const AddDorm = () => {
   const [save,setSaved] = useState("Save")
   const [status ,setStatus] = useState({});
   const [selectedOption, setSelectedOption] = useState('1');
-
+  
   const [errors, setErrors] = useState([]);
   const token = useSelector((state) => state.token);
   const [images, setImages] = useState([]);
@@ -28,9 +33,16 @@ const AddDorm = () => {
   const [formData, setFormData] = useState({
     id: "",
     description: "",
+    lat:"",
+    long:"",
     rent_details: "",
   });
   // useEffect(() => {}, []);
+  const dispatch = useDispatch();
+  const handleLogout = () => {
+      // Clear auth state in Redux
+      dispatch(logout());
+    };
   const navigate = useNavigate();
 
   const handleCloseModal = () => {
@@ -53,6 +65,8 @@ const AddDorm = () => {
     if (formData.id =="") allerrors.push("Dorm ID is required");
     if (formData.description =="") allerrors.push("Description is required");
     if (formData.rent_details =="") allerrors.push("Rent details are required");
+    if (formData.lat =="") allerrors.push("Latitude is required");  
+    if (formData.long =="") allerrors.push("Longitude is required");  
 
     // check if email is valid
     // if (formData.id && !formData.id.includes("@")) allerrors.push("Dorm ID must be a valid email");
@@ -79,6 +93,8 @@ const AddDorm = () => {
     formData.append("id", data.id);
     formData.append("description", data.description);
     formData.append("bedrooms", bedrooms);
+    formData.append("lat", data.lat);
+    formData.append("long", data.long);
     // formData.append("images", image);
     images.forEach((item, index) => {
       formData.append(`images[${index}]`, item.file);
@@ -162,18 +178,24 @@ const AddDorm = () => {
     formDatas.append("description", formData.description);
     formDatas.append("image", images);
     formDatas.append("rent_details", formData.rent_details);
+    formDatas.append("lat", formData.lat);
+    formDatas.append("long", formData.long);
     // formData.append("bedrooms", selectedOption);
     console.log( formDatas, images);
     console.log(formData);
     const newErrors = validateForm(formData, images);
     console.log(newErrors)
-    if (newErrors.length > 0) {
+    if (formData.id == "" || formData.description == "" || formData.rent_details == "" || images == []) {
+      toast.error("Please fill all fields", {
+        position: toast.POSITION.TOP_CENTER,
+        toastClassName: "custom-toast",
+      });
       setErrors(prevState => {prevState =newErrors; return prevState})
-      handleOpenModal();
+      // handleOpenModal();
       console.log("first error", errors)
         // setErrors(newErrors);
     } else {
-        postData("http://backend.uni-hive.net/api/add_new_dorm",formData,token,images,selectedOption);
+        postData("https://backend.uni-hive.net/api/add_new_dorm",formData,token,images,selectedOption);
         setErrors([]); // clear errors after successful submission
     }
     // postData(
@@ -182,6 +204,28 @@ const AddDorm = () => {
     //   token,
     //   images
     // );
+  };
+  const handleMapRedirect = () => {
+  
+    // Replace the placeholders with the desired map coordinates or address
+    if (formData.lat == ""){
+         toast.error("Please add Latitude ", {
+          position: toast.POSITION.TOP_CENTER,
+          toastClassName: "custom-toast",
+        });
+    }else if ( formData.long == "") 
+    {
+      toast.error("Please add Longitude ", {
+        position: toast.POSITION.TOP_CENTER,
+        toastClassName: "custom-toast",
+      });
+    }else{
+      const latitude = formData.lat;
+      const longitude = formData.long;
+      const mapUrl = `https://maps.google.com/maps?q=${latitude},${longitude}`;
+
+      window.location.href = mapUrl;
+    }
   };
   return (
     <>
@@ -193,10 +237,11 @@ const AddDorm = () => {
             </Link>
           </span>
         </div>
+        <Link  to="/"> 
         <h5>United Dorms</h5>
-
-        <div className="logoutButton">
-          <img src={logout} alt="" />
+        </Link>
+        <div className="logoutButton" onClick={()=>{handleLogout();handleRouteChange("/login")}}>
+          <img src={logouts} alt="" />
         </div>
       </div>
 
@@ -228,9 +273,32 @@ const AddDorm = () => {
                 placeholder="Enter Dorm Detail"
               ></textarea>
             </div>
-
+            <div className="input inputFile">
+            
+            <input
+                type="text"
+                id="lat"
+                name="lat"
+                placeholder="Enter Latitude"
+                onChange={(e) => {
+                  handleInputChange(e, "lat");
+                }}
+              /> 
+             </div>
+             <div className="input">
+              <input
+              type="text"
+              id="long"
+              name="long"
+              placeholder="Enter Longitude"
+              onChange={(e) => {
+                handleInputChange(e, "long");
+              }}
+            />
+            </div>
             <div className="input">
-              <button className="btn btn-map">Select Location Via Maps</button>
+          {    <button className="btn addDorm" style={{backgroundColor:"#7eb168 !important"}} onClick={handleMapRedirect}>Select Location Via Maps</button>}
+          
             </div>
 
             <div className="input inputFile">
@@ -243,7 +311,23 @@ const AddDorm = () => {
                 className="hiddenInput"
               />
               <div className="overflowText">
-                <p>Add Image Or Video</p>
+                <p>Add  Image</p>
+
+                <img className="placeholderImage" src={images} alt="" />
+              </div>
+            </div>
+            
+            <div className="input inputFile">
+              <input
+                onChange={(e) => {
+                  handleImageChange(e, "video");
+                }}
+                name="image"
+                type="file"
+                className="hiddenInput"
+              />
+              <div className="overflowText">
+                <p>Add Video</p>
 
                 <img className="placeholderImage" src={images} alt="" />
               </div>
@@ -279,7 +363,7 @@ const AddDorm = () => {
             checked={selectedOption == '1'}
             onChange={handleOptionChange}
           />
-          Single Room 1:
+          One Room:
         </div>
         <div className="col-lg-6" style={{width:"45%"}}>
           <input
@@ -288,7 +372,7 @@ const AddDorm = () => {
             checked={selectedOption == '2'}
             onChange={handleOptionChange}
           />
-          Double Room 2:
+          Double Room :
         </div>
      {/* <div className="col-lg-6">
 :
@@ -342,11 +426,7 @@ const AddDorm = () => {
         </Modal.Header>
         <Modal.Body>
         <Modal.Title style={{textTransform:"capitalize"}}>{status?.message} </Modal.Title>
-        {errors?.map((error, index) => (
-        <div key={index} className="error">
-            {error}
-        </div>
-    ))}
+      
         </Modal.Body>
         <Modal.Footer>
           <Button variant="primary" onClick={handleCloseModal}>
@@ -358,7 +438,7 @@ const AddDorm = () => {
           </div>
         </div>
       </div>
-
+      <ToastContainer />
       {/* FOOTER */}
       <Footer />
     </>

@@ -23,38 +23,16 @@ import Cookies from "js-cookie";
 import UserDashboard from "./components/UserDashboard/UserDashboard";
 import ManageStudents from "./components/Admin/ManageStudents/ManageStudents";
 import { ToastContainer } from "react-toastify";
+import Faqs from "./components/Faqs/Faqs";
 import StudentEdit from "./components/Admin/ManageStudents/StudentEdit";
 import BlogEdit from "./components/Admin/ManageStudents/BlogEdit";
 import ForgetPassword from "./components/Auth/Login/ForgetPassword";
 import ConfirmOTP from "./components/Auth/Login/ConfirmOtp";
 import ManageDorms from "./components/Admin/ManageStudents/ManageDorms";
+import Testimonials from "./components/Home/Testimonials";
+import About from "./components/About/About";
 function App() {
-  // const [user, setUser] = useState(null);
-// useEffect( async() => {
-//     // Here you can make a post request with the form data
-//     const  response = await axios.post(
-//         `http://backend.uni-hive.net/api/add_dorm_review`,
-//         {
-//             idorm_id:"formData.id",
-//             user_id:"formData.user_id",
-//             review:"formData.review",
-//             rating:"formData.rating",
-//         },
-//         {
-//           headers: {
-//             Authorization: `Bearer ${token}`,
-//           },
-//         }
-//       );
-    
-//     // if(response.status == 200){
-//     //   handleRouteChange("/admin/manage-dorms");
-//     // }
-//       console.log("wert", response.data);
 
-
-//  }, []);
-  // const userRoel = "admin"
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [userRole, setUserRole] = useState("admin");
   const GuestRoutes = [
@@ -64,8 +42,12 @@ function App() {
     { path: "/forget-password", element: <ForgetPassword/>, name: "" }, 
     { path: "/blog-detail/:id", element: <BlogDetail />, name: "" },
     {path: "/blogs", element: <Blogs />, name: "" },
-    { path: "/student/dorm-show/:id", element: <GalleryDetail />, name: "" },
-    { path: "/gallery", element: <Gallery />, name: "" },
+    {path:"/faqs",element:<Faqs/>,name:""},
+    {path:"/testimonials" ,element:<Testimonials/>,name:""},
+    { path: "/dorm-show/:id", element: <GalleryDetail />, name: "" },
+    {path:"/about",element:<About/>,name:"About"},
+    
+    { path: "/dorm", element: <Gallery />, name: "" },
     { path: "/otp", element: <ConfirmOTP />, name: "" },
     // {path:'/reset-password',element:<ResetPassword/>,name:""}
   ]; 
@@ -73,13 +55,21 @@ function App() {
     { path: "/admin/dashboard", element: <Dashboard />, name: "" },
     { path: "/admin/add-dorm", element: <AddDorm />, name: "" },
     { path: "/", element: <Home />, name: "Home" },
+    {path:"/testimonials" ,element:<Testimonials/>,name:""},
     { path: "/admin/add-blog", element: <AddBlog />, name: "" },
     {path:'/admin/edit-dorm/:id' ,element:<EditDorm/>,name:""},
+    {path:"/faqs",element:<Faqs/>,name:""},
     { path: "/blog-detail/:id", element: <BlogDetail />, name: "" },
     { path: "/admin/manage-students", element: <ManageStudents/>, name: "" },
+     { path: "/dorm", element: <Gallery />, name: "" },
+     {path:"/about",element:<About/>,name:"About"},
     {path:"/admin/manage-dorms" , element: <ManageDorms/> , name:""},
     {path:'/admin/manage-blogs' ,element:<ManageBlogs/>,name:''},
+    {path:"/admin-profile",element:<UserDashboard/>,name:""},
     { path: "/admin/student-edit/:id", element: <StudentEdit/>, name: "" },
+    { path: "/admin/dorm-show/:id", element: <GalleryDetail />, name: "" },    
+    { path: "/admin/blog-detail/:id", element: <BlogDetail />, name: "" },
+    { path: "/blogs", element: <Blogs />, name: "" },
     {path:"/admin/blog-edit/:id",element:<BlogEdit/>,name:""},
     { path: "/otp", element: <ConfirmOTP />, name: "" },
   ];
@@ -89,7 +79,11 @@ function App() {
     // { path: "/blog-detail", element: <BlogDetail />, name: "" }, student/blog-detail/
     { path: "/student/blog-detail/:id", element: <BlogDetail />, name: "" },
     { path: "/", element: <Home />, name: "Home" },
-    { path: "/gallery", element: <Gallery />, name: "" },
+    {path:"/about",element:<About/>,name:"About"},
+    {path:"/faqs",element:<Faqs/>,name:""},
+    {path:"/testimonials" ,element:<Testimonials/>,name:""},
+
+    { path: "/dorm", element: <Gallery />, name: "" },
     { path: "/otp", element: <ConfirmOTP />, name: "" },
     // { path: "/gallery-detail", element: <GalleryDetail />, name: "" },
     { path: "/student/dorm-show/:id", element: <GalleryDetail />, name: "" },
@@ -115,7 +109,7 @@ useEffect(() => {
     }else{
       setIsAuthenticated(false)
     }
-  }, [token])
+  }, [token,role])
   useEffect(() => {
     console.log("user",user)
   }, [])

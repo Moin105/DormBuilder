@@ -1,5 +1,5 @@
 import React, { useEffect, useState,useMemo } from 'react';
-import "./Home.css"
+import "./About.css"
 import { Container, Nav, Navbar } from 'react-bootstrap'
 import { Link,useNavigate,useLocation } from 'react-router-dom';
 import Footer from '../utils/Footer/Footer';
@@ -23,7 +23,7 @@ import { useSelector } from 'react-redux';
 
 
 
-const Home = () => {
+const About = () => {
     const navigate = useNavigate();  
     const location = useLocation();
 
@@ -147,7 +147,7 @@ const Home = () => {
             <section className='hero'>
                 <div className="container">
 
-                    <h5><span className="heroText">United</span> Dorms</h5>
+                    <h5>About <span className="heroText">United</span> Dorms</h5>
                     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure tempore alias consectetur at, velit minima aspernatur, voluptas, dicta porro commodi error enim a quia molestias animi ipsa dolor vero aut?</p>
 
                     <div className="heroBtn">
@@ -156,7 +156,7 @@ const Home = () => {
                     </div>
                 </div>
             </section>
-    
+       
 
             {/* FEATURE SECTION */}
 
@@ -442,4 +442,4 @@ const Home = () => {
     )
 }
 
-export default Home
+export default About

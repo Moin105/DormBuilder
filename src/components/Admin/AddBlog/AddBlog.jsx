@@ -1,14 +1,18 @@
 import React, { useState,useEffect } from 'react';
 import './AddBlog.css'
 import { Spinner,Button, Modal } from "react-bootstrap";
-import logout from './assets/logout.png'
+import logouts from './assets/logout.png'
 import { MdKeyboardBackspace } from 'react-icons/md';
 import { Link,useNavigate } from 'react-router-dom';
 import image from './assets/image.png';
+import { FaPlus, FaImage, FaVideo } from 'react-icons/fa';
+
 import axios from 'axios';
 import imageCompression from 'browser-image-compression';
 import Cookies from 'js-cookie';
-import { useSelector } from 'react-redux';
+import { useSelector,useDispatch } from 'react-redux';
+import { logout } from '../../../redux/slices/authSlice';
+import { ToastContainer, toast } from 'react-toastify';
 
 const AddBlog = () => {
     // let YOUR_ACCESS_TOKEN = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiNmYxYWNiOTVmMjRjNzFkMGI5NTlmZjRmZGUwNmI1MTNmYjc3ZDMyYzFiYTIwZTEwYTVmNTc2MDNkMTFmOWYyZDljNGNmM2RiNDFmMjc4MjUiLCJpYXQiOjE2ODQwNzk5MjUuMDMwMDczLCJuYmYiOjE2ODQwNzk5MjUuMDMwMDc1LCJleHAiOjE3MTU3MDIzMjUuMDI1NDg0LCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.lCFyKORnlLCOnwEFXNkdGitwZCQ4M8q48tiaU_EgwOPhNGXqq2B-q06bCWFLAIlkqGv5qGI2Wc8S8tpJTRvvoQSX28AXWKy6govP0fMA0lalij8p7TGuPJT4glGS8gJHwjY0hm52w7R6tlZC9grsGZBpOiHaSxfmhPcdBYopQNFZbIrUfx_erS1knuwgETvuyhG-9IzrjzoqTre3t5b-XZiMw2134UQ1Nsaif_pm4HIArKrLKm4ViSqP0jRXF2WES3g-HIeiK_IVKSzCLuZLW-OG_gF53kndc2M9G_VjNRnQfmx5X0DB6t8Pq5Ow0nidnrYjjtheekR0P8pXGrrBloKroVP77gTeq8OitQYfOiiHmIreXYWY19j6tPi0xKOLn4mVcs3drtvDqfvlVsgeuEgSLm7sUOFCrjAYBVb3jreUiXYMpaAH20fjQA8CbkSdv4YlpHPzDnLCxcdxsBZ8c-hlZq4ZrH_L5xoLNO7yZh8ZCmjxRV-ewqLMEE2zCtC6_R-5Lu6h6N4yXIvdNXWEdJItcpKDHtYpvmACCzIW12OiZTtkkbL3uB2fuR6hNMQJbeyibspqayGMXh0uQ93lRa2HNK4a-HLgp7wG_nTk8S9SI3o4QJDHvgJiAW6OaeDNPEsII-ty4DIxuNUB1utlVT1_qSRDk_AYc5tZG-F9ADA';
@@ -18,6 +22,11 @@ const AddBlog = () => {
     const [save,setSaved] = useState("Save")
     const [status ,setStatus] = useState({});
     const [errors, setErrors] = useState([]);
+    const dispatch = useDispatch();
+    const handleLogout = () => {
+        // Clear auth state in Redux
+        dispatch(logout());
+      };
     const handleRouteChange = (url, datas) => {
         navigate(url, { state: { data: datas } });
       };
@@ -110,6 +119,7 @@ const postData = async (url,data,token,image) => {
         // Handle success response heres
       } catch (error) {
         handleOpenModal()
+
         setStatus(prevState =>{prevState.message =  error.response.data.message;return prevState});
         console.error('API error:', error.response.data.message);
         // Handle error response here
@@ -123,8 +133,8 @@ const postData = async (url,data,token,image) => {
       const allerrors = [];
        console.log(formData)
       // check for empty fields
-      if (formData.title =="") allerrors.push(" Title is required");
-      if (formData.body =="") allerrors.push("Body is required");
+      if (formData.title =="") {allerrors.push(" Title is required")};
+      if (formData.body =="") {allerrors.push("Body is required");}
       // if (formData.rent_details =="") allerrors.push("Rent details are required");
   
       // check if email is valid
@@ -172,13 +182,17 @@ const handleSubmit = (event) => {
        console.log(formData);
        const newErrors = validateForm(formData, image);
        console.log(newErrors)
-       if (newErrors.length > 0) {
+       if (formData.title == "" || formData.body == "" || image == []) {
+         toast.error("Please fill all fields", {
+          position: toast.POSITION.TOP_CENTER,
+          toastClassName: "custom-toast",
+        });
         setErrors(prevState => {prevState =newErrors; return prevState})
-        handleOpenModal();
+        // handleOpenModal();
         console.log("first error", errors)
           // setErrors(newErrors);
       } else {
-        postData("http://backend.uni-hive.net/api/add_new_blog_post",formData,token,image)
+        postData("https://backend.uni-hive.net/api/add_new_blog_post",formData,token,image)
       
           setErrors([]); // clear errors after successful submission
       }
@@ -191,10 +205,10 @@ const handleSubmit = (event) => {
                 <div className="backBtn float-start" >
                     <span ><Link className="backIcon" to="/admin/dashboard"><MdKeyboardBackspace /></Link></span>
                 </div>
-                <h5>United Dorms</h5>
+                <h5 onClick={()=>{handleRouteChange("/")}}>United Dorms</h5>
 
-                <div className="logoutButton">
-                    <img src={logout} alt="" />
+                <div className="logoutButton" onClick={()=>{handleLogout();handleRouteChange("/login")}}>
+                    <img src={logouts} alt="" />
                 </div>
             </div>
 
@@ -210,7 +224,7 @@ const handleSubmit = (event) => {
                         <div className="input">
                             <textarea name="body" onChange={(e) => {
             handleInputChange(e, "body");
-          }} id=""  cols="30" rows="10" placeholder="Enter Dorm Detail"></textarea>
+          }} id=""  cols="30" rows="10" placeholder="Enter Blog Description"></textarea>
                         </div>
 
                         <div className="input inputFile">
@@ -219,8 +233,8 @@ const handleSubmit = (event) => {
     }}name='image'  className="hiddenInput" />
                             <div className="overflowText">
                                 <p>Add Image Or Video</p>
-
-                                <img className="placeholderImage" src={image} alt="" />
+                                <div style={{color:"#7eb168",fontSize:"25px",position:"absolute",right:"20px",marginTop:"-6px"}}><FaImage /></div>
+                                {/* <img className="placeholderImage" src={image} alt="" /> */}
 
                             </div>
                         </div>
@@ -241,11 +255,7 @@ const handleSubmit = (event) => {
         </Modal.Header>
         <Modal.Body>
         <Modal.Title style={{textTransform:"capitalize"}}>{status?.message} </Modal.Title>
-        {errors?.map((error, index) => (
-        <div key={index} className="error">
-            {error}
-        </div>
-    ))}
+     
         </Modal.Body>
         <Modal.Footer>
           <Button variant="primary" onClick={handleCloseModal}>
@@ -253,6 +263,7 @@ const handleSubmit = (event) => {
           </Button>
         </Modal.Footer>
         </Modal>
+        <ToastContainer />
             </div>
 
         </>

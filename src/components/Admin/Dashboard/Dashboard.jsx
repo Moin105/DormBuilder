@@ -7,8 +7,16 @@ import { Link,useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { BiTrendingUp, BiTrendingDown } from "react-icons/bi";
 import { useSelector,useDispatch } from 'react-redux';
+import {BiPlus} from 'react-icons/bi'
+import {GoHome} from 'react-icons/go'
+import {FaUsers} from 'react-icons/fa'
+// import {TbBrandBlogger} from 'react-icons/tb'
+import {ImBlogger} from 'react-icons/im'
+import {MdBedroomParent} from 'react-icons/md'
 import { logout } from '../../../redux/slices/authSlice';
 import Cookies from 'js-cookie';
+import Header from '../../Header/Header';
+
 import { Button, Container, Card } from 'react-bootstrap';
 const Dashboard = () => {
     const dispatch = useDispatch()
@@ -49,14 +57,14 @@ const Dashboard = () => {
 
     return (
         <>
-            <div className="LoginNavbar">
+            {/* <div className="LoginNavbar">
                 <h5>United Dorms</h5>
 
                 <div className="logoutButton" onClick={()=>{handleLogout();handleRouteChange("/login")}}>
                     <img src={logouts} alt="" />
                 </div>
-            </div>
-
+            </div> */}
+<Header/>
 
             {/* Dashboard  */}
 
@@ -69,20 +77,26 @@ const Dashboard = () => {
                             <h5 className="link">Welcome Back</h5>
 
                         </div> */}
-                        <Card className="mb-4 p-3 text-center">
+                        <Card className="mb-4 p-3 text-center" style={{border:"none"}}>
                 <Card.Title className="display-4"><h1>Welcome Back!</h1></Card.Title>
-                <Card.Text><p className="link">This is your Dashboard, you can navigate from here.</p></Card.Text>
+                {/* <Card.Text><p className="link">This is your Dashboard, you can navigate from here.</p></Card.Text> */}
             </Card>
-                        <div style={{margin:"0 auto"}} className="col-sm-12 col-md-6 col-lg-6 p-5 dashboardButtons d-flex flex-column justify-content-around">
+            <div className='row' style={{flexDirection:"column",alignItems:"center"}}>
+            {/* style={{margin:"0 auto"}} */}
+                        <div style={{width:"100%"}}  className="col-sm-12 col-md-6 col-lg-6 p-5 dashboardButtons d-flex  justify-content-around">
 {/* /admin/manage-blogs */}
-         
-                            <Link style={{margin:"0 auto"}} to='/admin/add-dorm'><Button className="dashboardBtn"> Add New Dorm</Button></Link> <br />
-                            <Link style={{margin:"0 auto"}} to='/admin/manage-dorms'><Button className="dashboardBtn"> Manage Dorms</Button></Link> <br />
-                            <Link style={{margin:"0 auto"}} to='/admin/manage-blogs'><Button className="dashboardBtn"> Manage Blogs</Button></Link> <br />
-                            <Link style={{margin:"0 auto"}} to='/admin/add-blog'><Button className="dashboardBtn"> Add New Blog</Button></Link> <br />
-                            <Link style={{margin:"0 auto"}} to='/admin/manage-students'><Button className="dashboardBtn"> Manage Students</Button></Link>
+                            <Link style={{margin:"0 auto"}} to='/admin-profile'><Button className="dashboardBtn"><span><GoHome/></span> <p>Edit Admin</p></Button></Link> <br />
+                            <Link style={{margin:"0 auto"}} to='/admin/add-dorm'><Button className="dashboardBtn"><span><MdBedroomParent/><BiPlus/></span><p>Add New Dorm</p> </Button></Link> <br />
+                            <Link style={{margin:"0 auto"}} to='/admin/manage-dorms'><Button className="dashboardBtn"><span><MdBedroomParent/></span><p>Manage Dorms</p> </Button></Link> <br />
+                           </div>
+                            <div style={{width:"100%"}} className="col-sm-12 col-md-6 col-lg-6 p-5 dashboardButtons d-flex  justify-content-around">
+
+                            <Link style={{margin:"0 auto"}} to='/admin/manage-blogs'><Button className="dashboardBtn"><span><ImBlogger/></span><p> Manage Blogs</p></Button></Link> <br />
+                            <Link style={{margin:"0 auto"}} to='/admin/add-blog'><Button className="dashboardBtn"><span><ImBlogger/><BiPlus/></span><p>Add New Blog</p> </Button></Link> <br />
+                            <Link style={{margin:"0 auto"}} to='/admin/manage-students'><Button className="dashboardBtn"><span><FaUsers/></span><p>Manage Students</p> </Button></Link>
 
                         </div>
+            </div>
 
 
                     </div>
