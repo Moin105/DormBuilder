@@ -134,3 +134,9 @@ font-size: 25px;
     font-weight: 700;
     cursor: pointer;
 }
+@media screen and (max-width: 900px) {
+    .dashboard .dashboardButtons{
+    flex-direction: column;
+    padding: 0px !important;
+    }
+}

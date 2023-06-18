@@ -177,7 +177,7 @@ function ManageStudents() {
         </table>   
         <CustomModal isOpen={isModalOpen} onClose={closeModal}>
                 <h1>Delete </h1>
-                <p>Are you sure you want to delete this user?</p>
+                <p>Are you sure you want to delete this Blog?</p>
                 <div>
                 <button onClick={()=>deleteUser(userToDelete, role)}>Confirm</button>
                 <button onClick={closeModal}>Cancel</button>

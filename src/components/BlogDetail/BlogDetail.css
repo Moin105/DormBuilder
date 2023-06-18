@@ -21,6 +21,7 @@
 } 
 .blogDetailMainTitle h1{
     font-weight: 700;
+    text-transform: capitalize;
     text-align: justify;
     width: 95%;
     word-break: break-word;

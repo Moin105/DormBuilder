@@ -92,7 +92,7 @@ const token = useSelector((state) => state.token);
                     <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Accusamus laboriosam atque amet porro facere perferendis cupiditate obcaecati recusandae maiores architecto minima, quos aperiam, incidunt similique modi dolore quibusdam ullam itaque.</p> */}
                    
 <br></br>
-<p>  {formatContent(blogData?.body)}</p>
+<p dangerouslySetInnerHTML={{ __html: blogData?.body }}></p>
                    {/* <p dangerouslySetInnerHTML={{ __html: blogData?.body }} > */}
 
                      {/* {blogData?.body} */}

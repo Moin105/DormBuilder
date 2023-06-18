@@ -7,6 +7,8 @@ import axios from 'axios';
 import { MdKeyboardBackspace, MdVerticalAlignBottom } from "react-icons/md";
 import { Link ,useNavigate,useLocation} from 'react-router-dom';
 import Footer from '../../utils/Footer/Footer';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 import Form from 'react-bootstrap/Form';
 import UserContext from '../../../Context';
 import Cookies from 'js-cookie';
@@ -15,6 +17,7 @@ import { useSelector,useDispatch } from 'react-redux';
 const EditDorm = () => {
     const location = useLocation();
     const data = location.state ? location.state.data : null;
+    const [value,setValue] = useState('')
     const dispatch = useDispatch();
     const handleLogout = () => {
         // Clear auth state in Redux
@@ -26,11 +29,11 @@ const EditDorm = () => {
     //   };
       const [formData, setFormData] = useState({
         id: "",
-        description: "",
+        value: "",
         rent_details: "",
       });
       useEffect(() => {
-        // console.log(user)
+        console.log(data)
       }, [])
       const navigate = useNavigate();
       const handleRouteChange = (url, datas) => {
@@ -57,6 +60,28 @@ const EditDorm = () => {
               window.location.reload();
               handleRouteChange("/");
             } 
+    }const modules = {
+      toolbar: [
+        ['bold', 'italic', 'underline', 'strike'], // toggled buttons
+        ['blockquote', 'code-block'],
+    
+        [{ 'header': 1 }, { 'header': 2 }], // custom button values
+        [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+        [{ 'script': 'sub'}, { 'script': 'super' }], // superscript/subscript
+        [{ 'indent': '-1'}, { 'indent': '+1' }], // outdent/indent
+        [{ 'direction': 'rtl' }], // text direction
+    
+        [{ 'size': ['small', false, 'large', 'huge'] }], // custom dropdown
+        [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+    
+        [{ 'color': [] }, { 'background': [] }], // dropdown with defaults from theme
+        [{ 'font': [] }],
+        [{ 'align': [] }],
+    
+        ['clean'], // remove formatting button
+    
+        ['link', 'image', 'video'] // link and image, video
+      ]
     }
 
         const handleSubmit =async (event) => {
@@ -67,7 +92,8 @@ const EditDorm = () => {
                 `https://backend.uni-hive.net/api/edit_dorm/${data}`,
                 {
                     id:formData.id,
-                    description: formData.description,
+                    dorm_id:formData.dorm_id, 
+                    description: value,
                     rent_details: formData.rent_details,
                 },
                 {
@@ -99,10 +125,12 @@ const EditDorm = () => {
               console.log("wert", response.data.dorms);
         
               setFormData({
-                id:response.data.dorms.dorm_id,
+                id:response.data.dorms.id,
+                dorm_id:response.data.dorms.dorm_id,
                 description: response.data.dorms.description,
                 rent_details: response.data.dorms.rent_details,
               });
+              setValue(response.data.dorms.description)
         
             } catch (error) {
               console.error("Failed to update student:", error);
@@ -140,14 +168,16 @@ const EditDorm = () => {
                     <div className="inputs">
 
                         <div className="input">
-                            <input type="text" id='dormId' name='id' placeholder="Enter Dorm ID" 
-                               value={formData.id}
+                            <input type="text" id='dormId' name='dorm_id' placeholder="Enter Dorm ID" 
+                               value={formData.dorm_id}
                                onChange={handleInputChange}/>
                         </div>
 
                         <div className="input">
-                            <textarea      value={formData.description}
-            onChange={handleInputChange} id="" cols="30" name="description" rows="10" placeholder="Enter Dorm Detail"></textarea>
+                            {/* <textarea      value={formData.description}
+            onChange={handleInputChange} id="" cols="30" name="description" rows="10" placeholder="Enter Dorm Detail"></textarea> */}
+                   <ReactQuill theme="snow" value={value} onChange={setValue} style={{margin:"20px 0px 0px 0px",borderRadius:"0px 0px 20px 20px",border:"1px solid black",maxWidth:"370px"}}/>
+
                         </div>
 
                         <div className="input">

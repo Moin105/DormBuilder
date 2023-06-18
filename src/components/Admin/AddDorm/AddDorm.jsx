@@ -7,9 +7,12 @@ import { Spinner,Button, Modal } from "react-bootstrap";
 import { MdClose } from "react-icons/md";
 import axios from "axios";
 import { MdKeyboardBackspace, MdVerticalAlignBottom } from "react-icons/md";
+// import {BiSolidVideos} from 'react-icons/bi'
 import { Link, useNavigate } from "react-router-dom";
 import Footer from "../../utils/Footer/Footer";
 import ReactQuill from 'react-quill';
+import {FaPhotoVideo} from 'react-icons/fa'
+import {BsFillImageFill} from 'react-icons/bs'
 import 'react-quill/dist/quill.snow.css';
 import Form from "react-bootstrap/Form";
 import { ToastContainer, toast } from 'react-toastify';
@@ -25,7 +28,8 @@ const AddDorm = () => {
   const [save,setSaved] = useState("Save")
   const [status ,setStatus] = useState({});
   const [selectedOption, setSelectedOption] = useState('1');
-  
+  const [value, setValue] = useState('');
+
   const [errors, setErrors] = useState([]);
   const token = useSelector((state) => state.token);
   const [images, setImages] = useState([]);
@@ -86,16 +90,15 @@ const AddDorm = () => {
 // }
 
   // const [image, setImage] = useState(null);
-  const postData = async (url, data, token, image,bedrooms) => {
+  const postData = async (url, data, token, image,bedrooms,value) => {
 
     setIsLoading(true);
     const formData = new FormData();
     formData.append("id", data.id);
-    formData.append("description", data.description);
+    formData.append("description", value);
     formData.append("bedrooms", bedrooms);
     formData.append("lat", data.lat);
     formData.append("long", data.long);
-    // formData.append("images", image);
     images.forEach((item, index) => {
       formData.append(`images[${index}]`, item.file);
     });
@@ -171,11 +174,35 @@ const AddDorm = () => {
   const handleRemoveImage = (index) => {
     setImages(prevImages => prevImages.filter((_, i) => i !== index)); 
   };
+  const modules = {
+    toolbar: [
+      ['bold', 'italic', 'underline', 'strike'], // toggled buttons
+      ['blockquote', 'code-block'],
+  
+      [{ 'header': 1 }, { 'header': 2 }], // custom button values
+      [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+      [{ 'script': 'sub'}, { 'script': 'super' }], // superscript/subscript
+      [{ 'indent': '-1'}, { 'indent': '+1' }], // outdent/indent
+      [{ 'direction': 'rtl' }], // text direction
+  
+      [{ 'size': ['small', false, 'large', 'huge'] }], // custom dropdown
+      [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+  
+      [{ 'color': [] }, { 'background': [] }], // dropdown with defaults from theme
+      [{ 'font': [] }],
+      [{ 'align': [] }],
+  
+      ['clean'], // remove formatting button
+  
+      ['link', 'image', 'video'] // link and image, video
+    ]
+  }
+  
   const handleSubmit = (event) => {
     event.preventDefault();
     const formDatas = new FormData();
     formDatas.append("id", formData.id);
-    formDatas.append("description", formData.description);
+    formDatas.append("description", value);
     formDatas.append("image", images);
     formDatas.append("rent_details", formData.rent_details);
     formDatas.append("lat", formData.lat);
@@ -185,7 +212,7 @@ const AddDorm = () => {
     console.log(formData);
     const newErrors = validateForm(formData, images);
     console.log(newErrors)
-    if (formData.id == "" || formData.description == "" || formData.rent_details == "" || images == []) {
+    if (formData.id == "" || value == "" || formData.rent_details == "" || images == []) {
       toast.error("Please fill all fields", {
         position: toast.POSITION.TOP_CENTER,
         toastClassName: "custom-toast",
@@ -195,7 +222,7 @@ const AddDorm = () => {
       console.log("first error", errors)
         // setErrors(newErrors);
     } else {
-        postData("https://backend.uni-hive.net/api/add_new_dorm",formData,token,images,selectedOption);
+        postData("https://backend.uni-hive.net/api/add_new_dorm",formData,token,images,selectedOption,value);
         setErrors([]); // clear errors after successful submission
     }
     // postData(
@@ -227,6 +254,12 @@ const AddDorm = () => {
       window.location.href = mapUrl;
     }
   };
+ // define the handleRemove function in your component
+const handleRemove = (index) => {
+  const newImages = [...images];
+  newImages.splice(index, 1);
+  setImages(newImages);
+}
   return (
     <>
       <div className="LoginNavbar">
@@ -262,7 +295,7 @@ const AddDorm = () => {
             </div>
 
             <div className="input">
-              <textarea
+              {/* <textarea
                 onChange={(e) => {
                   handleInputChange(e, "description");
                 }}
@@ -271,7 +304,9 @@ const AddDorm = () => {
                 name="description"
                 rows="10"
                 placeholder="Enter Dorm Detail"
-              ></textarea>
+              ></textarea> */}
+                   <ReactQuill theme="snow" value={value} onChange={setValue} style={{margin:"20px 0px 0px 0px",borderRadius:"0px 0px 20px 20px",border:"1px solid black",maxWidth:"370px"}}/>
+
             </div>
             <div className="input inputFile">
             
@@ -313,7 +348,7 @@ const AddDorm = () => {
               <div className="overflowText">
                 <p>Add  Image</p>
 
-                <img className="placeholderImage" src={images} alt="" />
+               <span style={{position:"absolute",right:"20px",fontSize:"25px",color:"#7eb168"}}><BsFillImageFill/></span>
               </div>
             </div>
             
@@ -328,8 +363,8 @@ const AddDorm = () => {
               />
               <div className="overflowText">
                 <p>Add Video</p>
-
-                <img className="placeholderImage" src={images} alt="" />
+                <span style={{position:"absolute",right:"20px",fontSize:"25px",color:"#7eb168"}}><FaPhotoVideo/></span>
+                {/* <img className="placeholderImage" src={images} alt="" /> */}
               </div>
             </div>
            <div className="images-gallery">
@@ -339,7 +374,7 @@ const AddDorm = () => {
         <button className="remove" onClick={() => handleRemoveImage(index)}><MdClose/></button>
       </div>
     ))} */}
-              {images?.map((item, index) => (
+              {/* {images?.map((item, index) => (
       <div key={index} className="figure">
         {item.name === 'image' && (
           <img src={URL.createObjectURL(item.file)} alt={`Image ${index}`} />
@@ -350,7 +385,27 @@ const AddDorm = () => {
           </video>
         )}
         </div>
-        ))}
+        ))} */}
+       {images == [] ? images?.map((item, index) => (
+  <div key={index} className="figure">
+    {item.name === 'image' && (
+      <img 
+        src={URL.createObjectURL(item.file)} 
+        alt={`Image ${index}`} 
+        onClick={() => handleRemove(index)} 
+      />
+    )}
+    {item.name === 'video' && (
+      <video controls onClick={() => handleRemove(index)}>
+        <source src={URL.createObjectURL(item.file)} type={item.file.type} />
+      </video>
+    )}
+  </div>
+  
+)) : <p style={{margin:"0 !important",alignSelf:"center"}}>No Images/Video Selected </p>}
+
+
+
             </div> 
             <div className="radioSelect">
               <h5>Choose The Type Of Room</h5>

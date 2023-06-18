@@ -89,7 +89,7 @@ const Register = () => {
           // Handle success response here
         } catch (error) {
           console.error('API error:', error);
-          toast.error('Failed to submit the form. Please try again.', {
+          toast.error(error.response.data.message, {
             position: toast.POSITION.TOP_CENTER,
             toastClassName: "custom-toast",
           });
@@ -97,6 +97,10 @@ const Register = () => {
           // Handle error response here
         }
       };
+      function validateEmail(email) {
+        var re = /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/;
+        return re.test(String(email).toLowerCase());
+    }
 const handleSubmit = async (event) => {
     event.preventDefault();
     setIsLoading(true);
@@ -112,8 +116,17 @@ const handleSubmit = async (event) => {
       position: toast.POSITION.TOP_CENTER,
       toastClassName: "custom-toast",
     });
+  
     setIsLoading(false);
     return;
+  }else if(!validateEmail(formData.email)){
+    toast.error('Please enter a valid email address.', {
+      position: toast.POSITION.TOP_CENTER,
+      toastClassName: "custom-toast",
+    });
+    setIsLoading(false);
+    return;
+
   } else{
   console.log("data",formData)  
  postData("https://backend.uni-hive.net/api/user_register",data)

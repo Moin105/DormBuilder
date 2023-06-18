@@ -6,7 +6,8 @@ import { MdKeyboardBackspace } from 'react-icons/md';
 import { Link,useNavigate } from 'react-router-dom';
 import image from './assets/image.png';
 import { FaPlus, FaImage, FaVideo } from 'react-icons/fa';
-
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 import axios from 'axios';
 import imageCompression from 'browser-image-compression';
 import Cookies from 'js-cookie';
@@ -78,7 +79,7 @@ const [formData, setFormData] = useState({
     title: "",
     body: "",
   });
-
+const [value ,setValue] = useState("")
   const handleInputChange = (event, fieldName) => {
     setFormData({ ...formData, [fieldName]: event.target.value });
   };
@@ -90,11 +91,11 @@ const [formData, setFormData] = useState({
     setShowModal(true);
   };
   const [image,setImage]= useState(null)
-const postData = async (url,data,token,image) => {
+const postData = async (url,data,token,image,value) => {
   setIsLoading(true);
     const formData = new FormData();
     formData.append('title', data.title);
-    formData.append('body', data.body);
+    formData.append('body', value);
     formData.append('image', image);
     // formData.append('rent_details', data.rent_details);
     console.log(data,formData,image,)
@@ -134,7 +135,7 @@ const postData = async (url,data,token,image) => {
        console.log(formData)
       // check for empty fields
       if (formData.title =="") {allerrors.push(" Title is required")};
-      if (formData.body =="") {allerrors.push("Body is required");}
+      if (value =="") {allerrors.push("Body is required");}
       // if (formData.rent_details =="") allerrors.push("Rent details are required");
   
       // check if email is valid
@@ -176,13 +177,13 @@ const handleSubmit = (event) => {
        event.preventDefault();
        const formDatas = new FormData();
     formDatas.append('title', formData.title);
-    formDatas.append('body', formData.body);
+    formDatas.append('body', value);
     formDatas.append('image', image);
        console.log( formDatas, image);
        console.log(formData);
        const newErrors = validateForm(formData, image);
        console.log(newErrors)
-       if (formData.title == "" || formData.body == "" || image == []) {
+       if (formData.title == "" || value == "" || image == []) {
          toast.error("Please fill all fields", {
           position: toast.POSITION.TOP_CENTER,
           toastClassName: "custom-toast",
@@ -192,7 +193,7 @@ const handleSubmit = (event) => {
         console.log("first error", errors)
           // setErrors(newErrors);
       } else {
-        postData("https://backend.uni-hive.net/api/add_new_blog_post",formData,token,image)
+        postData("https://backend.uni-hive.net/api/add_new_blog_post",formData,token,image,value)
       
           setErrors([]); // clear errors after successful submission
       }
@@ -222,9 +223,11 @@ const handleSubmit = (event) => {
                               }} placeholder="Add a title" />
 
                         <div className="input">
-                            <textarea name="body" onChange={(e) => {
+                            {/* <textarea name="body" onChange={(e) => {
             handleInputChange(e, "body");
-          }} id=""  cols="30" rows="10" placeholder="Enter Blog Description"></textarea>
+          }} id=""  cols="30" rows="10" placeholder="Enter Blog Description"></textarea> */}
+                             <ReactQuill theme="snow" value={value} onChange={setValue} style={{margin:"20px auto 10px",borderRadius:"0px 0px 20px 20px",border:"1px solid black",maxWidth:"370px"}}/>
+
                         </div>
 
                         <div className="input inputFile">

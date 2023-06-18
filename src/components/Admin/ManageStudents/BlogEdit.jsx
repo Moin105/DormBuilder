@@ -9,6 +9,8 @@ import axios from "axios";
 import { MdKeyboardBackspace, MdVerticalAlignBottom } from "react-icons/md";
 import { Link, useLocation,useNavigate } from "react-router-dom";
 import Footer from "../../utils/Footer/Footer";
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 import Form from "react-bootstrap/Form";
 import UserContext from "../../../Context";
 import { useSelector,useDispatch } from "react-redux";
@@ -25,6 +27,7 @@ function BlogEdit() {
   const [student, setStudent] = useState(null);
   // const token = localStorage.getItem("token");
   const token = useSelector((state) => state.token);
+  const [value,setValue] = useState('')
   const [formData, setFormData] = useState({
     // first_name: "",
     // last_name: "",
@@ -53,7 +56,7 @@ function BlogEdit() {
         {
                 blog_id: formData.blog_id,
                 title: formData.title,  
-                body: formData.body,    
+                body: value,    
                 // username: formData.username,
                 // // last_name: formData.last_name,
                 // college_university: formData.college_university,
@@ -96,7 +99,7 @@ function BlogEdit() {
         title: response.data.blog.title,
         blog_id:response.data.blog.id
       });
-
+      setValue(response.data.blog.body) 
     } catch (error) {
       console.error("Failed to update student:", error);
     }
@@ -147,13 +150,15 @@ function BlogEdit() {
          </div> */}
           <div className="input">
 
-          <textarea
+          {/* <textarea
             type="text"
             name="body"
             value={formData.body}
             onChange={handleInputChange}
             placeholder="Body"
-          />  
+          />   */}
+          <ReactQuill theme="snow" value={value} onChange={setValue} style={{margin:"20px 0px 0px 0px",borderRadius:"0px 0px 20px 20px",border:"1px solid black",maxWidth:"370px"}}/>
+
           </div>
           
           {/* <div className="input">

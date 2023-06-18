@@ -2,14 +2,42 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import images from '../../UserDashboard/assets/profile.png'
 import { ToastContainer, toast } from 'react-toastify';
+import ReactQuill from 'react-quill';
+import './quill-custom.css'
 import 'react-toastify/dist/ReactToastify.css';
+import 'react-quill/dist/quill.snow.css'; // import styles
 import StarRating from './Rating';
 import { useSelector } from 'react-redux';
 function AddComments({dorm_id,user_id}) {
 //   const [name, setName] = useState('');
   const [review, setReview] = useState('');
+  const [values, setValues] = useState('');
+  const [value, setValue] = useState('');
   const [rating, setRating] = useState(0);
-  
+  // Create a toolbar with every feature
+  const modules = {
+    toolbar: [
+      ['bold', 'italic', 'underline', 'strike'], // toggled buttons
+      ['blockquote', 'code-block'],
+
+      [{ 'header': 1 }, { 'header': 2 }], // custom button values
+      [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+      [{ 'script': 'sub'}, { 'script': 'super' }], // superscript/subscript
+      [{ 'indent': '-1'}, { 'indent': '+1' }], // outdent/indent
+      [{ 'direction': 'rtl' }], // text direction
+
+      [{ 'size': ['small', false, 'large', 'huge'] }], // custom dropdown
+      [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+
+      [{ 'color': [] }, { 'background': [] }], // dropdown with defaults from theme
+      [{ 'font': [] }],
+      [{ 'align': [] }],
+
+      ['clean'], // remove formatting button
+
+      ['link', 'image', 'video'] // link and image, video
+    ]
+  }
   const [replyingTo, setReplyingTo] = useState(null);
   const [reply, setReply] = useState('');
   const [reviews, setReviews] = useState([]);
@@ -51,7 +79,7 @@ useEffect(() => {
 const handleReply = async (event, reviewId) => {
   event.preventDefault();
 
-  if (!reply) {
+  if (values =='' || rating == 0) {
     toast.error('Please fill in all fields.', {
       position: toast.POSITION.TOP_CENTER,
       toastClassName: "custom-toast",
@@ -62,7 +90,8 @@ const handleReply = async (event, reviewId) => {
   try {
     const formData = {
       comment_id: reviewId,
-      reply: reply,
+      reply: values,
+   
     };
 
     const response = await axios.post('https://backend.uni-hive.net/api/comment_reply', formData,{
@@ -76,6 +105,7 @@ const handleReply = async (event, reviewId) => {
 
     // Reset reply state
     setReply('');
+    setValues('');
     setReplyingTo(null);
     getUser(dorm_id);
     // Fetch reviews again to update the list with the new reply
@@ -110,7 +140,7 @@ const handleReply = async (event, reviewId) => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    if ( !review ) {
+    if ( value == '' ) {
       toast.error('Please fill in all fields and provide a rating.', {
         position: toast.POSITION.TOP_CENTER,
         toastClassName: "custom-toast",
@@ -122,7 +152,8 @@ const handleReply = async (event, reviewId) => {
       const formData = {
         blog_id: dorm_id,
         user_id: user_id?.id,
-        comment: review,
+        rating: rating,
+        comment: value,
         // rating: rating,
       };
 
@@ -137,6 +168,7 @@ const handleReply = async (event, reviewId) => {
       // Clear the form
     //   setName('');
       setReview('');
+      setValue('');
       setRating(0);
       getUser(dorm_id);
       // Fetch updated reviews
@@ -173,15 +205,18 @@ const handleReply = async (event, reviewId) => {
           />
         </label> */}
          <div className="input">
-         <textarea
+         {/* <textarea
          style={{maxWidth:"100%"}}
             value={review}
             onChange={(e) => setReview(e.target.value)}
             required
-          /></div>
+          /> */}
+                    <ReactQuill theme="snow" value={value} onChange={setValue}  />
+
+          </div>
 
           Rating:
-          {/* <StarRating rating={rating} onRatingChange={handleRatingChange} /> */}
+          <StarRating rating={rating} onRatingChange={handleRatingChange} />
            <p className="text-center"><button className='heroButtonOne' type='submit'>Add Review</button></p> 
       </form>
 
@@ -194,13 +229,14 @@ const handleReply = async (event, reviewId) => {
        
         <div style={{padding:"6px"}} key={review.id}>
           <h4 style={{fontSize:"18px"}}>{review.user.username}</h4>
-          <p  >{review.comment}</p>
+          <p  dangerouslySetInnerHTML={{ __html: review.comment }}></p>
+          <StarRating rating={review.rating}/>
           {review?.replies.map((reply)=>{return   <div className='row' style={{flexWrap:"nowrap",alignItems:"flex-start"}}> 
           <div style={{width:"40px",height:"40px"}}>
          <img src={review?.user?.profile_image =="" ? images : `https://backend.uni-hive.net/storage/${review?.user?.profile_image}`} style={{width:"100%",height:"100%",objectFit:"contain"}}/>
         </div>    <div style={{padding:"6px"}} key={review.id}>
           <h4 style={{fontSize:"18px"}}>{review.user.username}</h4>
-          <p>{reply.reply}</p>
+          <p dangerouslySetInnerHTML={{ __html: reply?.reply }}></p>
           
           </div>
           
@@ -209,7 +245,9 @@ const handleReply = async (event, reviewId) => {
              <button style={{border:"none",padding:"10px",background:"#7BB564",borderRadius:"10px",color:"white",fontSize:"10px"}} onClick={() => setReplyingTo(review.id)}>Reply</button>
 {replyingTo === review.id && (
   <form onSubmit={(e) => handleReply(e, review.id)} style={{display:"flex",flexDirection:"column",width:"80%"}}>
-    <textarea value={reply} onChange={(e) => setReply(e.target.value)} required  style={{margin:"10px 0px"}} />
+              <ReactQuill theme="snow" value={values} onChange={setValues}  />
+
+    {/* <textarea value={reply} onChange={(e) => setReply(e.target.value)} required  style={{margin:"10px 0px"}} /> */}
     <button style={{border:"none",padding:"10px",background:"#7BB564",borderRadius:"10px",color:"white",width:"150px",margin:"10px auto",fontSize:"10px"}}  type='submit'>Submit Reply</button>
   </form>           )}
           {/* <StarRating  /> */}

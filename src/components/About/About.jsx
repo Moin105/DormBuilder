@@ -148,11 +148,11 @@ const About = () => {
                 <div className="container">
 
                     <h5>About <span className="heroText">United</span> Dorms</h5>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure tempore alias consectetur at, velit minima aspernatur, voluptas, dicta porro commodi error enim a quia molestias animi ipsa dolor vero aut?</p>
+                    {/* <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure tempore alias consectetur at, velit minima aspernatur, voluptas, dicta porro commodi error enim a quia molestias animi ipsa dolor vero aut?</p> */}
 
                     <div className="heroBtn">
                         <button onClick={handleWhatsAppClick} className='heroButtonOne'>Book Now</button>
-                        <button className='heroButtonTwo'>Learn More</button>
+                        <Link to="/about/#feature"><button className='heroButtonTwo'>Learn More</button></Link>
                     </div>
                 </div>
             </section>
@@ -160,15 +160,17 @@ const About = () => {
 
             {/* FEATURE SECTION */}
 
-            <section className="feature">
+            <section className="feature" id='feature'>
                 <div className="container">
                     <h1>The Comfort of your <span className='link'>Home</span></h1>
-                    <div className="featureBadge">
-                        <h6>Features</h6>
-                    </div>
+                    {/* <div className="featureBadge"> */}
+                        {/* <h6>Features</h6> */}
+                    {/* </div> */}
+                 <p>
+                 Welcome to Uni-Hive, your ultimate destination for hassle-free university dorm bookings. Founded by Ahmed AbdelRazek & AbdulRahman Hallak, Uni-Hive was born out of personal experience and a burning desire to help students avoid the challenges they faced when arriving in Cyprus. The name "Uni-Hive" symbolizes our vision of creating a bustling community where students can find the perfect hive (dorm) that meets their needs, without getting stung by scams or overpriced accommodations.
+                 </p>
 
-
-                    <div className="row">
+                    {/* <div className="row">
 
 
                         <div className="col-sm-12 col-md-6 col-lg-3">
@@ -231,7 +233,7 @@ const About = () => {
 
 
 
-                    </div>
+                    </div> */}
 
 
 
@@ -244,26 +246,27 @@ const About = () => {
   <section className="blogs">
 
 <div className="container">
-    <div className="featuredBlog">
-        <h5>Featured Blog</h5>
-    </div>
+    {/* <div className="featuredBlog"> */}
+        {/* <h5>Featured Blog</h5> */}
+    {/* </div> */}
+    <h1>Our Mission <span className='link'></span></h1>
 
     <div className="row">
-
+<p>
+Having personally experienced the frustration of being lost and overwhelmed while searching for the best dorm with the best price, our founders embarked on a mission to simplify the process. They were determined to spare fellow students the hardship of falling victim to unscrupulous agents and misleading offers.
+</p>
         
-        {
+        {/* {
             memoizedData?.map((item) => (
                 <div className="col-sm-12 col-md-6 col-lg-4" onClick={()=>{handleBlogDetails(item.id)}} >
                     <div className="blogCard">
                         <div className="blogCardImg">
-                            {/* <span className="blogCardBadge">Student</span> */}
                             <img src={` https://backend.uni-hive.net/storage/${item.featured_image_url}`} className="img-fluid" alt="" />
                         </div>
                         <div className="blogCardContent">
                             <div className="cardLink"> <h5>{item.title}</h5></div>
 
                         { !token &&   <div className="contentBottom" onClick={() => handleRouteChange(`/blog-detail/${item.id}`,item.id) }>
-                                {/* <p>7 mins read - September 20</p> */}
                                 <div className="cardIcon">
                                     <span >
                                         <FiArrowRight className="icon" />
@@ -271,7 +274,6 @@ const About = () => {
                                 </div>
                             </div>}
                             { token && role == "admin"   &&   <div className="contentBottom" onClick={() => handleRouteChange(`/admin/blog-detail/${item.id}`,item.id) }>
-                                {/* <p>7 mins read - September 20</p> */}
                                 <div className="cardIcon">
                                     <span >
                                         <FiArrowRight className="icon" />
@@ -279,7 +281,6 @@ const About = () => {
                                 </div>
                             </div>}
                             {token && role=="student"   && <div className="contentBottom" onClick={() => handleRouteChange(`/student/blog-detail/${item.id}`,item.id) }>
-                                {/* <p>7 mins read - September 20</p> */}
                                 <div className="cardIcon">
                                     <span >
                                         <FiArrowRight className="icon" />
@@ -292,7 +293,7 @@ const About = () => {
                     </div>
                 </div>
             ))
-        }
+        } */}
 
 
 
@@ -302,10 +303,26 @@ const About = () => {
 </div>
 </section>
             {/* What We Do Section */}
-
+            <section className="feature">
+                <div className="container">
+                    <h1>Safety, Comfort, and Affordability <span className='link'></span></h1>
+                    {/* <div className="featureBadge"> */}
+                        {/* <h6>Features</h6> */}
+                    {/* </div> */}
+                 <p>
+                 At Uni-Hive, we pride ourselves on being a trusted and reliable platform that puts students' needs first. Our comprehensive database provides accurate information about dormitories, including amenities, prices, and locations. We meticulously vet each dormitory listed on our platform to ensure they meet our strict standards for safety, comfort, and affordability.
+                 </p>
+                </div>
+            </section>
             <section className="whatWeDo">
                 <div className="container">
-                    <div className="row">
+                <h1 style={{color:"black"}}>Our Goal <span className='link'></span></h1>
+                    <p>
+
+Our goal is to empower students by offering a user-friendly interface that simplifies the booking process. With Uni-Hive, students can search, compare, and secure their ideal dormitory seamlessly. By taking the stress out of accommodation hunting, we enable students to focus on what truly matters: their education and the vibrant university experience.
+
+                    </p>
+                    {/* <div className="row">
                         <div className="col-sm-12 col-md-12 col-lg-6">
                             <div className="whatWeDoContent">
                                 <h1>What We Do?</h1>
@@ -346,10 +363,20 @@ const About = () => {
 
                             </div>
                         </div>
-                    </div>
+                    </div> */}
                 </div>
             </section>
-
+            <section className="feature">
+                <div className="container">
+                    <h1>Join Us <span className='link'></span></h1>
+                    {/* <div className="featureBadge"> */}
+                        {/* <h6>Features</h6> */}
+                    {/* </div> */}
+                 <p>
+                 Join us at Uni-Hive as we revolutionize the way students find and book university dorms. Together, let's create a buzzing community where students can thrive and make lasting memories, starting with finding the perfect hive to call home.
+                 </p>
+                </div>
+            </section>
 
             {/* Testimonials */}
 

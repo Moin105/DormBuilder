@@ -215,7 +215,7 @@ const GalleryDetail = () => {
                   {dormData?.description ? 
                   // <p dangerouslySetInnerHTML={{ __html: dormData?.description}} >
                   //   </p>
-                    <p>{formatContent(dormData?.description)}</p>
+                    <p dangerouslySetInnerHTML={{ __html: dormData?.description }}></p>
                     
                     :    <>
                         <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Accusamus laboriosam atque amet porro facere perferendis cupiditate obcaecati recusandae maiores architecto minima, quos aperiam, incidunt similique modi dolore quibusdam ullam itaque. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Soluta atque voluptatum autem ut maiores. Officiis reiciendis quas accusamus similique aliquam, laborum voluptatum repudiandae illo fugiat aperiam unde labore nisi quasi!</p>

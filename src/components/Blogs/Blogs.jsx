@@ -98,7 +98,7 @@ const handleBlogDetails = (id)=>{
          <div className="blogCard">
              <div className="blogCardImg">
                  {/* <span className="blogCardBadge">Student</span> */}
-                 <img src={` https://backend.uni-hive.net/storage/${item.featured_image_url}`}className="img-fluid" alt="" />
+                 <img src={item.featured_image_url == null ? why4 :    ` https://backend.uni-hive.net/storage/${item.featured_image_url}`}className="img-fluid" alt="" />
              </div>
              <div className="blogCardContent">
                  <Link className="cardLink" > <h5>{item.title}</h5></Link>

@@ -3,6 +3,7 @@ import './Footer.css';
 
 
 import { FaFacebookF, FaInstagram, FaTwitter } from "react-icons/fa";
+import {SiTiktok} from 'react-icons/si'
 import { Link } from 'react-router-dom';
 
 
@@ -34,16 +35,16 @@ const Footer = () => {
                             <p>Social Media</p>
                             <div className="socialMediaIcons">
 
+                                {/* <span className="socialMediaIcon">
+                                  <a href=''>  <FaFacebookF className='fIcon'/></a>
+                                </span> */}
+
                                 <span className="socialMediaIcon">
-                                    <FaFacebookF className='fIcon'/>
+                                   <a href='https://www.instagram.com/study_abode_/?igshid=NTc4MTIwNjQ2YQ'> <FaInstagram className='fIcon'/></a>
                                 </span>
 
                                 <span className="socialMediaIcon">
-                                    <FaInstagram className='fIcon'/>
-                                </span>
-
-                                <span className="socialMediaIcon">
-                                    <FaTwitter className='fIcon'/>
+                                   <a href='https://www.tiktok.com/@infoqcciyu'> <SiTiktok className='fIcon'/></a>
                                 </span>
 
 

@@ -14,6 +14,9 @@ import crown from './assets/crown.png';
 import why1 from './assets/why1.jpg';
 import why2 from './assets/why2.jpg';
 import why3 from './assets/why3.jpg';
+import heart from './assets/heart.png';
+import dormer from './assets/sad.avif';
+import whatsapp from './assets/whatsapp.svg'
 import why4 from './assets/why4.jpg';
 import Slider from 'react-slick';
 import axios from 'axios';
@@ -148,12 +151,13 @@ const Home = () => {
                 <div className="container">
 
                     <h5><span className="heroText">United</span> Dorms</h5>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure tempore alias consectetur at, velit minima aspernatur, voluptas, dicta porro commodi error enim a quia molestias animi ipsa dolor vero aut?</p>
+                    <p>Are you a student or a young traveler seeking affordable and convenient accommodation? Look no further! DormBooker is your ultimate destination for hassle-free dormitory bookings. We understand the importance of comfortable and budget-friendly accommodations, and our platform is designed to make your dormitory search a breeze.</p>
 
                     <div className="heroBtn">
-                        <button onClick={handleWhatsAppClick} className='heroButtonOne'>Book Now</button>
-                        <button className='heroButtonTwo'>Learn More</button>
-                    </div>
+                        <button style={{margin:"10px 30px 0px 0px"}} onClick={handleWhatsAppClick} className='heroButtonOne'>Book Now</button>
+                       <Link to="/about"> <button style={{margin:"10px 30px 0px 0px"}} className='heroButtonTwo'>Learn More</button></Link>
+                    </div>                      
+
                 </div>
             </section>
     
@@ -171,50 +175,50 @@ const Home = () => {
                     <div className="row">
 
 
-                        <div className="col-sm-12 col-md-6 col-lg-3">
+                        <div className="col-sm-12 col-md-6 col-lg-4">
                             <div className="featureCard">
                                 <div className="featureCardImg">
-                                    <img src={star} alt="" />
+                                    <img src={dormer} alt="" />
                                 </div>
 
                                 <div className="featureCardContent">
-                                    <h5>Otel Konspeti</h5>
-                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Et ab error voluptatem porro animi optio dolor sit.</p>
+                                    <h5>Look at the dorms</h5>
+                                    {/* <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Et ab error voluptatem porro animi optio dolor sit.</p> */}
                                 </div>
 
                             </div>
                         </div>
 
 
-                        <div className="col-sm-12 col-md-6 col-lg-3">
+                        <div className="col-sm-12 col-md-6 col-lg-4">
                             <div className="featureCard">
                                 <div className="featureCardImg">
-                                    <img src={map} alt="" />
+                                    <img src={heart} alt="" />
                                 </div>
 
                                 <div className="featureCardContent">
-                                    <h5>Otel Konspeti</h5>
-                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Et ab error voluptatem porro animi optio dolor sit.</p>
+                                    <h5>Find which one you like </h5>
+                                    {/* <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Et ab error voluptatem porro animi optio dolor sit.</p> */}
                                 </div>
 
                             </div>
                         </div>
 
-                        <div className="col-sm-12 col-md-6 col-lg-3">
+                        <div className="col-sm-12 col-md-6 col-lg-4">
                             <div className="featureCard">
                                 <div className="featureCardImg">
-                                    <img src={creditCard} alt="" />
+                                    <img src={whatsapp} alt="" />
                                 </div>
 
                                 <div className="featureCardContent">
-                                    <h5>Otel Konspeti</h5>
-                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Et ab error voluptatem porro animi optio dolor sit.</p>
+                                    <h5>Contact Us to secure a spot </h5>
+                                    {/* <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Et ab error voluptatem porro animi optio dolor sit.</p> */}
                                 </div>
 
                             </div>
                         </div>
 
-                        <div className="col-sm-12 col-md-6 col-lg-3">
+                        {/* <div className="col-sm-12 col-md-6 col-lg-3">
                             <div className="featureCard">
                                 <div className="featureCardImg">
                                     <img src={crown} alt="" />
@@ -226,7 +230,7 @@ const Home = () => {
                                 </div>
 
                             </div>
-                        </div>
+                        </div> */}
 
 
 
@@ -234,6 +238,70 @@ const Home = () => {
                     </div>
 
 
+                    {/* <div className="row">
+
+
+<div className="col-sm-12 col-md-6 col-lg-3">
+    <div className="featureCard">
+        <div className="featureCardImg">
+            <img src={star} alt="" />
+        </div>
+
+        <div className="featureCardContent">
+            <h5>Otel Konspeti</h5>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Et ab error voluptatem porro animi optio dolor sit.</p>
+        </div>
+
+    </div>
+</div>
+
+
+<div className="col-sm-12 col-md-6 col-lg-3">
+    <div className="featureCard">
+        <div className="featureCardImg">
+            <img src={map} alt="" />
+        </div>
+
+        <div className="featureCardContent">
+            <h5>Otel Konspeti</h5>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Et ab error voluptatem porro animi optio dolor sit.</p>
+        </div>
+
+    </div>
+</div>
+
+<div className="col-sm-12 col-md-6 col-lg-3">
+    <div className="featureCard">
+        <div className="featureCardImg">
+            <img src={creditCard} alt="" />
+        </div>
+
+        <div className="featureCardContent">
+            <h5>Otel Konspeti</h5>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Et ab error voluptatem porro animi optio dolor sit.</p>
+        </div>
+
+    </div>
+</div>
+
+<div className="col-sm-12 col-md-6 col-lg-3">
+    <div className="featureCard">
+        <div className="featureCardImg">
+            <img src={crown} alt="" />
+        </div>
+
+        <div className="featureCardContent">
+            <h5>Otel Konspeti</h5>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Et ab error voluptatem porro animi optio dolor sit.</p>
+        </div>
+
+    </div>
+</div>
+
+
+
+
+</div> */}
 
                 </div>
             </section>
@@ -241,6 +309,63 @@ const Home = () => {
   {/* BLOGS */}
 
 
+
+            {/* What We Do Section */}
+
+            <section className="whatWeDo">
+                <div className="container">
+                    <div className="row">
+                        <div className="col-sm-12 col-md-12 col-lg-6">
+                            <div className="whatWeDoContent">
+                                <h1>Why use United Dorms ? </h1>
+                                <br />
+                                <br />
+                                <ul>
+                                    <li><p>You can ask us any worries you have about the campus or dorms </p></li>
+                                    <li><p>our articles will help you figure out what is important as a new student </p></li>
+                                    <li><p>We can pick you up from the airport if you reserve through us to feel assured coming to an unknown country</p></li>
+                                </ul>
+                                {/* <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat officia deleniti delectus obcaecati in, consequuntur, similique, commodi sed dicta aspernatur voluptas veritatis beatae odit magnam molestias exercitationem veniam consectetur nostrum!</p> */}
+
+                                <button onClick={handleWhatsAppClick} className='heroButtonOne mt-5'>Book Now</button>
+                            </div>
+                        </div>
+                        <div className="col-sm-12 col-md-12 col-lg-6">
+                            <div className="row">
+
+                                <div className="col-sm-12 col-md-6 col-lg-6 mt-3">
+                                    <div className="why1">
+                                        <img src={why1} className="img-fluid" alt="" />
+                                    </div>
+                                </div>
+
+                                <div className="col-sm-12 col-md-6 col-lg-6 mt-3">
+                                    <div className="why2">
+                                        <img src={why2} className="img-fluid" alt="" />
+                                    </div>
+                                </div>
+
+                                <div className="col-sm-12 col-md-6 col-lg-6 mt-3">
+                                    <div className="why3">
+                                        <img src={why3} className="img-fluid" alt="" />
+                                    </div>
+                                </div>
+
+                                <div className="col-sm-12 col-md-6 col-lg-6 mt-3">
+                                    <div className="why4">
+                                        <img src={why4} className="img-fluid" alt="" />
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+
+            {/* Testimonials */}
   <section className="blogs">
 
 <div className="container">
@@ -257,7 +382,7 @@ const Home = () => {
                     <div className="blogCard">
                         <div className="blogCardImg">
                             {/* <span className="blogCardBadge">Student</span> */}
-                            <img src={` https://backend.uni-hive.net/storage/${item.featured_image_url}`} className="img-fluid" alt="" />
+                            <img src={item.featured_image_url == null ? why4 :` https://backend.uni-hive.net/storage/${item.featured_image_url}`} className="img-fluid" alt="" />
                         </div>
                         <div className="blogCardContent">
                             <div className="cardLink"> <h5>{item.title}</h5></div>
@@ -301,58 +426,6 @@ const Home = () => {
 
 </div>
 </section>
-            {/* What We Do Section */}
-
-            <section className="whatWeDo">
-                <div className="container">
-                    <div className="row">
-                        <div className="col-sm-12 col-md-12 col-lg-6">
-                            <div className="whatWeDoContent">
-                                <h1>What We Do?</h1>
-                                <br />
-                                <br />
-                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat officia deleniti delectus obcaecati in, consequuntur, similique, commodi sed dicta aspernatur voluptas veritatis beatae odit magnam molestias exercitationem veniam consectetur nostrum!</p>
-
-                                <button onClick={handleWhatsAppClick} className='heroButtonOne mt-5'>Book Now</button>
-                            </div>
-                        </div>
-                        <div className="col-sm-12 col-md-12 col-lg-6">
-                            <div className="row">
-
-                                <div className="col-sm-12 col-md-6 col-lg-6 mt-3">
-                                    <div className="why1">
-                                        <img src={why1} className="img-fluid" alt="" />
-                                    </div>
-                                </div>
-
-                                <div className="col-sm-12 col-md-6 col-lg-6 mt-3">
-                                    <div className="why2">
-                                        <img src={why2} className="img-fluid" alt="" />
-                                    </div>
-                                </div>
-
-                                <div className="col-sm-12 col-md-6 col-lg-6 mt-3">
-                                    <div className="why3">
-                                        <img src={why3} className="img-fluid" alt="" />
-                                    </div>
-                                </div>
-
-                                <div className="col-sm-12 col-md-6 col-lg-6 mt-3">
-                                    <div className="why4">
-                                        <img src={why4} className="img-fluid" alt="" />
-                                    </div>
-                                </div>
-
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-
-            {/* Testimonials */}
-
             {/* <section className="testimonials">
 
                 <div className="testimonialsBadge">
