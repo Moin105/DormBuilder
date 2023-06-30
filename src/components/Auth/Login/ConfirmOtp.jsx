@@ -121,7 +121,8 @@ const resetPassword = async (e,email, password, confirmPassword) => {
     </form>
 </>
             :<div className="loginForm">
-                <h5>Enter the Verification code sent to your email address<br></br> To activate your account</h5>
+                <h5>Reset Account Password</h5>
+                {/* <p></p> */}
 
                 <div className="loginField">
                     <span><RiMailFill /></span>

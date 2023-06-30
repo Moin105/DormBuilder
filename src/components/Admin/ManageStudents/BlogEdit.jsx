@@ -119,7 +119,7 @@ function BlogEdit() {
           </span>
         </div>
         <Link  to="/"> 
-        <h5>United Dorms</h5>
+        <h5>Unihive Dorms</h5>
         </Link>
         <div className="logoutButton" onClick={()=>{handleLogout();handleRouteChange("/login")}}>
           <img src={logouts} alt="" />

@@ -63,9 +63,10 @@ const Login = () => {
             const response = await axios.post('https://backend.uni-hive.net/api/user_login', data);
             const responseData = response.data;
        console.log(responseData)
-            if(responseData.status == 200){
-                
-
+       if(responseData.status == 401 && responseData.message == "please verify your account first") {
+        handleRouteChange('/verify-otp',email)
+       }
+            if(responseData.status == 200){     
                 console.log("helllooo gee")
                 const  {token,role,user} = responseData;
                 console.log("role",role)
@@ -106,6 +107,7 @@ const Login = () => {
                 }
             }
         } catch (error) {
+            // console.log(error);
             window.alert(error.message);
         }}
     }
@@ -148,7 +150,7 @@ const Login = () => {
         <>
 
             {/* <div className="LoginNavbar">
-                <h5>United Dorms</h5>
+                <h5>Unihive Dorms</h5>
             </div> */}
             <Header/>
        <ToastContainer />
@@ -180,7 +182,7 @@ const Login = () => {
       )}</button>
                 </div>
 
-                <h6>New To United Dorms? <Link className='link' to="/register">Sign Up</Link></h6>
+                <h6>New To Unihive Dorms? <Link className='link' to="/register">Sign Up</Link></h6>
 
             </div>
 

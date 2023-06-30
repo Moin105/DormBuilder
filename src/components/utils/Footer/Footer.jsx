@@ -86,7 +86,7 @@ const Footer = () => {
                     </div>
                 </div>
                 <hr />
-                <p className="copyright">Copyright 2023 United Dorms. All rights reserved.</p>
+                <p className="copyright">Copyright 2023 Unihive Dorms. All rights reserved.</p>
             </div>
         </div>
         

@@ -88,7 +88,7 @@ const role = useSelector((state) => state.role);
                     <h1 className='link'>Dorm Gallery</h1>
                     <h2>The Comfort of your <span className='link'>Home</span></h2>
 
-                    <div className="row d-flex align-items-center">
+                    <div className="row d-flex align-items-center" style={{justifyContent:"center"}}>
                         {/* <div className="col-lg-4">
                             <Form.Check
                                 inline
@@ -236,8 +236,12 @@ const role = useSelector((state) => state.role);
 
 
                                 <div className="card-body" style={{cursor:"pointer"}} onClick={() => handleDormDetails(dorm.id) }>
-                                    <div  className="card-title">{dorm?.dorm_id}</div>
-                                    <p className="card-text">{dorm?.description}</p>
+                                    <div  className="card-title" dangerouslySetInnerHTML={{ __html: dorm?.dorm_id}}>
+                                        {/* {dorm?.dorm_id} */}
+                                        </div>
+                                    <p className="card-text" dangerouslySetInnerHTML={{ __html: dorm?.description}}>
+                                        {/* {dorm?.description} */}
+                                        </p>
 
                                     <div className="cardBottom">
                                         <div className="bottomIcons">

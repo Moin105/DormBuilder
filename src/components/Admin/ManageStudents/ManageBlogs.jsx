@@ -139,7 +139,7 @@ function ManageStudents() {
                     <span ><Link className="backIcon" to="/admin/dashboard"><MdKeyboardBackspace /></Link></span>
                 </div>
                 <Link  to="/"> 
-        <h5>United Dorms</h5>
+        <h5>Unihive Dorms</h5>
         </Link>
 
                 <div className="logoutButton" onClick={()=>{handleLogout();handleRouteChange("/login")}}>

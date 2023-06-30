@@ -55,6 +55,12 @@ const Register = () => {
         try {
           const response = await axios.post(url, data);
           console.log('API response:', response.data);
+          if(response.data.status == 202 ){
+            console.log("dasda",response.data)
+            if (response.data.message == 'please check your mail for verification code')  {
+            handleRouteChange('/verify-otp',data.email)}
+            setIsLoading(false);
+          }
            if(response.data.status == 200){
           const  {token,role,user} = response.data;
           // const id = response.data;
@@ -65,18 +71,12 @@ const Register = () => {
             console.log("user",user)
             console.log("token",token)
             if(token){
-                // Dispatch login action to update token and role in redux store
                 dispatch(login({ token, role,user }));
-
-                // let userStr = JSON.stringify(user);
-
-                // Set the cookie
-                // Cookies.set('user', userStr);
                 toast.success('Form submitted successfully!', {
                   position: toast.POSITION.TOP_CENTER,
                   toastClassName: "custom-toast",
                 });
-
+                setIsLoading(false);
                 if(role === "student"){
                     handleRouteChange('/blogs',user)
                 }else if (role === "admin"){
@@ -136,7 +136,7 @@ const handleSubmit = async (event) => {
         <>
         
         {/* <div className="LoginNavbar">
-            <h5>United Dorms</h5>
+            <h5>Unihive Dorms</h5>
         </div> */}
         
 <Header/>

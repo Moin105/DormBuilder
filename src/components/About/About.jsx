@@ -127,7 +127,7 @@ const About = () => {
             {/* NAVBAR */}
             {/* <Navbar expand="lg" className="navbar">
                 <Container>
-                    <Navbar.Brand><Link className='navLogo'>United Dorms</Link> </Navbar.Brand>
+                    <Navbar.Brand><Link className='navLogo'>Unihive Dorms</Link> </Navbar.Brand>
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="me-auto navLinks">
@@ -145,9 +145,9 @@ const About = () => {
 
             {/* HERO SECTION */}
             <section className='hero'>
-                <div className="container">
+                <div className="container" style={{display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center"}}>
 
-                    <h5>About <span className="heroText">United</span> Dorms</h5>
+                    <h5>About <span className="heroText">Unihive</span> Dorms</h5>
                     {/* <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure tempore alias consectetur at, velit minima aspernatur, voluptas, dicta porro commodi error enim a quia molestias animi ipsa dolor vero aut?</p> */}
 
                     <div className="heroBtn">

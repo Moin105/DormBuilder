@@ -4,3 +4,9 @@
 .ql-editor{
     height: 110px !important;
 }
+.editor-wrapper .ql-toolbar .ql-formats .ql-picker {
+    display: none;
+  }
+  .ql-snow.ql-toolbar button, .ql-snow .ql-toolbar button{
+    margin: 8px 0px 0px 0px;
+  }

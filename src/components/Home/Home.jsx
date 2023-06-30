@@ -15,7 +15,7 @@ import why1 from './assets/why1.jpg';
 import why2 from './assets/why2.jpg';
 import why3 from './assets/why3.jpg';
 import heart from './assets/heart.png';
-import dormer from './assets/sad.avif';
+import dormer from './assets/sad.png';
 import whatsapp from './assets/whatsapp.svg'
 import why4 from './assets/why4.jpg';
 import Slider from 'react-slick';
@@ -130,7 +130,7 @@ const Home = () => {
             {/* NAVBAR */}
             {/* <Navbar expand="lg" className="navbar">
                 <Container>
-                    <Navbar.Brand><Link className='navLogo'>United Dorms</Link> </Navbar.Brand>
+                    <Navbar.Brand><Link className='navLogo'>UniHive Dorms</Link> </Navbar.Brand>
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="me-auto navLinks">
@@ -148,9 +148,9 @@ const Home = () => {
 
             {/* HERO SECTION */}
             <section className='hero'>
-                <div className="container">
+                <div className="container" style={{display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center"}}>
 
-                    <h5><span className="heroText">United</span> Dorms</h5>
+                    <h5><span className="heroText">Unihive</span> Dorms</h5>
                     <p>Are you a student or a young traveler seeking affordable and convenient accommodation? Look no further! DormBooker is your ultimate destination for hassle-free dormitory bookings. We understand the importance of comfortable and budget-friendly accommodations, and our platform is designed to make your dormitory search a breeze.</p>
 
                     <div className="heroBtn">
@@ -160,13 +160,72 @@ const Home = () => {
 
                 </div>
             </section>
-    
+            <section className="blogs">
+
+<div className="container">
+    <div className="featuredBlog">
+        <h5>Featured Blog</h5>
+    </div>
+
+    <div className="row">
+
+        
+        {
+            memoizedData?.map((item) => (
+                <div className="col-sm-12 col-md-6 col-lg-4" onClick={()=>{handleBlogDetails(item.id)}} >
+                    <div className="blogCard">
+                        <div className="blogCardImg">
+                            {/* <span className="blogCardBadge">Student</span> */}
+                            <img src={item.featured_image_url == null ? why4 :` https://backend.uni-hive.net/storage/${item.featured_image_url}`} className="img-fluid" alt="" />
+                        </div>
+                        <div className="blogCardContent">
+                            <div className="cardLink"> <h5>{item.title}</h5></div>
+
+                        { !token &&   <div className="contentBottom" onClick={() => handleRouteChange(`/blog-detail/${item.id}`,item.id) }>
+                                {/* <p>7 mins read - September 20</p> */}
+                                <div className="cardIcon">
+                                    <span >
+                                        <FiArrowRight className="icon" />
+                                    </span>
+                                </div>
+                            </div>}
+                            { token && role == "admin"   &&   <div className="contentBottom" onClick={() => handleRouteChange(`/admin/blog-detail/${item.id}`,item.id) }>
+                                {/* <p>7 mins read - September 20</p> */}
+                                <div className="cardIcon">
+                                    <span >
+                                        <FiArrowRight className="icon" />
+                                    </span>
+                                </div>
+                            </div>}
+                            {token && role=="student"   && <div className="contentBottom" onClick={() => handleRouteChange(`/student/blog-detail/${item.id}`,item.id) }>
+                                {/* <p>7 mins read - September 20</p> */}
+                                <div className="cardIcon">
+                                    <span >
+                                        <FiArrowRight className="icon" />
+                                    </span>
+                                </div>
+                            </div>}
+                        </div>
+
+
+                    </div>
+                </div>
+            ))
+        }
+
+
+
+
+    </div>
+
+</div>
+</section>
 
             {/* FEATURE SECTION */}
 
             <section className="feature">
                 <div className="container">
-                    <h1>The Comfort of your <span className='link'>Home</span></h1>
+                    <h1 style={{color:"black"}}>How does it  <span className='link'>Work</span></h1>
                     <div className="featureBadge">
                         <h6>Features</h6>
                     </div>
@@ -182,7 +241,7 @@ const Home = () => {
                                 </div>
 
                                 <div className="featureCardContent">
-                                    <h5>Look at the dorms</h5>
+                                    <h5 style={{textTransform:"capitalize"}}>Look at the dorms</h5>
                                     {/* <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Et ab error voluptatem porro animi optio dolor sit.</p> */}
                                 </div>
 
@@ -197,7 +256,7 @@ const Home = () => {
                                 </div>
 
                                 <div className="featureCardContent">
-                                    <h5>Find which one you like </h5>
+                                    <h5 style={{textTransform:"capitalize"}}>Find which one you like </h5>
                                     {/* <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Et ab error voluptatem porro animi optio dolor sit.</p> */}
                                 </div>
 
@@ -211,7 +270,7 @@ const Home = () => {
                                 </div>
 
                                 <div className="featureCardContent">
-                                    <h5>Contact Us to secure a spot </h5>
+                                    <h5 style={{textTransform:"capitalize"}}>Contact Us to secure a spot </h5>
                                     {/* <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Et ab error voluptatem porro animi optio dolor sit.</p> */}
                                 </div>
 
@@ -313,16 +372,16 @@ const Home = () => {
             {/* What We Do Section */}
 
             <section className="whatWeDo">
-                <div className="container">
+                <div className="container" >
                     <div className="row">
                         <div className="col-sm-12 col-md-12 col-lg-6">
                             <div className="whatWeDoContent">
-                                <h1>Why use United Dorms ? </h1>
+                                <h1>Why Use Unihive Dorms ? </h1>
                                 <br />
                                 <br />
                                 <ul>
                                     <li><p>You can ask us any worries you have about the campus or dorms </p></li>
-                                    <li><p>our articles will help you figure out what is important as a new student </p></li>
+                                    <li><p>Our articles will help you figure out what is important as a new student </p></li>
                                     <li><p>We can pick you up from the airport if you reserve through us to feel assured coming to an unknown country</p></li>
                                 </ul>
                                 {/* <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat officia deleniti delectus obcaecati in, consequuntur, similique, commodi sed dicta aspernatur voluptas veritatis beatae odit magnam molestias exercitationem veniam consectetur nostrum!</p> */}
@@ -366,66 +425,7 @@ const Home = () => {
 
 
             {/* Testimonials */}
-  <section className="blogs">
-
-<div className="container">
-    <div className="featuredBlog">
-        <h5>Featured Blog</h5>
-    </div>
-
-    <div className="row">
-
-        
-        {
-            memoizedData?.map((item) => (
-                <div className="col-sm-12 col-md-6 col-lg-4" onClick={()=>{handleBlogDetails(item.id)}} >
-                    <div className="blogCard">
-                        <div className="blogCardImg">
-                            {/* <span className="blogCardBadge">Student</span> */}
-                            <img src={item.featured_image_url == null ? why4 :` https://backend.uni-hive.net/storage/${item.featured_image_url}`} className="img-fluid" alt="" />
-                        </div>
-                        <div className="blogCardContent">
-                            <div className="cardLink"> <h5>{item.title}</h5></div>
-
-                        { !token &&   <div className="contentBottom" onClick={() => handleRouteChange(`/blog-detail/${item.id}`,item.id) }>
-                                {/* <p>7 mins read - September 20</p> */}
-                                <div className="cardIcon">
-                                    <span >
-                                        <FiArrowRight className="icon" />
-                                    </span>
-                                </div>
-                            </div>}
-                            { token && role == "admin"   &&   <div className="contentBottom" onClick={() => handleRouteChange(`/admin/blog-detail/${item.id}`,item.id) }>
-                                {/* <p>7 mins read - September 20</p> */}
-                                <div className="cardIcon">
-                                    <span >
-                                        <FiArrowRight className="icon" />
-                                    </span>
-                                </div>
-                            </div>}
-                            {token && role=="student"   && <div className="contentBottom" onClick={() => handleRouteChange(`/student/blog-detail/${item.id}`,item.id) }>
-                                {/* <p>7 mins read - September 20</p> */}
-                                <div className="cardIcon">
-                                    <span >
-                                        <FiArrowRight className="icon" />
-                                    </span>
-                                </div>
-                            </div>}
-                        </div>
-
-
-                    </div>
-                </div>
-            ))
-        }
-
-
-
-
-    </div>
-
-</div>
-</section>
+  
             {/* <section className="testimonials">
 
                 <div className="testimonialsBadge">

@@ -193,7 +193,7 @@ const modules = {
       <form onSubmit={handleSubmit}>
      <div className="input">
      {/* <ReactQuill theme="snow" value={reply} onChange={setReply}  /> */}
-     <ReactQuill theme="snow" value={value} onChange={setValue} modules={modules} />
+     <ReactQuill theme="snow" value={value} onChange={setValue} />
 
          {/* <textarea
          style={{maxWidth:"100%"}}
@@ -210,22 +210,22 @@ const modules = {
 
     <h2 style={{borderBottom:"1px solid black",padding:"6px"}}>All Reviews:</h2>
       {dormData?.reviews?.length > 0 ?<> {dormData?.reviews?.map((review) => (
-       <div className='row' style={{flexWrap:"nowrap",alignItems:"baseline"}}> 
-       <div style={{width:"70px",height:"70px"}}>
-         <img src={review?.user?.profile_image =="" ? images : `https://backend.uni-hive.net/storage/${review?.user?.profile_image}`} style={{width:"100%",objectFit:"contain"}}/>
+    review.user !== null ?   <div className='row' style={{flexWrap:"nowrap",alignItems:"baseline"}}> 
+       <div style={{width:"70px",height:"70px",display:"flex",alignItems:"center",justifyContent:"center",padding:"0px",margin:"10px 0px 0px 0px"}}>
+         <img src={review?.user?.profile_image == ""||review?.user?.profile_image ==  undefined   ? images : `https://backend.uni-hive.net/storage/${review?.user?.profile_image}`} style={{width:"70px",height:"70px",objectFit:"cover",padding:"0px",borderRadius:"50px"}}/>
         </div>
        
-        <div style={{padding:"6px"}} key={review.id}>
-          <h4 style={{fontSize:"18px"}}>{review.user.username}</h4>
-          <p dangerouslySetInnerHTML={{ __html: review?.review }}>{}</p>
+        <div style={{padding:"6px",width:"80%",alignSelf:'flex-end'}} key={review.id}>
+          <h4 style={{fontSize:"18px"}}>{review?.user?.username}</h4>
+          <p dangerouslySetInnerHTML={{ __html: review?.review == (null||""||undefined) ? <>ofer</> :review?.review   }}>{}</p>
           <StarRating rating={review.rating}/>
           {role == "admin" ?   <button style={{border:"none",padding:"10px",background:"#7BB564",borderRadius:"10px",color:"white",fontSize:"10px"}} onClick={() => setReplyingTo(review.id)}>Reply</button>: null
 }
 
           {review?.review_replies.map((reply)=>{return   <div className='row' style={{flexWrap:"nowrap",alignItems:"center"}}> 
-          <div style={{width:"70px",height:"70px"}}>
-         <img src={!reply?.user?.profile_image  ? images : `https://backend.uni-hive.net/storage/${reply?.user?.profile_image}`} style={{width:"100%",height:"100%",objectFit:"contain"}}/>
-        </div>    <div style={{padding:"6px"}} key={review.id}>
+          <div style={{width:"45px",height:"45px",padding:"0px"}}>
+         <img src={reply?.user?.profile_image ==(""|| null || undefined ) ? images : `https://backend.uni-hive.net/storage/${reply?.user?.profile_image}`} style={{width:"45px",height:"45px",objectFit:"cover",borderRadius:"50px",padding:"0px"}}/>
+        </div>    <div style={{padding:"6px",width:"80%"}} key={review.id}>
           <h4 style={{fontSize:"18px"}}>{reply?.user?.username}</h4>
           <p  dangerouslySetInnerHTML={{ __html: reply?.reply }}>{}</p>
           
@@ -244,7 +244,7 @@ const modules = {
 
         </div>
         
-        </div>  
+        </div>   :null
       ))} </>:<p style={{margin:"0 auto"}}> No reviews yet.</p>}
       <ToastContainer />
     </div>

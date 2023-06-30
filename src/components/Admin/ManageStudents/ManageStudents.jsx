@@ -135,7 +135,7 @@ function ManageStudents() {
                     <span ><Link className="backIcon" to="/admin/dashboard"><MdKeyboardBackspace /></Link></span>
                 </div>
                 <Link  to="/"> 
-        <h5>United Dorms</h5>
+        <h5>Unihive Dorms</h5>
         </Link>
                 <div className="logoutButton" onClick={()=>{handleLogout();handleRouteChange("/login")}}>
                     <img src={logouts} alt="" />
@@ -149,8 +149,8 @@ function ManageStudents() {
                 <tr>
                     <th>ID</th>
                     <th>Student Name</th>
-                    <th>Dorm Details</th>
-                    <th>Subscription</th>
+                    {/* <th>Dorm Details</th>
+                    <th>Subscription</th> */}
                     <th>Edit</th>
                 </tr>
             </thead>
@@ -159,8 +159,8 @@ function ManageStudents() {
                     <tr key={student.id}>
                         <td>{index+1}</td>
                         <td>{student.name}</td>
-                        <td></td>
-                        <td></td>
+                        {/* <td></td>
+                        <td></td> */}
                         <td>
                             <button onClick={() => handleRouteChange(`/admin/student-edit/${student.id}`,student.id) }>Edit</button>
                             {/* <button onClick={() =>  deleteUser(student.id)}>Delete</button> */}

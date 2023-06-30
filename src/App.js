@@ -31,6 +31,7 @@ import ConfirmOTP from "./components/Auth/Login/ConfirmOtp";
 import ManageDorms from "./components/Admin/ManageStudents/ManageDorms";
 import Testimonials from "./components/Home/Testimonials";
 import About from "./components/About/About";
+import RegisterConfirm from "./components/Auth/Register/RegisterConfirm";
 function App() {
 
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -46,7 +47,7 @@ function App() {
     {path:"/testimonials" ,element:<Testimonials/>,name:""},
     { path: "/dorm-show/:id", element: <GalleryDetail />, name: "" },
     {path:"/about",element:<About/>,name:"About"},
-    
+    { path: "/verify-otp", element: <RegisterConfirm/>, name: "" },
     { path: "/dorm", element: <Gallery />, name: "" },
     { path: "/otp", element: <ConfirmOTP />, name: "" },
     // {path:'/reset-password',element:<ResetPassword/>,name:""}

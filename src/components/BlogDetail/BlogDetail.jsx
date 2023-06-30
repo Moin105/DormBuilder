@@ -69,7 +69,7 @@ const token = useSelector((state) => state.token);
 
             {/* BLOG DETAIL MAIN */}
             <div className="blogSecondImage">
-                      {blogData?.featured_image_url ?  <img src={`https://backend.uni-hive.net/storage/${blogData?.featured_image_url}`} width="100%" height="400px" alt="blogSecondImage" />:<img src={why4} width="100%" height="400px" alt="blogSecondImage" />
+                      {blogData?.featured_image_url ?  <img src={`https://backend.uni-hive.net/storage/${blogData?.featured_image_url}`} width="100%" height="400px"style={{objectFit:'cover'}} alt="blogSecondImage" />:<img src={why4} width="100%" height="400px" alt="blogSecondImage" />
                 }    </div>
             {/* <section className="blogDetailMain" > */}
             {/* <section className="blogDetailMain" style={{ position: 'relative', backgroundImage: `linear-gradient(to bottom, #ffffff84 , #ffffff41) ,url(${why4})`, height: "60vh", backgroundRepeat: "no-repeat", width: "100%", backgroundSize: 'cover', backgroundPosition: 'center' }}> */}

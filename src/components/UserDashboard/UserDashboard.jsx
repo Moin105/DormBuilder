@@ -1,13 +1,12 @@
 import React,{useEffect,useState} from 'react'
 import './UserDashboard.css'
-
-
-
+import {GrFormClose} from 'react-icons/gr'
 import logouts from './assets/logout.png'
 import profile from './assets/profile.png'
 import { BiEdit } from 'react-icons/bi'
 import { Link,useNavigate,useLocation } from 'react-router-dom'
 import Header from '../Header/Header';
+import {FaUser} from 'react-icons/fa'
 import axios from 'axios'
 import { logout,login } from '../../redux/slices/authSlice'
 import imageCompression from 'browser-image-compression';
@@ -174,11 +173,43 @@ headers: {
       });
     }
   };
+  const [fileName, setFileName] = useState("Edit Profile Picture");
+
+  const handleFileChange =async (event) => {
+    setFileName(event.target.files[0] ? event.target.files[0].name : "Edit Profile Picture");
+    const imageFile = event.target.files[0];
+
+    const options = {
+      maxSizeMB: 1,
+      maxWidthOrHeight: 1920,
+      useWebWorker: true,
+    };
   
+    try {
+      const compressedImage = await imageCompression(imageFile, options);
+      console.log(`Compressed  image:`, compressedImage);
+     
+        // setFormData({ ...formData, image: compressedImage});
+        // setFormData(prevState => {
+        //   let updatedState = { ...prevState, image: compressedImage };
+        //   console.log("updated state",updatedState); // Now you can see the updated state
+        //   return updatedState;
+        // });
+        setImage(prevState =>{prevState =  compressedImage; return prevState})
+        
+        // setFormData(prevState =>{prevState.image =  compressedImage; return prevState})
+        console.log(formData)
+      
+      // Upload the compressed image to the server or save it to the state
+      // ...
+    } catch (error) {
+      console.error(`Error compressing ${name} image:`, error);
+    }
+  };
     return (
         <>
             {/* <div className="LoginNavbar">
-              <Link to="/Home">  <h5>United Dorms</h5></Link>
+              <Link to="/Home">  <h5>UniHive Dorms</h5></Link>
 
                 <div className="logoutButton" onClick={()=>{handleLogout();handleRouteChange("/")}}>
                     <img src={logouts} alt="" />
@@ -197,14 +228,14 @@ headers: {
                             </div>
                         </div>
                         <div className="col-sm-12 col-md-6 col-lg-5" style={{display:"flex",alignItems:"center",justifyContent:"center",}}>
-                            <img src={user.profile_image ? `https://backend.uni-hive.net/storage/${user?.profile_image}`: profile } alt=""  style={{width:"200px",height:"60%",objectFit:"contain",borderRadius:"160px"}}/>
-                        </div>
+                          {image ?<img src={URL.createObjectURL(image) } alt=""  style={{width:"200px",height:"60%",objectFit:"contain",borderRadius:"160px"}}/> :   <img src={user.profile_image ? `https://backend.uni-hive.net/storage/${user?.profile_image}`: profile } alt=""  style={{width:"200px",height:"60%",objectFit:"contain",borderRadius:"160px"}}/>
+}                        </div>
                     </div>
 
 
                     <div className="studentInfoTable">
                         <div className="studentTableTop">
-                            <span onClick={() => {setEditMode(!editMode)}} className='editIcon' style={editMode ?{color:"#7eb168"} :{color:"black"}}>{!editMode ?<><p>Edit</p><BiEdit /></> :< ><p>Submit</p><AiOutlineCheckCircle/></>}</span>
+                            <span onClick={() => {setEditMode(!editMode)}} className='editIcon' style={editMode ?{color:"#7eb168"} :{color:"black"}}>{!editMode ?<><p>Edit</p><BiEdit /></> :< ><p onClick={handleSubmit} >Submit</p><AiOutlineCheckCircle/></>}</span>
         
                             <h5>My Details</h5>
                         </div>
@@ -237,12 +268,28 @@ headers: {
       placeholder='edit bio'
       onChange={(e) => setFormData({ ...formData, bio: e.target.value })}
     />
-      <input
+      {/* <input
       type="file"
       placeholder='profile image'
       onChange={(e)=>{handleImageChange(e, "image")}}
-    />
-
+    /> */}
+  <div className="file-upload-wrapper">
+      <p style={{position:"absolute",right:"10px"}} onClick={()=>{setImage(null)}}>
+    {image &&    <GrFormClose/>}
+    {!image && <FaUser color='#7BB564' style={{margin:"-5px 10px 0px 0px"}}/>}
+      </p>
+      <label htmlFor="profile-picture" className="file-upload-button">
+        {fileName}
+      </label>
+      <input
+        type="file"
+        id="profile-picture"
+        className="file-upload-input"
+        accept="image/*"
+        style={{ display: "none" }}
+        onChange={handleFileChange}
+      />
+    </div>
       {/* <input
       type="text"
       value={formData?.name}

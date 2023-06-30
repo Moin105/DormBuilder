@@ -58,7 +58,7 @@ const Dashboard = () => {
     return (
         <>
             {/* <div className="LoginNavbar">
-                <h5>United Dorms</h5>
+                <h5>Unihive Dorms</h5>
 
                 <div className="logoutButton" onClick={()=>{handleLogout();handleRouteChange("/login")}}>
                     <img src={logouts} alt="" />

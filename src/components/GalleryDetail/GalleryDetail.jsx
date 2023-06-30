@@ -98,7 +98,7 @@ const GalleryDetail = () => {
         });
       }else{
         const latitude = dormData.lat;
-        const longitude = dormData.long;
+        const longitude = dormData.lng;
         const mapUrl = `https://maps.google.com/maps?q=${latitude},${longitude}`;
   
         window.location.href = mapUrl;
@@ -109,7 +109,7 @@ const GalleryDetail = () => {
             {/* NAVBAR */}
             {/* <Navbar expand="lg" className="navbar">
                 <Container>
-                    <Navbar.Brand><Link className='navLogo'>United Dorms</Link> </Navbar.Brand>
+                    <Navbar.Brand><Link className='navLogo'>UniHive Dorms</Link> </Navbar.Brand>
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="me-auto navLinks">
@@ -132,8 +132,10 @@ const GalleryDetail = () => {
             {/* GALLERY DETAIL MAIN */}
             <section className="galleryDetailMain">
                 <div className="container">
-                    <h6 className='link text-center'>Gallery</h6>
-                    <h1 className='title text-center'>Dorm Id {dormData?.id}</h1>
+                    <h6 className='link text-center'>Dorms</h6>
+                    <h1 className='title text-center' style={{textTransform:"capitalize"}}> {dormData?.dorm_id}</h1>
+                    {/* <h1 className='title text-center'>Dorm Id {dormData?.id}</h1> */}
+
 
                     {/* <div className="row">
                 { dormData?.dorm_images.length > 0 ? <> {dormData?.dorm_images?.map((image, index) => {
@@ -185,7 +187,7 @@ const GalleryDetail = () => {
                         <source src={`https://backend.uni-hive.net/storage/${image.image_url}`} type="video/mp4" />
                     </video>
                 ) : (
-                    <img style={{objectFit:"contain",boxShadow: "0px 10px 15px -3px rgba(0,0,0,0.1)", margin: 'auto', display: 'block'}} src={`https://backend.uni-hive.net/storage/${image.image_url}`} alt={`Image ${index + 1}`} />
+                    <img style={{objectFit:"contain",boxShadow: "0px 10px 15px -3px rgba(0,0,0,0.1)", margin: 'auto', display: 'block',width:"100%"}} src={`https://backend.uni-hive.net/storage/${image.image_url}`} alt={`Image ${index + 1}`} />
                 )}
             </div>
         );

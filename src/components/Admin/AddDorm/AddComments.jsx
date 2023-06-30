@@ -123,6 +123,14 @@ const handleReply = async (event, reviewId) => {
     });
   }
 };
+const toolbarConfig = {
+  // Remove heading-related options
+  toolbar: [
+    [{ 'header': [] }],
+    ['bold', 'italic', 'underline', 'strike'],
+    // Other options...
+  ]
+};
   // const fetchReviews = async () => {
   //   try {
   //       const formData = {
@@ -222,20 +230,20 @@ const handleReply = async (event, reviewId) => {
 
     <h2 style={{borderBottom:"1px solid black",padding:"6px"}}>All Reviews:</h2>
       {blogData?.comments?.length > 0 ?<> {blogData?.comments?.map((review) => (
-       <div className='row' style={{flexWrap:"nowrap",alignItems:"flex-start",borderBottom:"1px solid black"}}> 
-       <div style={{width:"70px",height:"70px",display:"flex",alignItems:"center",justifyContent:"center"}}>
-         <img src={review?.user?.profile_image =="" ? images : `https://backend.uni-hive.net/storage/${review?.user?.profile_image}`} style={{width:"100%",height:"100%",objectFit:"contain"}}/>
+    review.user !== null ?   <div className='row' style={{flexWrap:"nowrap",alignItems:"flex-start",borderBottom:"1px solid black"}}> 
+       <div style={{width:"70px",height:"70px",display:"flex",alignItems:"center",justifyContent:"center",padding:"0px",margin:"10px 0px 0px 0px"}}>
+         <img src={review?.user?.profile_image === "" || review?.user?.profile_image == undefined ? images : `https://backend.uni-hive.net/storage/${review?.user?.profile_image}`} style={{width:"70px",height:"70px",objectFit:"cover",padding:"0px",borderRadius:"50px"}}/>
         </div>
        
-        <div style={{padding:"6px"}} key={review.id}>
-          <h4 style={{fontSize:"18px"}}>{review.user.username}</h4>
-          <p  dangerouslySetInnerHTML={{ __html: review.comment }}></p>
+        <div style={{padding:"6px",width:"80%",alignSelf:'flex-end'}} key={review.id}>
+          <h4 style={{fontSize:"18px"}}>{review?.user?.username}</h4>
+          <p  dangerouslySetInnerHTML={{ __html: review?.comment }}></p>
           <StarRating rating={review.rating}/>
           {review?.replies.map((reply)=>{return   <div className='row' style={{flexWrap:"nowrap",alignItems:"flex-start"}}> 
-          <div style={{width:"40px",height:"40px"}}>
-         <img src={review?.user?.profile_image =="" ? images : `https://backend.uni-hive.net/storage/${review?.user?.profile_image}`} style={{width:"100%",height:"100%",objectFit:"contain"}}/>
-        </div>    <div style={{padding:"6px"}} key={review.id}>
-          <h4 style={{fontSize:"18px"}}>{review.user.username}</h4>
+          <div style={{width:"45px",height:"45px",padding:"0px"}}>
+         <img  src={review?.user?.profile_image ==(""|| null || undefined )? images : `https://backend.uni-hive.net/storage/${review?.user?.profile_image}`} style={{width:"45px",height:"45px",objectFit:"cover",borderRadius:"50px",padding:"0px"}}/>
+        </div>    <div style={{padding:"6px",width:"80%"}} key={review.id}>
+          <h4 style={{fontSize:"18px"}}>{review?.user?.username}</h4>
           <p dangerouslySetInnerHTML={{ __html: reply?.reply }}></p>
           
           </div>
@@ -252,7 +260,7 @@ const handleReply = async (event, reviewId) => {
   </form>           )}
           {/* <StarRating  /> */}
         </div>
-        </div>  
+        </div>  : null 
       ))} </>:<p style={{margin:"0 auto"}}> No Comments yet.</p>}
       <ToastContainer />
     </div>

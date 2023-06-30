@@ -63,7 +63,7 @@ const handleBlogDetails = (id)=>{
             {/* NAVBAR */}
             {/* <Navbar expand="lg" className="navbar">
                 <Container>
-                    <Navbar.Brand><Link className='navLogo'>United Dorms</Link> </Navbar.Brand>
+                    <Navbar.Brand><Link className='navLogo'>Unihive Dorms</Link> </Navbar.Brand>
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="me-auto navLinks">

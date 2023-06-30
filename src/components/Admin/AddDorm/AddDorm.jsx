@@ -38,7 +38,7 @@ const AddDorm = () => {
     id: "",
     description: "",
     lat:"",
-    long:"",
+    lng:"",
     rent_details: "",
   });
   // useEffect(() => {}, []);
@@ -70,7 +70,7 @@ const AddDorm = () => {
     if (formData.description =="") allerrors.push("Description is required");
     if (formData.rent_details =="") allerrors.push("Rent details are required");
     if (formData.lat =="") allerrors.push("Latitude is required");  
-    if (formData.long =="") allerrors.push("Longitude is required");  
+    if (formData.lng =="") allerrors.push("Longitude is required");  
 
     // check if email is valid
     // if (formData.id && !formData.id.includes("@")) allerrors.push("Dorm ID must be a valid email");
@@ -98,7 +98,7 @@ const AddDorm = () => {
     formData.append("description", value);
     formData.append("bedrooms", bedrooms);
     formData.append("lat", data.lat);
-    formData.append("long", data.long);
+    formData.append("lng", data.lng);
     images.forEach((item, index) => {
       formData.append(`images[${index}]`, item.file);
     });
@@ -206,7 +206,7 @@ const AddDorm = () => {
     formDatas.append("image", images);
     formDatas.append("rent_details", formData.rent_details);
     formDatas.append("lat", formData.lat);
-    formDatas.append("long", formData.long);
+    formDatas.append("lng", formData.lng);
     // formData.append("bedrooms", selectedOption);
     console.log( formDatas, images);
     console.log(formData);
@@ -240,7 +240,7 @@ const AddDorm = () => {
           position: toast.POSITION.TOP_CENTER,
           toastClassName: "custom-toast",
         });
-    }else if ( formData.long == "") 
+    }else if ( formData.lng == "") 
     {
       toast.error("Please add Longitude ", {
         position: toast.POSITION.TOP_CENTER,
@@ -248,7 +248,7 @@ const AddDorm = () => {
       });
     }else{
       const latitude = formData.lat;
-      const longitude = formData.long;
+      const longitude = formData.lng;
       const mapUrl = `https://maps.google.com/maps?q=${latitude},${longitude}`;
 
       window.location.href = mapUrl;
@@ -271,7 +271,7 @@ const handleRemove = (index) => {
           </span>
         </div>
         <Link  to="/"> 
-        <h5>United Dorms</h5>
+        <h5>Unihive Dorms</h5>
         </Link>
         <div className="logoutButton" onClick={()=>{handleLogout();handleRouteChange("/login")}}>
           <img src={logouts} alt="" />
@@ -323,11 +323,11 @@ const handleRemove = (index) => {
              <div className="input">
               <input
               type="text"
-              id="long"
-              name="long"
+              id="lng"
+              name="lng"
               placeholder="Enter Longitude"
               onChange={(e) => {
-                handleInputChange(e, "long");
+                handleInputChange(e, "lng");
               }}
             />
             </div>
@@ -411,7 +411,7 @@ const handleRemove = (index) => {
               <h5>Choose The Type Of Room</h5>
 
               <div className="row" style={{display:"flex"}}>
-           <div className="col-lg-6" style={{width:"45%"}}>
+           <div className="col-lg-6" style={{width:"33%"}}>
           <input
             type="radio"
             value="1"
@@ -420,7 +420,7 @@ const handleRemove = (index) => {
           />
           One Room:
         </div>
-        <div className="col-lg-6" style={{width:"45%"}}>
+        <div className="col-lg-6" style={{width:"33%"}}>
           <input
             type="radio"
             value="2"
@@ -428,6 +428,15 @@ const handleRemove = (index) => {
             onChange={handleOptionChange}
           />
           Double Room :
+        </div>
+        <div className="col-lg-6" style={{width:"33%"}}>
+          <input
+            type="radio"
+            value="3"
+            checked={selectedOption == '3'}
+            onChange={handleOptionChange}
+          />
+          Apartment :
         </div>
      {/* <div className="col-lg-6">
 :

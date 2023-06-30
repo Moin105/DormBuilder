@@ -133,7 +133,7 @@ const token = useSelector((state) => state.token);
                     <span ><Link className="backIcon" to="/admin/dashboard"><MdKeyboardBackspace /></Link></span>
                 </div>
                 <Link  to="/"> 
-        <h5>United Dorms</h5>
+        <h5>Unihive Dorms</h5>
         </Link>
 
                 <div className="logoutButton" onClick={()=>{handleLogout();handleRouteChange("/login")}}>
@@ -147,9 +147,9 @@ const token = useSelector((state) => state.token);
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Dorm Id</th>
-                    <th>Dorm Details</th>
-                    <th>Status</th>
+                    <th>Dorm Name</th>
+                    {/* <th>Dorm Details</th>
+                    <th>Status</th> */}
                     <th>Edit</th>
                 </tr>
             </thead>
@@ -158,8 +158,8 @@ const token = useSelector((state) => state.token);
                     <tr key={student.id}>
                         <td>{index+1}</td>
                         <td>    {`${student.dorm_id}`} </td>
-                        <td></td>
-                        <td></td>
+                        {/* <td></td>
+                        <td></td> */}
                         <td>
                             <button onClick={() => handleRouteChange(`/admin/edit-dorm/${student.id}`,student.id) }>Edit</button>
                             {/* <button onClick={() =>  deleteUser(student.id)}>Delete</button> */}
