@@ -99,6 +99,8 @@ const EditDorm = () => {
         dorm_id: formData.dorm_id,
         description: value,
         rent_details: formData.rent_details,
+        lng:formData.lng,
+        lat:formData.lat,
       },
       {
         headers: {
@@ -182,7 +184,7 @@ const EditDorm = () => {
       <div className="LoginNavbar">
         <div className="backBtn float-start">
           <span>
-            <Link className="backIcon" to="/admin/dashboard">
+            <Link className="backIcon" to="/admin/manage-dorms">
               <MdKeyboardBackspace />
             </Link>
           </span>
@@ -294,14 +296,14 @@ const EditDorm = () => {
                 <div className="col">
                   <Form.Check inline label="Double Room" type="radio" />
                 </div>
-                {/* <div className="col">
+                <div className="col">
                                     <Form.Check
                                         inline
                                         label="Apartment"
                                         type="radio"
                                     />
 
-                                </div> */}
+                                </div>
               </div>
             </div>
 

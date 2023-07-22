@@ -113,7 +113,7 @@ function BlogEdit() {
       <div className="LoginNavbar">
         <div className="backBtn float-start">
           <span>
-            <Link className="backIcon" to="/admin/dashboard">
+            <Link className="backIcon" to="admin/manage-blogs">
               <MdKeyboardBackspace />
             </Link>
           </span>

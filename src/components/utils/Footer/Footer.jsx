@@ -10,7 +10,8 @@ import { Link } from 'react-router-dom';
 const Footer = () => {
     const handleWhatsAppClick = () => {
         // Replace the placeholders with your actual phone number and message
-        const phoneNumber = "+9212451251";
+        const phoneNumber = "+17257122887";
+
         const message = "Hello, I'm contacting you via WhatsApp.";
     
         const encodedMessage = encodeURIComponent(message);

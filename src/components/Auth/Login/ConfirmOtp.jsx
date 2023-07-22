@@ -7,6 +7,7 @@ import Footer from '../../utils/Footer/Footer';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import Header from '../../Header/Header';
+import { toast, ToastContainer } from 'react-toastify';
 
 
 
@@ -33,7 +34,7 @@ const [show,setShow] = useState(false);
     const navigate = useNavigate()
   
 useEffect(() => {
-    console.log("maa ka bharosa",data)
+    // console.log("maa ka bharosa",data)
  if(data){
         setEmail(data.email)
  }
@@ -42,22 +43,31 @@ const [password, setPassword] = useState('');
 const [confirmPassword, setConfirmPassword] = useState('');
 const resetPassword = async (e,email, password, confirmPassword) => {
      e.preventDefault();
-    try {
-      const response = await axios.post('https://backend.uni-hive.net/api/reset_password', {
-        email: email,
-        password: password,
-        confirm_password: confirmPassword
-      });
-  
-      // Handle success
-      console.log(response.data);
-      if(response.data.status == 200){
-        handleRouteChange('/login')
-      }
-    } catch (error) {
-      // Handle error
-      console.error(error);
-    }
+     if(confirmPassword !== password){
+      toast.error("Password and Confirm Password does not match", {
+        position: toast.POSITION.TOP_CENTER,
+        toastClassName: "custom-toast",
+      })
+     }
+     else{
+
+       try {
+         const response = await axios.post('https://backend.uni-hive.net/api/reset_password', {
+           email: email,
+           password: password,
+           confirm_password: confirmPassword
+         });
+     
+         // Handle success
+         console.log(response.data);
+         if(response.data.status == 200){
+           handleRouteChange('/login')
+         }
+       } catch (error) {
+         // Handle error
+         console.error(error);
+       }
+     }
   };
 
       const handleLogin = async () => {
@@ -138,7 +148,7 @@ const resetPassword = async (e,email, password, confirmPassword) => {
 
             </div>}
 
-
+<ToastContainer />
             <Footer />
 
         </>
