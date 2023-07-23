@@ -177,7 +177,7 @@
     font-size: .9rem;
 }
 .card-img-top{
-    max-height: 196px;
+    height: 196px;
     max-width: 100%;
     object-fit: cover;
     min-width: 250px;

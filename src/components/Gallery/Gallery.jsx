@@ -1,6 +1,6 @@
-import React, { useEffect, useState,useMemo } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { Carousel, Container, Form, Nav, Navbar } from 'react-bootstrap';
-import { Link,useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Footer from '../utils/Footer/Footer';
 import './Gallery.css';
 import { BiEdit, BiSearch } from "react-icons/bi";
@@ -8,74 +8,71 @@ import { FaLaptop, FaStar, FaWifi, FaWindowMaximize } from 'react-icons/fa';
 import axios from 'axios';
 import Header from '../Header/Header';
 import { useSelector } from 'react-redux';
-
+// import Loader from './Loader'; // Assuming you've created a Loader component
 
 const Gallery = () => {
     const navigate = useNavigate();
-const role = useSelector((state) => state.role);
-    const  handleDormDetails = (id)=>{
-        if(token !== null ){
-            if(role === "admin"){
-              return  handleRouteChange(`/admin/dorm-show/${id}`,id)
-            }
-             if(role === "student"){
-        return       handleRouteChange(`/student/dorm-show/${id}`,id)
-                }
-        }else{
-     return       handleRouteChange(`/dorm-show/${id}`,id)
-        }
-    }
-      const handleRouteChange = (url, datas) => {
-        navigate(url, { state: { data: datas } });
-      };
-    const [data, setData] = useState([]);
-    // const token = localStorage.getItem("token")
+    const role = useSelector((state) => state.role);
     const token = useSelector((state) => state.token);
-    const fetchData = async () => {
-        try {
-           const response = await  axios.post('https://backend.uni-hive.net/api/get_all_dorms', {
+    const [loading, setLoading] = useState(false);
+    const [data, setData] = useState([]);
+    const [searchTerm, setSearchTerm] = useState("");
+    const [selectedBedrooms, setSelectedBedrooms] = useState('');
 
+    const handleDormDetails = (id) => {
+        const route = role === "admin" ? `/admin/dorm-show/${id}` : role === "student" ? `/student/dorm-show/${id}` : `/dorm-show/${id}`;
+        handleRouteChange(route, id);
+    }
+
+    const handleRouteChange = (url, datas) => {
+        navigate(url, { state: { data: datas } });
+    };
+
+    const fetchData = async () => {
+        setLoading(true);
+        try {
+           const response = await axios.post('https://backend.uni-hive.net/api/get_all_dorms', {
                 headers: {
-                    "Authorization":`Bearer ${token}`  },
+                    "Authorization":`Bearer ${token}`
+                }
             });
-            await setData(response.data.dorms);
-            console.log(data);
+            setData(response.data.dorms);
         } catch (error) {
             console.error(error);
+        } finally {
+            setLoading(false);
         }
     };
-    useEffect(() => {
 
+    useEffect(() => {
         fetchData();
     }, []);
 
     const memoizedData = useMemo(() => data, [data]);
 
- console.log(memoizedData)
- const [searchTerm, setSearchTerm] = useState("");
- const [selectedBedrooms, setSelectedBedrooms] = useState('');
+    const handleBedroomsChange = (event) => {
+        setSelectedBedrooms(event.target.value);
+    };
 
- const handleBedroomsChange = (event) => {
-    setSelectedBedrooms(event.target.value);
-  };
-  const handleInputChange = (event) => {
-    setSearchTerm(event.target.value);
-  };
-  const handleClearFilters = () => {
-    setSearchTerm('');
-    setSelectedBedrooms('');
-  };
+    const handleInputChange = (event) => {
+        setSearchTerm(event.target.value);
+    };
 
-  const filteredData = useMemo(
-    () =>
-      memoizedData.filter((item) =>
-        item.dorm_id?.toString().includes(searchTerm) &&
-        (selectedBedrooms == '' ||
-          item.rooms == parseInt(selectedBedrooms))
-      ),
-    [searchTerm, selectedBedrooms, memoizedData]
-  );
-  console.log("filteredData", filteredData);
+    const handleClearFilters = () => {
+        setSearchTerm('');
+        setSelectedBedrooms('');
+    };
+
+    const filteredData = useMemo(
+        () => memoizedData.filter((item) =>
+            item.dorm_id?.toString().includes(searchTerm) && (selectedBedrooms === '' || item.rooms === parseInt(selectedBedrooms))
+        ), [searchTerm, selectedBedrooms, memoizedData]
+    );
+    const removeHTMLTags = (str) => {
+        const doc = new DOMParser().parseFromString(str, 'text/html');
+        return doc.body.textContent || "";
+    }
+
     return (
         <>
         
@@ -239,7 +236,8 @@ const role = useSelector((state) => state.role);
                                     <div  className="card-title" dangerouslySetInnerHTML={{ __html: dorm?.dorm_id}}>
                                         {/* {dorm?.dorm_id} */}
                                         </div>
-                                    <p className="card-text" dangerouslySetInnerHTML={{ __html: dorm?.description}}>
+                                    <p className="card-text" >
+                                    {removeHTMLTags(dorm?.description)}
                                         {/* {dorm?.description} */}
                                         </p>
 
