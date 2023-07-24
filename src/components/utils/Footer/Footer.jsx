@@ -9,7 +9,6 @@ import { Link } from 'react-router-dom';
 
 const Footer = () => {
     const handleWhatsAppClick = () => {
-        // Replace the placeholders with your actual phone number and message
         const phoneNumber = "+17257122887";
 
         const message = "Hello, I'm contacting you via WhatsApp.";
@@ -35,11 +34,6 @@ const Footer = () => {
                         <div className="socialMedia">
                             <p>Social Media</p>
                             <div className="socialMediaIcons">
-
-                                {/* <span className="socialMediaIcon">
-                                  <a href=''>  <FaFacebookF className='fIcon'/></a>
-                                </span> */}
-
                                 <span className="socialMediaIcon">
                                    <a href='https://www.instagram.com/study_abode_/?igshid=NTc4MTIwNjQ2YQ'> <FaInstagram className='fIcon'/></a>
                                 </span>
@@ -66,22 +60,6 @@ const Footer = () => {
                                 <Link to="/faqs"><li>FAQs</li></Link>  
                             </ul>
                         </div>
-                        {/* <div className="col-sm-12 col-md-6 col-lg-4 mt-5">
-                        <ul className="quickLinks">
-                                <li>Vision</li>
-                                <li>Mission</li>
-                                <li>Join Us</li>
-                                <li onClick={handleWhatsAppClick}>Contact</li>
-                            </ul>
-                        </div> */}
-                        {/* <div className="col-sm-12 col-md-6 col-lg-4 mt-5">
-                        <ul className="quickLinks">
-                                <li>Privacy & Terms</li>
-                                <li>Google</li>
-                                <li>Alphabet</li>
-                                
-                            </ul>
-                        </div> */}
                     </div>
 
                     </div>

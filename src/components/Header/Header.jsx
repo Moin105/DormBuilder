@@ -22,9 +22,7 @@ function Header() {
     const handleRouteChange = (url, datas) => {
         navigate(url, { state: { data: datas } });
       };
-      
-    // const role = Cookies.get("role");
-  return (
+        return (
     <>
                <Navbar expand="lg" className="navbar">
                 <Container>

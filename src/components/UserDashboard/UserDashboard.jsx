@@ -12,43 +12,17 @@ import { logout,login } from '../../redux/slices/authSlice'
 import imageCompression from 'browser-image-compression';
 import {AiOutlineCheckCircle} from 'react-icons/ai'
 import { useSelector,useDispatch } from 'react-redux'
-
-import Cookies from 'js-cookie'
 import { ToastContainer,toast } from 'react-toastify'
 const UserDashboard = () => {
-    const navigate = useNavigate();
     const student = useSelector((state) => state.user);
     const dispatch = useDispatch();
     const handleLogout = () => {
-        // Clear auth state in Redux
         dispatch(logout());
-      };
- 
-    const handleRouteChange = (url, datas) => {
-        navigate(url, { state: { data: datas } });
       };
       const user = useSelector((state) => state.user);
       const token = useSelector((state)=> state.token)
-    function removeKeys() {
-        // Array of keys to remove
-        const keys = ['token', 'role'];
-    
-        keys.forEach((key) => {
-            // Remove key from localStorage
-            localStorage.removeItem(key);
-    
-            // Remove key from cookies
-            Cookies.remove(key);
-        });
-        // if(
-        //     !localStorage.getItem("token") && !Cookies.get("token")){
-        //         window.location.reload();
-        //         handleRouteChange("/");
-        //     } 
-    }
-    // const  savedUser = JSON.parse(localStorage.getItem('user'));
 
-    // console.log(savedUser);  
+  
     useEffect(() => {
        console.log(user)    
     }, []);
@@ -71,63 +45,6 @@ const [formData, setFormData] = useState({
   student_id:user.id,
   image:user.profile_image
 });
-// const handleImageChange = (e) => {
-//   // if (e.target.files && e.target.files[0]) {
-//   //   let img = URL.createObjectURL(e.target.files[0]);
-    
-//   //   setFormData({ ...formData, image: img})
-//   // }
-//   if (e.target.files && e.target.files[0]) {
-//     let reader = new FileReader();
-    
-//     reader.onloadend = () => {
-//       setFormData({ ...formData, image: reader.result})
-//       // setImage(reader.result);
-//     }
-
-//     reader.readAsDataURL(e.target.files[0]);
-//   }
-//   // if (e.target.files && e.target.files[0]) {
-//   //   let reader = new FileReader();
-    
-//   //   reader.onloadend = () => {
-//   //     setFormData({ ...formData, image: reader.result})
-//   //   }
-
-//   //   reader.readAsDataURL(e.target.files[0]);
-//   // }
-// };
-const  handleImageChange =async (event, name) => {
-  
-  const imageFile = event.target.files[0];
-
-  const options = {
-    maxSizeMB: 1,
-    maxWidthOrHeight: 1920,
-    useWebWorker: true,
-  };
-
-  try {
-    const compressedImage = await imageCompression(imageFile, options);
-    console.log(`Compressed  image:`, compressedImage);
-    if(name==='image'){
-      // setFormData({ ...formData, image: compressedImage});
-      // setFormData(prevState => {
-      //   let updatedState = { ...prevState, image: compressedImage };
-      //   console.log("updated state",updatedState); // Now you can see the updated state
-      //   return updatedState;
-      // });
-      setImage(prevState =>{prevState =  compressedImage; return prevState})
-      // setFormData(prevState =>{prevState.image =  compressedImage; return prevState})
-      console.log(formData)
-    }
-    // Upload the compressed image to the server or save it to the state
-    // ...
-  } catch (error) {
-    console.error(`Error compressing ${name} image:`, error);
-  }
-
-}
 useEffect(() => {
 
   console.log("qweffewefewfwe",student)
@@ -143,9 +60,8 @@ formDatas.append("email", formData.email);
 formDatas.append("id", formData.id);
 formDatas.append("name", formData.name);
 formDatas.append("phone_number", null);
-formDatas.append("image", image);  // Assuming you have an image file, replace "" with the file
+formDatas.append("image", image);
 formDatas.append("username", formData.username);
-      // Make a POST request with axios to update the user details
       const response =     await axios.post("https://backend.uni-hive.net/api/edit_student",   formDatas,
 {
 headers: {
@@ -154,13 +70,7 @@ headers: {
 })
       setFormData(response.data.student)
       dispatch(login(response.data));
-      // Exit the edit mode and fetch the updated user data
       setEditMode(false);
-      // getUser(user?.id);
-      // Fetch updated user data
-      // ...
-      
-      // Show a success message to the user
       toast.success('Details updated successfully!', {
         position: toast.POSITION.TOP_CENTER,
         toastClassName: "custom-toast",
@@ -187,35 +97,17 @@ headers: {
   
     try {
       const compressedImage = await imageCompression(imageFile, options);
-      console.log(`Compressed  image:`, compressedImage);
-     
-        // setFormData({ ...formData, image: compressedImage});
-        // setFormData(prevState => {
-        //   let updatedState = { ...prevState, image: compressedImage };
-        //   console.log("updated state",updatedState); // Now you can see the updated state
-        //   return updatedState;
-        // });
+      console.log(`Compressed  image:`, compressedImage);  
         setImage(prevState =>{prevState =  compressedImage; return prevState})
-        
-        // setFormData(prevState =>{prevState.image =  compressedImage; return prevState})
         console.log(formData)
-      
-      // Upload the compressed image to the server or save it to the state
-      // ...
+
     } catch (error) {
       console.error(`Error compressing ${name} image:`, error);
     }
   };
     return (
         <>
-            {/* <div className="LoginNavbar">
-              <Link to="/Home">  <h5>UniHive Dorms</h5></Link>
 
-                <div className="logoutButton" onClick={()=>{handleLogout();handleRouteChange("/")}}>
-                    <img src={logouts} alt="" />
-                </div>
-                  
-            </div> */}
 <Header/>
             <div className="userDashboard">
                 <div className="container">
@@ -268,11 +160,7 @@ headers: {
       placeholder='edit bio'
       onChange={(e) => setFormData({ ...formData, bio: e.target.value })}
     />
-      {/* <input
-      type="file"
-      placeholder='profile image'
-      onChange={(e)=>{handleImageChange(e, "image")}}
-    /> */}
+
   <div className="file-upload-wrapper">
       <p style={{position:"absolute",right:"10px"}} onClick={()=>{setImage(null)}}>
     {image &&    <GrFormClose/>}
@@ -290,20 +178,9 @@ headers: {
         onChange={handleFileChange}
       />
     </div>
-      {/* <input
-      type="text"
-      value={formData?.name}
-      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-    /> */}
-     {/* <input
-      type="text"
-      value={formData?.phone_number}
-      style={{marginBottom:"20px"}}
-      onChange={(e) => setFormData({ ...formData, phone_number: e.target.value })}
-    /> */}
+
     {editMode && <button style={{float:"right",margin:"20px 0px"}} onClick={handleSubmit}  className='heroButtonOne'>Save</button>}
-                         
-    {/* Render other editable fields similarly */}
+  
   </div>
 ) : 
 <>   <div className="studentInfoName">
@@ -317,22 +194,9 @@ headers: {
                         <div className="studentInfoName">
                             <h6>{formData?.college_university || "University Pending"}</h6>
                         </div>
-
-                        {/* <div className="studentInfoName">
-                            <h6>{formData?.name }</h6>
-                        </div> */}
-
-                        {/* <div className="studentInfoName">
-                            <h6>{formData?.phone_number || "no phone number"}</h6>
-                        </div> */}
-
                         <div className="studentInfoName">
                             <h6>Joined On {formattedDate}</h6>
                         </div>
-
-                        {/* <div className="studentInfoName">
-                            <h6>Membership Ending on {updatedFormattedDate}. <span className='ml-5 '><Link to="/" className='renewLink'>Renew It</Link></span></h6>
-                        </div> */}
 
 </>}
                     </div>
