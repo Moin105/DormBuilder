@@ -152,7 +152,7 @@ const Home = () => {
             >
               Contact Us
             </button>
-            <Link to="/about">
+            <Link to="/dorm">
               {" "}
               <button style={{ margin: "0px 0px" }} className="heroButtonTwo">
                 Checkout Dorm
