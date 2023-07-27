@@ -206,7 +206,7 @@ const handleSubmit = (event) => {
                 <div className="backBtn float-start" >
                     <span ><Link className="backIcon" to="/admin/dashboard"><MdKeyboardBackspace /></Link></span>
                 </div>
-                <h5 onClick={()=>{handleRouteChange("/")}}>Unihive Dorms</h5>
+                <h5 style={{color:"black"}} onClick={()=>{handleRouteChange("/")}}><span className="heroText">Uni</span>-Hive </h5>
 
                 <div className="logoutButton" onClick={()=>{handleLogout();handleRouteChange("/login")}}>
                     <img src={logouts} alt="" />

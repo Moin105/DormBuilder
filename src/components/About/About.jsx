@@ -147,12 +147,12 @@ const About = () => {
             <section className='hero'>
                 <div className="container" style={{display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center"}}>
 
-                    <h5>About <span className="heroText">Unihive</span> Dorms</h5>
+                    <h5>About <span className="heroText">Uni</span>-Hive</h5>
                     {/* <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure tempore alias consectetur at, velit minima aspernatur, voluptas, dicta porro commodi error enim a quia molestias animi ipsa dolor vero aut?</p> */}
 
                     <div className="heroBtn">
-                        <button onClick={handleWhatsAppClick} className='heroButtonOne'>Book Now</button>
-                        <Link to="/about/#feature"><button className='heroButtonTwo'>Learn More</button></Link>
+                        <button onClick={handleWhatsAppClick} className='heroButtonOne'>Contact Us</button>
+                        <Link to="/about/#feature"><button className='heroButtonTwo'>Checkout Dorm</button></Link>
                     </div>
                 </div>
             </section>
@@ -167,7 +167,7 @@ const About = () => {
                         {/* <h6>Features</h6> */}
                     {/* </div> */}
                  <p>
-                 Welcome to Uni-Hive, your ultimate destination for hassle-free university dorm bookings. Founded by Ahmed AbdelRazek & AbdulRahman Hallak, Uni-Hive was born out of personal experience and a burning desire to help students avoid the challenges they faced when arriving in Cyprus. The name "Uni-Hive" symbolizes our vision of creating a bustling community where students can find the perfect hive (dorm) that meets their needs, without getting stung by scams or overpriced accommodations.
+                 Welcome to <span className="heroText">Uni</span>-Hive, your ultimate destination for hassle-free university dorm bookings. Founded by Ahmed AbdelRazek & AbdulRahman Hallak, <span className="heroText">Uni</span>-Hive was born out of personal experience and a burning desire to help students avoid the challenges they faced when arriving in Cyprus. The name "<span className="heroText">Uni</span>-Hive" symbolizes our vision of creating a bustling community where students can find the perfect hive (dorm) that meets their needs, without getting stung by scams or overpriced accommodations.
                  </p>
 
                     {/* <div className="row">
@@ -310,7 +310,7 @@ Having personally experienced the frustration of being lost and overwhelmed whil
                         {/* <h6>Features</h6> */}
                     {/* </div> */}
                  <p>
-                 At Uni-Hive, we pride ourselves on being a trusted and reliable platform that puts students' needs first. Our comprehensive database provides accurate information about dormitories, including amenities, prices, and locations. We meticulously vet each dormitory listed on our platform to ensure they meet our strict standards for safety, comfort, and affordability.
+                 At <span className="heroText">Uni</span>-Hive, we pride ourselves on being a trusted and reliable platform that puts students' needs first. Our comprehensive database provides accurate information about dormitories, including amenities, prices, and locations. We meticulously vet each dormitory listed on our platform to ensure they meet our strict standards for safety, comfort, and affordability.
                  </p>
                 </div>
             </section>
@@ -319,7 +319,7 @@ Having personally experienced the frustration of being lost and overwhelmed whil
                 <h1 style={{color:"black"}}>Our Goal <span className='link'></span></h1>
                     <p>
 
-Our goal is to empower students by offering a user-friendly interface that simplifies the booking process. With Uni-Hive, students can search, compare, and secure their ideal dormitory seamlessly. By taking the stress out of accommodation hunting, we enable students to focus on what truly matters: their education and the vibrant university experience.
+Our goal is to empower students by offering a user-friendly interface that simplifies the booking process. With <span className="heroText">Uni</span>-Hive, students can search, compare, and secure their ideal dormitory seamlessly. By taking the stress out of accommodation hunting, we enable students to focus on what truly matters: their education and the vibrant university experience.
 
                     </p>
                     {/* <div className="row">
@@ -373,7 +373,7 @@ Our goal is to empower students by offering a user-friendly interface that simpl
                         {/* <h6>Features</h6> */}
                     {/* </div> */}
                  <p>
-                 Join us at Uni-Hive as we revolutionize the way students find and book university dorms. Together, let's create a buzzing community where students can thrive and make lasting memories, starting with finding the perfect hive to call home.
+                 Join us at <span className="heroText">Uni</span>-Hive as we revolutionize the way students find and book university dorms. Together, let's create a buzzing community where students can thrive and make lasting memories, starting with finding the perfect hive to call home.
                  </p>
                 </div>
             </section>

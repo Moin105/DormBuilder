@@ -182,7 +182,7 @@ const Login = () => {
       )}</button>
                 </div>
 
-                <h6>New To Unihive Dorms? <Link className='link' to="/register">Sign Up</Link></h6>
+                <h6>New To <span className="heroText">Uni</span>-Hive? <Link className='link' to="/register">Sign Up</Link></h6>
 
             </div>
 

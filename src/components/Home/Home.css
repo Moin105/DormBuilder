@@ -111,7 +111,7 @@
 .hero{
     height: 100%;
     padding-bottom: 12rem;
-    background-image: linear-gradient(to bottom, #ffffffb7 , #ffffff9e),url('../../../public/homeBg.jpg');
+    background-image: linear-gradient(to bottom, #ffffff9e , #ffffff9b),url('../../../public/homebds.jpg') !important;
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
@@ -138,7 +138,7 @@
 }
 
 .hero .heroBtn{
-    margin-top: 4rem;
+    margin-top: 2rem;
 }
 
 .hero .heroButtonOne{
@@ -160,7 +160,7 @@
     padding: .9rem 2rem;
     color: #090228;
     border: none;
-    margin-right: 2rem;
+    /* margin-right: 2rem; */
     border-top-right-radius: 2rem;
     border-bottom-right-radius: 2rem;
     border-top-left-radius: 2rem;
@@ -442,4 +442,79 @@
 .blogs .blogCard .blogCardContent .contentBottom .cardIcon .icon{ 
     position: block;
     transform: translateY(-.1rem);
+}
+.contact-section {
+    text-align: center;
+    padding: 20px;
+  }
+  
+  .contact-button {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 10px 20px;
+    background: #7BB564;
+    color: white;
+    text-decoration: none;
+    border-radius: 29px;
+    transition: background-color 0.3s ease;
+  }
+  
+ .disc{
+    display: flex;
+    flex-direction: row;
+ }
+ .disc .dect{
+    width: 50%;
+  
+    /* padding: 20px; */
+ }
+ .disc .dect h1{
+    font-size: 26px;
+    line-height: 33px;
+}
+ .disc .dect .contact-button{
+    font-size: 16px;
+ }
+ .disc div{
+    width: 50%;
+    /* padding: 20px; */
+ }
+ .disc div img{
+    mix-blend-mode: multiply;
+
+ }
+ @media only screen and (max-width: 990px){
+    
+    .disc {
+      flex-direction: column;
+    }
+    .disc .dect{
+        margin: 0 auto;
+        width: 95%;
+    }
+    .disc div{
+        margin: 0 auto;
+    }
+    .disc div img{
+        width: 100%;
+        max-width: 360px;
+
+    }
+}
+@media only screen and (max-width: 490px){
+    
+    .disc {
+      flex-direction: column;
+    }
+    .disc .dect{
+        margin: 0 auto;
+    }
+    .disc div{
+        margin: 0 auto;
+    }
+    .disc div img{
+        width: 100%;
+        max-width: 260px;
+
+    }
 }

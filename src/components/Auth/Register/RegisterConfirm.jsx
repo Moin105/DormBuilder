@@ -144,7 +144,7 @@ if(code == ""){
 
             <div className="LoginNavbar">
             <Link  to="/"> 
-        <h5>Unihive Dorms</h5>
+            <h5 style={{color:"black"}} ><span className="heroText">Uni</span>-Hive </h5>
         </Link>
             </div>
 
@@ -165,7 +165,7 @@ if(code == ""){
                     <button onClick={handleLogin} className="signInBtn">Confirm</button>
                 </div>
 
-                <h6>New To Unihive Dorms? <Link className='link' to="/register">Sign Up</Link></h6>
+                <h6>New To <span className="heroText">Uni</span>-Hive <Link className='link' to="/register">Sign Up</Link></h6>
 
             </div>
 

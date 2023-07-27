@@ -143,71 +143,7 @@ useEffect(() => {
     <Route path="*" element={<Home />} />
   </Routes>
 </Router>
-      {/* <Router>
-        <Routes>
-          <Route path="/" element={<Home/>} />
-          <Route path="/login" element={<Login/>} />
-          <Route path="/register" element={<Register/>} />
-          <Route path="/student-dashboard" element={<UserDashboard/>} />
-          <Route path="/blogs" element={<Blogs/>} />
-          <Route path="/blog-detail" element={<BlogDetail/>} />
-          <Route path="/gallery" element={<Gallery/>} />
-          <Route path="/gallery-detail" element={<GalleryDetail/>} />
-
-
-           ADMIN DASHBOARD 
-          <Route path="/admin/dashboard" element={<Dashboard/>} />
-          <Route path="/admin/add-dorm" element={<AddDorm/>} />
-          <Route path="/admin/add-blog" element={<AddBlog/>} />
-
-
-        </Routes>
-      </Router> */}
-    {/* <UserContext.Provider value={{ user, setUser }}> */}
-        {/* <Routes>
-          {isAuthenticated
-            ? authenticatedRoutes.map((route) => (
-                <Route
-                  key={route.path}
-                  path={route.path}
-                  element={route.element}
-                />
-              ))
-            : GuestRoutes.map((route) => (
-                <Route
-                  key={route.path}
-                  path={route.path}
-                  element={route.element}
-                />
-              ))}
-          <Route path="*" element={<Home/>} />
-        </Routes> */}
-      {/* <Router>
-          {token && role === "admin" && <Routes> { authenticatedRoutes.map((route) => (
-                <Route
-                  key={route.path}
-                  path={route.path}
-                  element={route.element}
-                />
-              ))} </Routes>}
-          {token && role === "student" && <Routes> { authenticatedRoutes.map((route) => (
-                <Route
-                  key={route.path}
-                  path={route.path}
-                  element={route.element}
-                />
-              ))} </Routes>}
-          {!token && <Routes> {GuestRoutes.map((route) => (
-                <Route
-                  key={route.path}
-                  path={route.path}
-                  element={route.element}
-                />
-              ))} </Routes>}
-               <Route path="*" element={<Home/>} />
-      </Router> */}
-      {/* </UserContext.Provider> */}
-
+     
     </div>
   );
 }

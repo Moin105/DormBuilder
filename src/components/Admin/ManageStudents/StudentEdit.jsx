@@ -115,7 +115,7 @@ let last_name = parts[1];
           </span>
         </div>
         <Link  to="/"> 
-        <h5>Unihive Dorms</h5>
+        <h5 style={{color:"black"}} ><span className="heroText">Uni</span>-Hive </h5>
         </Link>
         <div className="logoutButton" onClick={()=>{handleLogout();handleRouteChange("/login")}}>
           <img src={logouts} alt="" />
