@@ -155,7 +155,7 @@ const Home = () => {
             <Link to="/about">
               {" "}
               <button style={{ margin: "0px 0px" }} className="heroButtonTwo">
-                Learn More
+                Checkout Dorm
               </button>
             </Link>
           </div>
