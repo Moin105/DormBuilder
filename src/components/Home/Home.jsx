@@ -397,10 +397,10 @@ const Home = () => {
               <img src={banner}/>
             </div>
             <section className="dect">
-              <h1>Contact us now with any housing information or requirements you have. Let's find your perfect home together!
+              <h1>Not Sure Enough?
 </h1>
               <p style={{ textAlign: "center" }}>
-              Happy housing hunting!
+              Contact us now with any housing informationor requirements you have.Let's find your perfect home together! Happy housing hunting!
               </p>
               <div className="contact-button" onClick={handleWhatsAppClick}>
                 Contact Us
