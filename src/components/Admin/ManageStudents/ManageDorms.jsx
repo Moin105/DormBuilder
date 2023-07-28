@@ -142,7 +142,7 @@ const token = useSelector((state) => state.token);
             </div>
             <div className="addBlogMain">
                 <div className="container">
-                    <h1>Manage Dorms</h1>
+                    <h1>Uni<span style={{color:"black"}}>-Hive</span>Dorms</h1>
                     <table>
             <thead>
                 <tr>

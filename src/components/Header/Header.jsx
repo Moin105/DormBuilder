@@ -26,7 +26,7 @@ function Header() {
     <>
                <Navbar expand="lg" className="navbar">
                 <Container>
-                    <Navbar.Brand><Link className='navLogo' to="/">Unihive Dorms</Link> </Navbar.Brand>
+                    <Navbar.Brand><Link className='navLogo' to="/"> Uni<span style={{color:"black"}}>-Hive</span> </Link> </Navbar.Brand>
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="me-auto navLinks" style={{marginRight:"0px !important"}}>
