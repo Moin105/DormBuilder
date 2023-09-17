@@ -32,6 +32,7 @@ import ManageDorms from "./components/Admin/ManageStudents/ManageDorms";
 import Testimonials from "./components/Home/Testimonials";
 import About from "./components/About/About";
 import RegisterConfirm from "./components/Auth/Register/RegisterConfirm";
+import Study from "./components/StudyInCyprus/Study";
 function App() {
 
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -50,6 +51,7 @@ function App() {
     { path: "/verify-otp", element: <RegisterConfirm/>, name: "" },
     { path: "/dorm", element: <Gallery />, name: "" },
     { path: "/otp", element: <ConfirmOTP />, name: "" },
+    {path:"/study-in-cyprus",element:<Study/>,name:""}
     // {path:'/reset-password',element:<ResetPassword/>,name:""}
   ]; 
   const AdminRoutes = [
@@ -73,6 +75,7 @@ function App() {
     { path: "/blogs", element: <Blogs />, name: "" },
     {path:"/admin/blog-edit/:id",element:<BlogEdit/>,name:""},
     { path: "/otp", element: <ConfirmOTP />, name: "" },
+    {path:"/study-in-cyprus",element:<Study/>,name:""}
   ];
   const StudentRoutes = [
     { path: "/student-dashboard", element: <UserDashboard />, name: "" },
@@ -83,7 +86,7 @@ function App() {
     {path:"/about",element:<About/>,name:"About"},
     {path:"/faqs",element:<Faqs/>,name:""},
     {path:"/testimonials" ,element:<Testimonials/>,name:""},
-
+{path:"/study-in-cyprus",element:<Study/>,name:""},
     { path: "/dorm", element: <Gallery />, name: "" },
     { path: "/otp", element: <ConfirmOTP />, name: "" },
     // { path: "/gallery-detail", element: <GalleryDetail />, name: "" },

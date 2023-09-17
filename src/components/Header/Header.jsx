@@ -37,8 +37,9 @@ function Header() {
                             <Nav.Link className={location.pathname === "/faqs" ? "navLink active": "navLink" }><Link className="navText" to="/faqs">FAQs</Link></Nav.Link>
                             <Nav.Link className={location.pathname === "/about" ? "navLink active": "navLink" }><Link className="navText" to="/about">About</Link></Nav.Link>
                             <Nav.Link className={location.pathname === "/blogs" ? "navLink active": "navLink" }><Link className="navText" to="/blogs">Blogs</Link></Nav.Link> 
+                            <Nav.Link className={location.pathname === "/study-in-cyprus" ? "navLink active": "navLink" }><Link className="navText" to="/study-in-cyprus">Study in Cyprus</Link></Nav.Link> 
+                          
                             {/* admin/dashboard */}
-                            {!token &&  <Nav.Link className={location.pathname === "/login" ? "navLink": "navLink"}><Link className="navText" to="/login">Profile</Link></Nav.Link>}   
                         {token  && role == "admin"   &&  <Nav.Link className={location.pathname === "/admin/dashboard" ? "navLink active": "navLink"}><Link className="navText" to="/admin/dashboard">Profile</Link></Nav.Link>}
                         {token  && role == "student"   &&  <Nav.Link className={location.pathname === "/student-dashboard" ? "navLink active": "navLink"}><Link className="navText" to="/student-dashboard">Profile</Link></Nav.Link>}
                         
